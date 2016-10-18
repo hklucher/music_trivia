@@ -1,0 +1,14 @@
+<h1>Genres</h1>
+
+<p>
+  Here we have a list of available genres for you to choose from.
+  Simply pick one and explore the quizzes related to that genre!
+</p>
+
+<ol>
+  <%= for genre <- @genres do %>
+    <li>
+      <%= link(genre.name, to: genre_path(MusicQuiz.Endpoint, :show, genre.id)) %>
+    </li>
+  <% end %>
+</ol>
