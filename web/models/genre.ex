@@ -4,6 +4,8 @@ defmodule MusicQuiz.Genre do
   schema "genres" do
     field :name, :string
 
+    many_to_many :artists, MusicQuiz.Artist, join_through: "artist_genres"
+
     timestamps
   end
 
