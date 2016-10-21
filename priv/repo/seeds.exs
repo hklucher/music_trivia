@@ -1,4 +1,7 @@
 require IEx;
+alias MusicQuiz.Repo
+alias MusicQuiz.Genre
+alias MusicQuiz.Artist
 
 defmodule MusicQuiz.Seeds do
   @genre_base_url "https://api.spotify.com/v1/browse/categories"
@@ -11,17 +14,23 @@ defmodule MusicQuiz.Seeds do
   end
 
   def seed_artists do
-    base_year = 1960
+    base_year = 1980
     Enum.each(base_year..2000, fn(x) ->
       url = "https://api.spotify.com/v1/search?q=year%3A#{base_year}&type=artist&market=US"
       json_artists_for_year = HTTPoison.get!(url)
-      case json_artists_for_year.body do
+      case Poison.decode(json_artists_for_year.body) do
         {:ok, artists} ->
           artist_list = artists["artists"]["items"]
           Enum.each(artist_list, fn(artist) ->
-            Repo.insert!(%Arist{name: artist["name"], popularity: artist["popularity"],
+            Repo.insert!(%Artist{name: artist["name"], popularity: artist["popularity"],
                                 image_url: (artist["images"] |> Enum.at(0))["url"],
                                 spotify_id: artist["id"]})
+            artist_genres = artist["genres"]
+
+            Enum.each(artist_genres, fn(genre) ->
+              changeset = Genre.changeset(%Genre{}, %{name: genre})
+              Repo.insert(changeset)
+            end)
           end)
           IO.puts "Inserted artists. Sleeping, please wait..."
           :timer.sleep(10000) # Don't overload API with requests.
