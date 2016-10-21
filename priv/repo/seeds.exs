@@ -1,12 +1,50 @@
+require IEx;
+
 defmodule MusicQuiz.Seeds do
   @genre_base_url "https://api.spotify.com/v1/browse/categories"
 
   def seed_genres do
-    HTTPoison.start
     token = get_access_token
     HTTPoison.get!(@genre_base_url, ["Accept": "application/json", "Authorization": "Bearer #{token}"])
     |> parse_json
     |> insert_genres
+  end
+
+  def seed_artists do
+    base_year = 1960
+    Enum.each(base_year..2000, fn(x) ->
+      url = "https://api.spotify.com/v1/search?q=year%3A#{base_year}&type=artist&market=US"
+      json_artists_for_year = HTTPoison.get!(url)
+      case json_artists_for_year.body do
+        {:ok, artists} ->
+          artist_list = artists["artists"]["items"]
+          Enum.each(artist_list, fn(artist) ->
+            Repo.insert!(%Arist{name: artist["name"], popularity: artist["popularity"],
+                                image_url: (artist["images"] |> Enum.at(0))["url"],
+                                spotify_id: artist["id"]})
+          end)
+          IO.puts "Inserted artists. Sleeping, please wait..."
+          :timer.sleep(10000) # Don't overload API with requests.
+        _ ->
+          IO.puts "Error in getting response for #{base_year}, terminating."
+          System.halt(0)
+      end
+    end)
+    # 1. Start at 1960
+    # 2. FOR EACH number (n) BETWEEN 1960 and CURRENT YEAR
+      # -  GET list of artists for that year
+      # FOR EACH artist in ARTIST LIST
+        # Insert artist into DB
+        # FOR EACH genre in ARTIST GENRES
+          # IF that genre does not exist
+            # CREATE GENRE
+            # Assign genre to artist (and artist to genre)
+          # ELSE
+            # FIND GENRE
+            # Assign genre to artist
+          # END IF
+        # END FOR
+    # END FOR
   end
 
   defp insert_genres([head | tail]) do
@@ -41,4 +79,6 @@ defmodule MusicQuiz.Seeds do
   end
 end
 
-MusicQuiz.Seeds.seed_genres
+HTTPoison.start
+# MusicQuiz.Seeds.seed_genres
+MusicQuiz.Seeds.seed_artists

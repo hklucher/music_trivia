@@ -15,5 +15,6 @@ defmodule MusicQuiz.Genre do
     genre
     |> cast(params, [:name])
     |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end
