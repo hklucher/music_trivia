@@ -14,9 +14,9 @@ defmodule MusicQuiz.Seeds do
   end
 
   def seed_artists do
-    base_year = 1980
+    base_year = 1960
     Enum.each(base_year..2000, fn(x) ->
-      url = "https://api.spotify.com/v1/search?q=year%3A#{base_year}&type=artist&market=US"
+      url = "https://api.spotify.com/v1/search?q=year%3A#{x}&type=artist&market=US"
       json_artists_for_year = HTTPoison.get!(url)
       case Poison.decode(json_artists_for_year.body) do
         {:ok, artists} ->
@@ -39,21 +39,6 @@ defmodule MusicQuiz.Seeds do
           System.halt(0)
       end
     end)
-    # 1. Start at 1960
-    # 2. FOR EACH number (n) BETWEEN 1960 and CURRENT YEAR
-      # -  GET list of artists for that year
-      # FOR EACH artist in ARTIST LIST
-        # Insert artist into DB
-        # FOR EACH genre in ARTIST GENRES
-          # IF that genre does not exist
-            # CREATE GENRE
-            # Assign genre to artist (and artist to genre)
-          # ELSE
-            # FIND GENRE
-            # Assign genre to artist
-          # END IF
-        # END FOR
-    # END FOR
   end
 
   defp insert_genres([head | tail]) do
@@ -89,5 +74,5 @@ defmodule MusicQuiz.Seeds do
 end
 
 HTTPoison.start
-# MusicQuiz.Seeds.seed_genres
+MusicQuiz.Seeds.seed_genres
 MusicQuiz.Seeds.seed_artists

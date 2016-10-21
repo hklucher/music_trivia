@@ -10,5 +10,14 @@ defmodule MusicQuiz.Artist do
     many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres"
 
     timestamps
+
+    @required_fields ~w(name popularity image_url spotify_id)
+
+    def changeset(artist, params \\ %{}) do
+      artist
+      |> cast(params, [:name, :popularity, :image_url, :spotify_id])
+      |> validate_required(@required_fields)
+      |> unique_constraint(:name)
+    end
   end
 end
