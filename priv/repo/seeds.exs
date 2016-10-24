@@ -1,12 +1,63 @@
+require IEx;
+alias MusicQuiz.Repo
+alias MusicQuiz.Genre
+alias MusicQuiz.Artist
+
 defmodule MusicQuiz.Seeds do
   @genre_base_url "https://api.spotify.com/v1/browse/categories"
 
   def seed_genres do
-    HTTPoison.start
     token = get_access_token
     HTTPoison.get!(@genre_base_url, ["Accept": "application/json", "Authorization": "Bearer #{token}"])
     |> parse_json
     |> insert_genres
+  end
+
+  def seed_artists do
+    base_year = 1960
+    Enum.each(base_year..2000, fn(x) ->
+      url = "https://api.spotify.com/v1/search?q=year%3A#{x}&type=artist&market=US"
+      json_artists_for_year = HTTPoison.get!(url)
+      case Poison.decode(json_artists_for_year.body) do
+        {:ok, artists} ->
+          artist_list = artists["artists"]["items"]
+          Enum.each(artist_list, fn(artist) ->
+            Repo.insert!(%Artist{name: artist["name"], popularity: artist["popularity"],
+                                image_url: (artist["images"] |> Enum.at(0))["url"],
+                                spotify_id: artist["id"]})
+            artist_genres = artist["genres"]
+
+            Enum.each(artist_genres, fn(genre) ->
+              changeset = Genre.changeset(%Genre{}, %{name: genre})
+              Repo.insert(changeset)
+            end)
+          end)
+          IO.puts "Inserted artists. Sleeping, please wait..."
+          :timer.sleep(10000) # Don't overload API with requests.
+        _ ->
+          IO.puts "Error in getting response for #{base_year}, terminating."
+          System.halt(0)
+      end
+    end)
+  end
+
+  def seed_albums do
+    Repo.all(Artist)
+    |> Enum.each(fn(artist) ->
+         create_albums_for_artist(HTTPoison.get!("https://api.spotify.com/artists/#{artist.spotify_id}/albums"))
+       end)
+  end
+
+  defp create_albums_for_artist(%HTTPoison.Response{status_code: 200, body: body}) do
+    {:ok, %{"href" => _, "items" => items} = Poison.decode(body)
+    Enum.each(items, fn(album) ->
+      # Create album!
+    end)
+  end
+
+  defp create_albums_for_artist(_) do
+    IO.puts "Error in obtaining albums, terminating."
+    System.halt(0)
   end
 
   defp insert_genres([head | tail]) do
@@ -41,4 +92,6 @@ defmodule MusicQuiz.Seeds do
   end
 end
 
-MusicQuiz.Seeds.seed_genres
+HTTPoison.start
+# MusicQuiz.Seeds.seed_genres
+# MusicQuiz.Seeds.seed_artists

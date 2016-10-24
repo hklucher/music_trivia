@@ -4,8 +4,11 @@ defmodule MusicQuiz.Repo.Migrations.CreateGenres do
   def change do
     create table(:genres) do
       add :name, :string
+      add :artist_genre_id, :integer
 
       timestamps
     end
+
+    create unique_index(:genres, [:name])
   end
 end
