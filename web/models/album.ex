@@ -6,10 +6,14 @@ defmodule MusicQuiz.Album do
     field :image_url, :string
     field :spotify_id, :string
 
+    belongs_to :artist, MusicQuiz.Artist
+
     timestamps
   end
 
-  def changeset(artist, params \\ %{}) do
-    
+  def changeset(album, params \\ %{}) do
+    album
+    |> cast(params, [:name, :image_url, :spotify_id])
+    |> validate_required(@required_fields)
   end
 end

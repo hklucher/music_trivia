@@ -7,11 +7,13 @@ defmodule MusicQuiz.Artist do
     field :image_url, :string
     field :spotify_id, :string
 
+    has_many :albums, MusicQuiz.Album
+
     many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres"
 
     timestamps
 
-    @required_fields ~w(name popularity image_url spotify_id)
+    @required_fields [:name, :popularity, :image_url, :spotify_id]
 
     def changeset(artist, params \\ %{}) do
       artist
