@@ -41,6 +41,25 @@ defmodule MusicQuiz.Seeds do
     end)
   end
 
+  def seed_albums do
+    Repo.all(Artist)
+    |> Enum.each(fn(artist) ->
+         create_albums_for_artist(HTTPoison.get!("https://api.spotify.com/artists/#{artist.spotify_id}/albums"))
+       end)
+  end
+
+  defp create_albums_for_artist(%HTTPoison.Response{status_code: 200, body: body}) do
+    {:ok, %{"href" => _, "items" => items} = Poison.decode(body)
+    Enum.each(items, fn(album) ->
+      # Create album!
+    end)
+  end
+
+  defp create_albums_for_artist(_) do
+    IO.puts "Error in obtaining albums, terminating."
+    System.halt(0)
+  end
+
   defp insert_genres([head | tail]) do
     MusicQuiz.Repo.insert!(%MusicQuiz.Genre{name: head["name"]})
     insert_genres(tail)
@@ -74,5 +93,5 @@ defmodule MusicQuiz.Seeds do
 end
 
 HTTPoison.start
-MusicQuiz.Seeds.seed_genres
-MusicQuiz.Seeds.seed_artists
+# MusicQuiz.Seeds.seed_genres
+# MusicQuiz.Seeds.seed_artists

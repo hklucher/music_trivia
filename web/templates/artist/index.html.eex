@@ -1,1 +1,9 @@
-<h1>Index.</h1>
+<h1>Artists</h1>
+
+<ol>
+  <%= for artist <- @artists do %>
+    <li>
+      <%= artist.name %>
+    </li>
+  <% end %>
+</ol>
