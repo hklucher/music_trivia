@@ -19,8 +19,8 @@ defmodule MusicQuiz.Artist do
       artist
       |> cast(params, [:name, :popularity, :image_url, :spotify_id])
       |> validate_required(@required_fields)
-      |> unique_constraint(:name)
-      |> unique_constraint(:spotify_id)
+      |> unique_constraint(:name, message: "has already been taken")
+      |> unique_constraint(:spotify_id, message: "has already been taken")
     end
   end
 end
