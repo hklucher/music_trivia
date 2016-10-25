@@ -2,19 +2,33 @@ require IEx;
 alias MusicQuiz.Repo
 alias MusicQuiz.Genre
 alias MusicQuiz.Artist
+alias MusicQuiz.Album
+alias MusicQuiz.Spotify
 
 defmodule MusicQuiz.Seeds do
   @genre_base_url "https://api.spotify.com/v1/browse/categories"
 
-  def seed_genres do
-    token = get_access_token
-    HTTPoison.get!(@genre_base_url, ["Accept": "application/json", "Authorization": "Bearer #{token}"])
-    |> parse_json
-    |> insert_genres
+  # def seed_genres do
+  #   token = get_access_token
+  #   HTTPoison.get!(@genre_base_url, ["Accept": "application/json", "Authorization": "Bearer #{token}"])
+  #   |> parse_json
+  #   |> insert_genres
+  # end
+
+  def artists(start_year, end_year) do
+    Enum.each(start_year..end_year, fn(year) ->
+      {:ok, %HTTPoison.response{body: %{"artists" => artists}}}
+        = Spotify.get!("search?q=year%3A#{year}&type=artist")
+      insert_artists(artists)
+    end)
+  end
+
+  defp insert_artists(artists) do
+    
   end
 
   def seed_artists do
-    base_year = 1960
+    base_year = 1995
     Enum.each(base_year..2000, fn(x) ->
       url = "https://api.spotify.com/v1/search?q=year%3A#{x}&type=artist&market=US"
       json_artists_for_year = HTTPoison.get!(url)
@@ -42,20 +56,23 @@ defmodule MusicQuiz.Seeds do
   end
 
   def seed_albums do
-    Repo.all(Artist)
-    |> Enum.each(fn(artist) ->
-         create_albums_for_artist(HTTPoison.get!("https://api.spotify.com/artists/#{artist.spotify_id}/albums"))
-       end)
-  end
-
-  defp create_albums_for_artist(%HTTPoison.Response{status_code: 200, body: body}) do
-    {:ok, %{"href" => _, "items" => items} = Poison.decode(body)
-    Enum.each(items, fn(album) ->
-      # Create album!
+    Enum.each(Repo.all(Artist), fn(artist) ->
+      create_albums_for_artist(HTTPoison.get!("https://api.spotify.com/v1/artists/#{artist.spotify_id}/albums"), artist)
+      :timer.sleep(10000)
     end)
   end
 
-  defp create_albums_for_artist(_) do
+  defp create_albums_for_artist(%HTTPoison.Response{status_code: 200, body: body}, artist) do
+    {:ok, %{"href" => _, "items" => items}} = Poison.decode(body)
+    Enum.each(items, fn(album) ->
+      changeset = Album.changeset(%Album{name: album["name"], spotify_id: album["id"],
+                                         image_url: (album["images"] |> Enum.at(0))["url"],
+                                         artist_id: artist.id})
+      Repo.insert!(changeset)
+    end)
+  end
+
+  defp create_albums_for_artist(_, _) do
     IO.puts "Error in obtaining albums, terminating."
     System.halt(0)
   end
@@ -93,5 +110,6 @@ defmodule MusicQuiz.Seeds do
 end
 
 HTTPoison.start
-# MusicQuiz.Seeds.seed_genres
-# MusicQuiz.Seeds.seed_artists
+MusicQuiz.Seeds.seed_genres
+MusicQuiz.Seeds.seed_artists
+MusicQuiz.Seeds.seed_albums
