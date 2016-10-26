@@ -9,7 +9,7 @@ defmodule MusicQuiz.Artist do
 
     has_many :albums, MusicQuiz.Album
 
-    many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres"
+    many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres", on_replace: :delete
 
     timestamps
 
@@ -19,8 +19,9 @@ defmodule MusicQuiz.Artist do
       artist
       |> cast(params, [:name, :popularity, :image_url, :spotify_id])
       |> validate_required(@required_fields)
-      |> unique_constraint(:name, message: "has already been taken")
-      |> unique_constraint(:spotify_id, message: "has already been taken")
+      |> unique_constraint(:name, name: :artists_name_index)
+      |> unique_constraint(:spotify_id, name: :spotify_id)
+      |> cast_assoc(:genres)
     end
   end
 end

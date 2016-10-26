@@ -32,9 +32,15 @@ defmodule MusicQuiz.Seeds do
       |> Map.put("image_url", get_image_url(artist))
 
       genres = artist["genres"]
-      {:ok, artist_model} = Repo.insert(Artist.changeset(%Artist{}, attributes))
+      case Repo.insert(Artist.changeset(%Artist{}, attributes)) do
+        {:ok, changeset} ->
+          build_artist_genres(changeset, genres)
+        {:error, changeset} ->
+          IO.puts "Error: artist already exists, continuing without insertion."
+      end
+      # {:ok, artist_model} = Repo.insert(Artist.changeset(%Artist{}, attributes))
       # artist_model = Repo.insert(changeset)
-      build_artist_genres(artist_model, genres)
+      # build_artist_genres(artist_model, genres)
     end)
   end
 
@@ -49,9 +55,9 @@ defmodule MusicQuiz.Seeds do
           current_artist
           |> Repo.preload(:genres)
           |> Ecto.Changeset.change
-          |> Ecto.Changeset.put_assoc(:genres, [inserted_genre])
+          |> Ecto.Changeset.put_assoc(:genres, [changeset])
           |> Repo.update!
-        {:error, changeset} ->
+        {:error, _changeset} ->
           IO.puts "Genre #{genre} already exists, continuing without insertion."
       end
     end)
