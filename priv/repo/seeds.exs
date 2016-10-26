@@ -52,11 +52,16 @@ defmodule MusicQuiz.Seeds do
       inserted_genre = Repo.insert(Genre.changeset(%Genre{}, %{name: genre}))
       case inserted_genre do
         {:ok, changeset} ->
-          current_artist
-          |> Repo.preload(:genres)
+          changeset
+          |> Repo.preload(:artists)
           |> Ecto.Changeset.change
-          |> Ecto.Changeset.put_assoc(:genres, [changeset])
+          |> Ecto.Changeset.put_assoc(:artists, [current_artist])
           |> Repo.update!
+          # current_artist
+          # |> Repo.preload(:genres)
+          # |> Ecto.Changeset.change
+          # |> Ecto.Changeset.put_assoc(:genres, [changeset])
+          # |> Repo.update!
         {:error, _changeset} ->
           IO.puts "Genre #{genre} already exists, continuing without insertion."
       end

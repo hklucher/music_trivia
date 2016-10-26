@@ -9,7 +9,7 @@ defmodule MusicQuiz.Artist do
 
     has_many :albums, MusicQuiz.Album
 
-    many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres", on_replace: :delete
+    many_to_many :genres, MusicQuiz.Genre, join_through: "artist_genres"
 
     timestamps
 
