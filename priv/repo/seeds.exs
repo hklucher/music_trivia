@@ -63,6 +63,7 @@ defmodule MusicQuiz.Seeds do
           # |> Ecto.Changeset.put_assoc(:genres, [changeset])
           # |> Repo.update!
         {:error, _changeset} ->
+          # TODO: instead of skipping, find genre in DB and associate with artist
           IO.puts "Genre #{genre} already exists, continuing without insertion."
       end
     end)
