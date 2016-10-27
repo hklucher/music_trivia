@@ -6,15 +6,6 @@ alias MusicQuiz.Album
 alias MusicQuiz.Spotify
 
 defmodule MusicQuiz.Seeds do
-  @genre_base_url "https://api.spotify.com/v1/browse/categories"
-
-  # def seed_genres do
-  #   token = get_access_token
-  #   HTTPoison.get!(@genre_base_url, ["Accept": "application/json", "Authorization": "Bearer #{token}"])
-  #   |> parse_json
-  #   |> insert_genres
-  # end
-
   def artists(start_year, end_year) do
     Enum.each(start_year..end_year, fn(year) ->
       %HTTPoison.Response{body: %{"artists" => artists}} = Spotify.get!("search?q=year%3A#{year}&type=artist")
@@ -25,40 +16,41 @@ defmodule MusicQuiz.Seeds do
   defp insert_artists(json) do
     %{"href" => _, "items" => artists} = json
     Enum.each(artists, fn(artist) ->
-      attributes = artist
-      |> Map.take(["name", "popularity", "id"])
-      |> Map.put("spotify_id", artist["id"])
-      |> Map.delete("id")
-      |> Map.put("image_url", get_image_url(artist))
-
-      genres = artist["genres"]
+      attributes = parse_artist_attributes(artist)
       case Repo.insert(Artist.changeset(%Artist{}, attributes)) do
         {:ok, changeset} ->
-          build_artist_genres(changeset, genres)
+          build_artist_genres(changeset, artist["genres"])
         {:error, changeset} ->
           IO.puts "Error: artist already exists, continuing without insertion."
       end
     end)
   end
 
+  defp parse_artist_attributes(artist_map) do
+    artist_map
+    |> Map.take(["name", "popularity", "id"])
+    |> Map.put("spotify_id", artist_map["id"])
+    |> Map.delete("id")
+    |> Map.put("image_url", get_image_url(artist_map))
+  end
+
   defp get_image_url(artist), do: (Enum.at(artist["images"], 0))["url"]
 
   defp build_artist_genres(artist, genres) do
     Enum.each(genres, fn(genre) ->
-      current_artist = Repo.get(Artist, artist.id)
       inserted_genre = Repo.insert(Genre.changeset(%Genre{}, %{name: genre}))
       case inserted_genre do
         {:ok, changeset} ->
           changeset
           |> Repo.preload(:artists)
           |> Ecto.Changeset.change
-          |> Ecto.Changeset.put_assoc(:artists, [current_artist])
+          |> Ecto.Changeset.put_assoc(:artists, [artist])
           |> Repo.update!
         {:error, _changeset} ->
           Repo.get_by!(Genre, name: genre)
           |> Repo.preload(:artists)
           |> Ecto.Changeset.change
-          |> Ecto.Changeset.put_assoc(:artists, [current_artist])
+          |> Ecto.Changeset.put_assoc(:artists, [artist])
       end
     end)
   end
