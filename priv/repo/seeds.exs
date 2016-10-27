@@ -38,9 +38,6 @@ defmodule MusicQuiz.Seeds do
 
   defp build_artist_genres(artist, genres) do
     Enum.each(genres, fn(genre) ->
-      if artist.name == "AC/DC" do
-        IEx.pry
-      end
       case Repo.insert(Genre.changeset(%Genre{}, %{name: genre})) do
         {:ok, changeset} ->
           changeset
@@ -49,10 +46,11 @@ defmodule MusicQuiz.Seeds do
           |> Ecto.Changeset.put_assoc(:artists, [artist])
           |> Repo.update!
         {:error, _changeset} ->
-          Repo.get_by!(Genre, name: genre)
+          genre = Repo.get_by!(Genre, name: genre) |> Repo.preload(:artists)
+          genre
           |> Repo.preload(:artists)
           |> Ecto.Changeset.change
-          |> Ecto.Changeset.put_assoc(:artists, [artist])
+          |> Ecto.Changeset.put_assoc(:artists, genre.artists ++ [artist])
           |> Repo.update!
       end
     end)
