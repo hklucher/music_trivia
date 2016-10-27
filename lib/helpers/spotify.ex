@@ -14,4 +14,18 @@ defmodule MusicQuiz.Spotify do
   def process_response_body(body) do
     body |> Poison.decode!
   end
+
+  def albums(spotify_id) do
+    get!("artists/#{spotify_id}/albums")
+  end
+
+  def album(album_id) do
+    response = get!("albums/#{album_id}")
+    case response do
+      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => status}}} ->
+        {:error, message}
+      %HTTPoison.Response{body: album_data} ->
+        {:ok, album_data}
+    end
+  end
 end

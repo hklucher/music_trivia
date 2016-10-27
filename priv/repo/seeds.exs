@@ -34,7 +34,8 @@ defmodule MusicQuiz.Seeds do
     |> Map.put("image_url", get_image_url(artist_map))
   end
 
-  defp get_image_url(artist), do: (Enum.at(artist["images"], 0))["url"]
+  # TODO: Pattern match on argument?
+  defp get_image_url(map), do: (Enum.at(map["images"], 0))["url"]
 
   defp build_artist_genres(artist, genres) do
     Enum.each(genres, fn(genre) ->
@@ -48,13 +49,45 @@ defmodule MusicQuiz.Seeds do
         {:error, _changeset} ->
           genre = Repo.get_by!(Genre, name: genre) |> Repo.preload(:artists)
           genre
-          |> Repo.preload(:artists)
           |> Ecto.Changeset.change
           |> Ecto.Changeset.put_assoc(:artists, genre.artists ++ [artist])
           |> Repo.update!
       end
     end)
   end
+
+  def albums do
+    Enum.each(Repo.all(Artist), fn(artist) ->
+      %HTTPoison.Response{body: %{"href" => _, "items" => artist_albums}} = Spotify.albums(artist.id)
+      Enum.each(artist_albums, fn(album) ->
+        case Spotify.album(album.id) do
+          %HTTPoison.Response{body: album_data} ->
+            attributes = parse_album_attributes(album_data)
+            case Repo.insert(Album.changeset(%Album{}, attributes)) do
+              {:ok, changeset} ->
+                changeset
+                |> Repo.preload(:artist)
+                |> Ecto.Changeset.change
+                |> Repo.Changeset.put_assoc(:artist, artist)
+                |> Repo.update!
+              {:error, changeset} ->
+                IO.puts "Error, album not inserted."
+            end
+          _ ->
+            IEx.pry
+        end
+      end)
+    end)
+  end
+
+  def parse_album_attributes(album) do
+    album
+    |> Map.take(["name", "id"])
+    |> Map.put("spotify_id", album["id"])
+    |> Map.delete("id")
+    |> Map.put("image_url", get_image_url(album))
+  end
+
 
   # def seed_artists do
   #   base_year = 1995
@@ -140,6 +173,7 @@ end
 
 Spotify.start
 MusicQuiz.Seeds.artists(1970, 1975)
+MusicQuiz.Seeds.albums
 # HTTPoison.start
 # MusicQuiz.Seeds.seed_genres
 # MusicQuiz.Seeds.seed_artists
