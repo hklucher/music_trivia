@@ -58,25 +58,6 @@ defmodule MusicQuiz.Seeds do
 
   def albums do
     Enum.each(Repo.all(Artist), fn(artist) ->
-      %HTTPoison.Response{body: %{"href" => _, "items" => artist_albums}} = Spotify.albums(artist.id)
-      Enum.each(artist_albums, fn(album) ->
-        case Spotify.album(album.id) do
-          %HTTPoison.Response{body: album_data} ->
-            attributes = parse_album_attributes(album_data)
-            case Repo.insert(Album.changeset(%Album{}, attributes)) do
-              {:ok, changeset} ->
-                changeset
-                |> Repo.preload(:artist)
-                |> Ecto.Changeset.change
-                |> Repo.Changeset.put_assoc(:artist, artist)
-                |> Repo.update!
-              {:error, changeset} ->
-                IO.puts "Error, album not inserted."
-            end
-          _ ->
-            IEx.pry
-        end
-      end)
     end)
   end
 
