@@ -38,9 +38,6 @@ defmodule MusicQuiz.Seeds do
         {:error, changeset} ->
           IO.puts "Error: artist already exists, continuing without insertion."
       end
-      # {:ok, artist_model} = Repo.insert(Artist.changeset(%Artist{}, attributes))
-      # artist_model = Repo.insert(changeset)
-      # build_artist_genres(artist_model, genres)
     end)
   end
 
@@ -57,14 +54,11 @@ defmodule MusicQuiz.Seeds do
           |> Ecto.Changeset.change
           |> Ecto.Changeset.put_assoc(:artists, [current_artist])
           |> Repo.update!
-          # current_artist
-          # |> Repo.preload(:genres)
-          # |> Ecto.Changeset.change
-          # |> Ecto.Changeset.put_assoc(:genres, [changeset])
-          # |> Repo.update!
         {:error, _changeset} ->
-          # TODO: instead of skipping, find genre in DB and associate with artist
-          IO.puts "Genre #{genre} already exists, continuing without insertion."
+          Repo.get_by!(Genre, name: genre)
+          |> Repo.preload(:artists)
+          |> Ecto.Changeset.change
+          |> Ecto.Changeset.put_assoc(:artists, [current_artist])
       end
     end)
   end
