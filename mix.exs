@@ -19,7 +19,7 @@ defmodule MusicQuiz.Mixfile do
   def application do
     [mod: {MusicQuiz, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :ex_machina]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,7 +39,8 @@ defmodule MusicQuiz.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
-     {:poison, "~> 2.0"}]
+     {:poison, "~> 2.0"},
+     {:ex_machina, "~> 1.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
