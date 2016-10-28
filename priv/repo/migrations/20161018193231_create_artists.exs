@@ -11,5 +11,8 @@ defmodule MusicQuiz.Repo.Migrations.CreateArtists do
 
       timestamps
     end
+
+    create unique_index(:artists, [:name])
+    create unique_index(:artists, [:spotify_id])
   end
 end
