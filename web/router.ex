@@ -17,7 +17,9 @@ defmodule MusicQuiz.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", GenreController, :index
-    resources "/genres", GenreController, only: [:index, :show]
+    resources "/genres", GenreController, only: [:index, :show] do
+      resources "/quizzes", QuizController, only: [:index, :show]
+    end
     resources "/artists", ArtistController, only: [:index, :show]
   end
 end
