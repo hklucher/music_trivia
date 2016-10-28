@@ -58,15 +58,43 @@ defmodule MusicQuiz.Seeds do
 
   def albums do
     Enum.each(Repo.all(Artist), fn(artist) ->
+      case Spotify.albums(artist.spotify_id) do
+        {:ok, albums} ->
+          Enum.each(albums["items"], fn(album) ->
+            create_album(album["id"], artist)
+          end)
+        {:error, message} ->
+          IEx.pry
+      end
     end)
   end
 
-  def parse_album_attributes(album) do
+  defp create_album(spotify_id, artist) do
+    case Spotify.album(spotify_id) do
+      {:ok, album_data} ->
+        attributes = parse_album_attributes(album_data, artist)
+        case Repo.insert(Album.changeset(%Album{}, attributes)) do
+          {:ok, changeset} ->
+            associate_album_artist(changeset, artist)
+          {:error, changeset} ->
+            IEx.pry
+        end
+      {:error, message} ->
+        IEx.pry
+    end
+  end
+
+  defp associate_album_artist(album, artist) do
+    IEx.pry
+  end
+
+  def parse_album_attributes(album, artist) do
     album
     |> Map.take(["name", "id"])
     |> Map.put("spotify_id", album["id"])
     |> Map.delete("id")
     |> Map.put("image_url", get_image_url(album))
+    |> Map.put("artist_id", artist.id)
   end
 
 
