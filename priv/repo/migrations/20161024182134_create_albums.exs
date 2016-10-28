@@ -11,5 +11,7 @@ defmodule MusicQuiz.Repo.Migrations.CreateAlbums do
 
       timestamps
     end
+
+    create unique_index(:albums, [:name])
   end
 end

@@ -16,6 +16,7 @@ defmodule MusicQuiz.Album do
   def changeset(album, params \\ %{}) do
     album
     |> cast(params, [:name, :image_url, :spotify_id, :artist_id])
+    |> unique_constraint(:name)
     |> cast_assoc(:artist)
     |> validate_required(@required_fields)
   end
