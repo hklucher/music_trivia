@@ -74,12 +74,7 @@ defmodule MusicQuiz.Seeds do
     case Spotify.album(spotify_id) do
       {:ok, album_data} ->
         attributes = parse_album_attributes(album_data, artist)
-        case Repo.insert(Album.changeset(%Album{}, attributes)) do
-          {:ok, changeset} ->
-            IO.puts "Inserted album"
-          {:error, changeset} ->
-            IO.puts "Could not insert album"
-        end
+        Repo.insert!(Album.changeset(%Album{}, attributes))
       {:error, message} ->
         IO.puts "Error: #{message}"
         System.halt(0)
