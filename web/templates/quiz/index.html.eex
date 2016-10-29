@@ -1,1 +1,5 @@
-Quizzes
+<h1>Quizzes for <%= @genre.name %></h1>
+
+<%= for q <- @quizzes do %>
+  <p><%= q.name %></p>
+<% end %>
