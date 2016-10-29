@@ -27,6 +27,8 @@ defmodule MusicQuiz.ConnCase do
 
       import MusicQuiz.Router.Helpers
 
+      import MusicQuiz.Factory
+
       # The default endpoint for testing
       @endpoint MusicQuiz.Endpoint
     end
