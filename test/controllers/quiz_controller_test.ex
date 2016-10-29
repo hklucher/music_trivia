@@ -8,7 +8,7 @@ defmodule MusicQuiz.QuizControllerTest do
   test "lists all quizzes for a given genre" do
     changeset = Genre.changeset(%Genre{}, %{name: "classic rock"})
     Repo.insert(changeset)
-    response = conn(:get, "genres/#{1}/quizzes") |> send_request
+    response = build_conn(:get, "genres/#{1}/quizzes") |> send_request
     assert response.status == 200
   end
 
