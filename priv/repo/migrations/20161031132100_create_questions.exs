@@ -3,7 +3,7 @@ defmodule MusicQuiz.Repo.Migrations.CreateQuestions do
 
   def change do
     create table(:questions) do
-      add :text, :string
+      add :content, :string
       add :quiz_question_id, :integer
     end
   end
