@@ -5,7 +5,7 @@ defmodule MusicQuiz.QuizControllerTest do
   alias MusicQuiz.Quiz
 
 
-  test "lists all quizzes for a given genre" do
+  test "gets quiz index for a genre" do
     changeset = Genre.changeset(%Genre{}, %{name: "classic rock"})
     Repo.insert(changeset)
     response = build_conn(:get, "genres/#{1}/quizzes") |> send_request
