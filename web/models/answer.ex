@@ -4,7 +4,8 @@ defmodule MusicQuiz.Answer do
   schema "answers" do
     field :content, :string
 
-    belongs_to :quiz, MusicQuiz.Quiz
+    # belongs_to :quiz, MusicQuiz.Quiz
+    has_one :quiz, MusicQuiz.Quiz
 
     timestamps
   end
