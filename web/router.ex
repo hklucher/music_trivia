@@ -18,7 +18,9 @@ defmodule MusicQuiz.Router do
 
     get "/", GenreController, :index
     resources "/genres", GenreController, only: [:index, :show] do
-      resources "/quizzes", QuizController, only: [:index, :show]
+      resources "/quizzes", QuizController, only: [:index, :show] do
+        resources "/questions", QuestionController, only: [:show]
+      end
     end
     resources "/artists", ArtistController, only: [:index, :show]
   end

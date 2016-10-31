@@ -4,7 +4,7 @@ defmodule MusicQuiz.Quiz do
   schema "quizzes" do
     field :name, :string
 
-    many_to_many :questions, MusicQuiz.Question, join_through: "quiz_questions"  
+    many_to_many :questions, MusicQuiz.Question, join_through: "quiz_questions"
     belongs_to :genre, MusicQuiz.Genre
 
     timestamps
