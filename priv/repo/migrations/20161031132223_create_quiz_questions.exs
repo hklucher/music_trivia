@@ -4,7 +4,7 @@ defmodule MusicQuiz.Repo.Migrations.CreateQuizQuestions do
   def change do
     create table(:quiz_questions, primary_key: false) do
       add :quiz_id, references(:quizzes), on_replace: :nilify
-      add :awnswer_id, references(:questions), on_replace: :nilify
+      add :question_id, references(:questions), on_replace: :nilify
     end
   end
 end

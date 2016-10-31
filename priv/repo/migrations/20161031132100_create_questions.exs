@@ -5,6 +5,8 @@ defmodule MusicQuiz.Repo.Migrations.CreateQuestions do
     create table(:questions) do
       add :content, :string
       add :quiz_question_id, :integer
+
+      timestamps
     end
   end
 end
