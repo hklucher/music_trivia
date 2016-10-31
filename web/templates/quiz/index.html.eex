@@ -1,5 +1,9 @@
 <h1>Quizzes for <%= @genre.name %></h1>
 
-<%= for q <- @quizzes do %>
-  <p><%= q.name %></p>
-<% end %>
+<ol>
+  <%= for q <- @quizzes do %>
+    <li>
+      <%= link(q.name, to: genre_quiz_path(MusicQuiz.Endpoint, :show, @genre.id, q.id)) %>
+    </li>
+  <% end %>
+</ol>
