@@ -120,19 +120,21 @@ defmodule MusicQuiz.Seeds do
           incorrect_answers = incorrect_answers(non_artist_albums)
           {:ok, correct_answer} = Repo.insert(Answer.changeset(%Answer{}, %{content: Enum.random(artist_albums).name}))
           question_text = "Which of these albums was put out by '#{artist.name}'?"
-          insert_question(question_text, correct_answer)
+          insert_question(question_text, correct_answer, quiz)
         end
       end)
     end)
   end
 
-  def insert_question(content, answer) do
+  def insert_question(content, answer, quiz) do
     case Repo.insert(Question.changeset(%Question{}, %{content: content})) do
       {:ok, changeset} ->
         changeset
         |> Repo.preload(:answer)
+        |> Repo.preload(:quizzes)
         |> Ecto.Changeset.change
         |> Ecto.Changeset.put_assoc(:answer, answer)
+        |> Ecto.Changeset.put_assoc(:quizzes, Repo.preload(changeset, :quizzes).quizzes ++ [Repo.preload(quiz, :questions)])
         |> Repo.update!
       {:error, _changeset} ->
         IO.puts "Error inserting question, terminating."
