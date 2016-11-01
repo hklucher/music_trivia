@@ -4,7 +4,7 @@ defmodule MusicQuiz.QuizController do
   alias MusicQuiz.Genre
 
   def index(conn, %{"genre_id" => genre_id}) do
-    # TODO: It makes sense to display quizzes on a genre show page. Move this?
+    # ODO: It makes sense to display quizzes on a genre show page. Move this?
     genre = Repo.get(Genre, genre_id) |> Repo.preload(:quizzes)
     conn
     |> assign(:genre, genre)
