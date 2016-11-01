@@ -1,14 +1,11 @@
 defmodule MusicQuiz.QuizController do
   use MusicQuiz.Web, :controller
   alias MusicQuiz.Repo
-  alias MusicQuiz.Genre
+  alias MusicQuiz.Quiz
 
-  def index(conn, %{"genre_id" => genre_id}) do
-    # ODO: It makes sense to display quizzes on a genre show page. Move this?
-    genre = Repo.get(Genre, genre_id) |> Repo.preload(:quizzes)
+  def show(conn, %{"id" => id}) do
     conn
-    |> assign(:genre, genre)
-    |> assign(:quizzes, genre.quizzes)
-    |> render "index.html"
+    |> assign(:quiz, Repo.get(Quiz, id))
+    |> render "show.html"
   end
 end
