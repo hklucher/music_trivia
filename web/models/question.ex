@@ -5,7 +5,6 @@ defmodule MusicQuiz.Question do
     field :content, :string
 
     many_to_many :quizzes, MusicQuiz.Quiz, join_through: "quiz_questions"
-    # has_one :answer, MusicQuiz.Answer
     belongs_to :answer, MusicQuiz.Answer
 
     timestamps

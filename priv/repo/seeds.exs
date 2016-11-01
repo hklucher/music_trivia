@@ -5,6 +5,8 @@ alias MusicQuiz.Artist
 alias MusicQuiz.Album
 alias MusicQuiz.Spotify
 alias MusicQuiz.Quiz
+alias MusicQuiz.Answer
+alias MusicQuiz.Question
 
 defmodule MusicQuiz.Seeds do
   def artists(start_year, end_year) do
@@ -105,9 +107,48 @@ defmodule MusicQuiz.Seeds do
       |> Repo.update!
     end)
   end
+
+  def questions do
+    Enum.each(Repo.all(Quiz) |> Repo.preload(:genre), fn(quiz) ->
+      artists = Artist.by_genre(quiz.genre.id)
+      Enum.each(artists, fn(artist) ->
+        artist = Repo.get!(Artist, elem(artist, 0)) |> Repo.preload(:albums)
+        artist_albums = artist.albums
+        if length(artist_albums) > 0 do
+          non_artist_albums = Artist.not_owned_albums(artist.id)
+          incorrect_answers = incorrect_answers(non_artist_albums)
+          {:ok, correct_answer} = Repo.insert(Answer.changeset(%Answer{}, %{content: Enum.random(artist_albums).name}))
+          question_text = "Which of these albums was put out by '#{artist.name}'?"
+          insert_question(question_text, correct_answer)
+        end
+      end)
+    end)
+  end
+
+  def insert_question(content, answer) do
+    case Repo.insert(Question.changeset(%Question{}, %{content: content})) do
+      {:ok, changeset} ->
+        changeset
+        |> Repo.preload(:answer)
+        |> Ecto.Changeset.change
+        |> Ecto.Changeset.put_assoc(:answer, answer)
+        |> Repo.update!
+      {:error, _changeset} ->
+        IO.puts "Error inserting question, terminating."
+        System.halt(0)
+    end
+  end
+
+  defp incorrect_answers(collection) do
+    collection
+    |> Enum.take_random(3)
+    |> Enum.map(fn(tuple) -> Repo.get(Album, elem(tuple, 0)) end)
+  end
 end
 
 Spotify.start
-MusicQuiz.Seeds.artists(1970, 1975)
+# MusicQuiz.Seeds.artists(1970, 1975)
 # MusicQuiz.Seeds.albums
 MusicQuiz.Seeds.quizzes
+MusicQuiz.Seeds.questions
+

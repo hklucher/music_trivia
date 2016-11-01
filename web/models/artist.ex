@@ -1,5 +1,6 @@
 defmodule MusicQuiz.Artist do
   use MusicQuiz.Web, :model
+  alias MusicQuiz.Repo
 
   schema "artists" do
     field :name, :string
@@ -22,6 +23,26 @@ defmodule MusicQuiz.Artist do
       |> unique_constraint(:name, name: :artists_name_index)
       |> unique_constraint(:spotify_id, name: :spotify_id)
       |> cast_assoc(:genres)
+    end
+
+    # Scopes/Filters
+
+    def by_genre(genre_id) do
+      query = from a in "artists",
+                join: a_g in "artist_genres",
+                on: a.id == a_g.artist_id,
+                join: g in "genres",
+                on: g.id == a_g.genre_id,
+                where: g.id == ^genre_id,
+                select: {a.id, a.name}
+      Repo.all(query)
+    end
+
+    def not_owned_albums(artist_id) do
+      query = from a in "albums",
+                where: a.artist_id != ^artist_id,
+                select: {a.id, a.name}
+      Repo.all(query)
     end
   end
 end
