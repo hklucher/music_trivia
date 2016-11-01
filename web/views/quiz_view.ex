@@ -1,8 +1,8 @@
-defmodule MusicQuiz.GenreView do
+defmodule MusicQuiz.QuizView do
   use MusicQuiz.Web, :view
 
-  def titleize(genre) do
-    String.split(genre, " ")
+  def titleize(quiz_name) do
+    String.split(quiz_name, " ")
     |> Enum.map(fn(x) -> String.capitalize(x) end)
     |> Enum.join(" ")
   end

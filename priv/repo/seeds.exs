@@ -4,6 +4,7 @@ alias MusicQuiz.Genre
 alias MusicQuiz.Artist
 alias MusicQuiz.Album
 alias MusicQuiz.Spotify
+alias MusicQuiz.Quiz
 
 defmodule MusicQuiz.Seeds do
   def artists(start_year, end_year) do
@@ -94,8 +95,19 @@ defmodule MusicQuiz.Seeds do
     |> Map.put("image_url", get_image_url(album))
     |> Map.put("artist_id", artist.id)
   end
+
+  def quizzes do
+    Enum.each((Repo.all(Genre) |> Repo.preload(:quizzes)), fn(genre) ->
+      {:ok, quiz} = Repo.insert(Quiz.changeset(%Quiz{}, %{name: "#{genre.name} quiz"}))
+      genre
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.put_assoc(:quizzes, genre.quizzes ++ [quiz])
+      |> Repo.update!
+    end)
+  end
 end
 
 Spotify.start
 MusicQuiz.Seeds.artists(1970, 1975)
-MusicQuiz.Seeds.albums
+# MusicQuiz.Seeds.albums
+MusicQuiz.Seeds.quizzes

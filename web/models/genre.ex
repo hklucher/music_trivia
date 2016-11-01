@@ -5,6 +5,7 @@ defmodule MusicQuiz.Genre do
     field :name, :string
 
     many_to_many :artists, MusicQuiz.Artist, join_through: "artist_genres"
+    has_many :quizzes, MusicQuiz.Quiz
 
     timestamps
   end
