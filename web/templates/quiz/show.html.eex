@@ -8,11 +8,11 @@
           <li>
             <%= question.answer.content %>
           </li>
+          <%= for response <- question.responses do %>
           <li>
-            <%= for response <- question.responses do %>
-              <%= response.content %>
-            <% end %>
+            <%= response.content %>
           </li>
+          <% end %>
         </ol>
     </li>
   <% end %>
