@@ -4,8 +4,10 @@ defmodule MusicQuiz.QuizController do
   alias MusicQuiz.Quiz
 
   def show(conn, %{"id" => id}) do
+    quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
     conn
-    |> assign(:quiz, Repo.get(Quiz, id))
+    |> assign(:quiz, quiz)
+    |> assign(:questions, Repo.preload(quiz.questions, :answer))
     |> render "show.html"
   end
 end
