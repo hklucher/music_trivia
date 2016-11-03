@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Response do
+  @moduledoc """
+  A response is an incorrect answer to a question.
+  """
   use MusicQuiz.Web, :model
 
   schema "responses" do
