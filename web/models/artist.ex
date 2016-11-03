@@ -3,6 +3,7 @@ defmodule MusicQuiz.Artist do
   alias MusicQuiz.Repo
   alias MusicQuiz.Artist
   alias MusicQuiz.Album
+  alias MusicQuiz.Genre
 
   schema "artists" do
     field :name, :string
@@ -31,20 +32,20 @@ defmodule MusicQuiz.Artist do
     # Scopes/Filters
 
   def by_genre(genre_id) do
-    query = from a in "artists",
+    query = from a in Artist,
               join: a_g in "artist_genres",
               on: a.id == a_g.artist_id,
-              join: g in "genres",
+              join: g in Genre,
               on: g.id == a_g.genre_id,
               where: g.id == ^genre_id,
-              select: {a.id, a.name}
+              select: a
     Repo.all(query)
   end
 
   def not_owned_albums(artist_id) do
-    query = from a in "albums",
+    query = from a in Album,
               where: a.artist_id != ^artist_id,
-              select: {a.id, a.name}
+              select: a
     Repo.all(query)
   end
 
