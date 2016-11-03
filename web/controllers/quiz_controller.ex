@@ -7,7 +7,7 @@ defmodule MusicQuiz.QuizController do
     quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
     conn
     |> assign(:quiz, quiz)
-    |> assign(:questions, quiz.questions)
+    |> assign(:questions, Repo.preload(quiz.questions, :answer))
     |> render "show.html"
   end
 end

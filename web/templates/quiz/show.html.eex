@@ -4,6 +4,11 @@
   <%= for question <- @questions do %>
     <li>
       <%= question.content %>
+        <ol>
+          <li>
+            <%= question.answer.content %>
+          </li>
+        </ol>
     </li>
   <% end %>
 </ol>
