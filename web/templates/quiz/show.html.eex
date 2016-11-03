@@ -1,1 +1,9 @@
 <h1><%= titleize(@quiz.name) %></h1>
+
+<ol>
+  <%= for question <- @questions do %>
+    <li>
+      <%= question.content %>
+    </li>
+  <% end %>
+</ol>

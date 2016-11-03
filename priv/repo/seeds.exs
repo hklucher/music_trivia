@@ -109,7 +109,6 @@ defmodule MusicQuiz.Seeds do
   end
 
   def questions do
-    # TODO: Associate questions with a quiz
     Enum.each(Repo.all(Quiz) |> Repo.preload(:genre), fn(quiz) ->
       artists = Artist.by_genre(quiz.genre.id)
       Enum.each(artists, fn(artist) ->
@@ -150,8 +149,7 @@ defmodule MusicQuiz.Seeds do
 end
 
 Spotify.start
-# MusicQuiz.Seeds.artists(1970, 1975)
+# MusicQuiz.Seeds.artists(1970, 1972)
 # MusicQuiz.Seeds.albums
 MusicQuiz.Seeds.quizzes
 MusicQuiz.Seeds.questions
-
