@@ -1,14 +1,9 @@
 require IEx;
-alias MusicQuiz.Repo
-alias MusicQuiz.Genre
-alias MusicQuiz.Artist
-alias MusicQuiz.Album
 alias MusicQuiz.Spotify
-alias MusicQuiz.Quiz
-alias MusicQuiz.Answer
-alias MusicQuiz.Question
 
 defmodule MusicQuiz.Seeds do
+  alias MusicQuiz.{Repo, Genre, Artist, Album, Quiz, Answer, Question}
+
   def artists(start_year, end_year) do
     Enum.each(start_year..end_year, fn(year) ->
       %HTTPoison.Response{body: %{"artists" => artists}} = Spotify.get!("search?q=year%3A#{year}&type=artist")
@@ -37,7 +32,6 @@ defmodule MusicQuiz.Seeds do
     |> Map.put("image_url", get_image_url(artist_map))
   end
 
-  # TODO: Pattern match on argument?
   defp get_image_url(map), do: (Enum.at(map["images"], 0))["url"]
 
   defp build_artist_genres(artist, genres) do
@@ -65,7 +59,7 @@ defmodule MusicQuiz.Seeds do
         {:ok, albums} ->
           Enum.each(albums["items"], fn(album) ->
             create_album(album["id"], artist)
-            :timer.sleep(5000)
+            :timer.sleep(2500)
           end)
         {:error, message} ->
           IO.puts "Error creating album."
@@ -110,13 +104,11 @@ defmodule MusicQuiz.Seeds do
 
   def questions do
     Enum.each(Repo.all(Quiz) |> Repo.preload(:genre), fn(quiz) ->
-      artists = Artist.by_genre(quiz.genre.id)
+      artists = Repo.preload(Artist.by_genre(quiz.genre.id), :albums)
       Enum.each(artists, fn(artist) ->
-        artist = Repo.get!(Artist, elem(artist, 0)) |> Repo.preload(:albums)
         artist_albums = artist.albums
-        if length(artist_albums) > 0 do
-          non_artist_albums = Artist.not_owned_albums(artist.id)
-          incorrect_answers = incorrect_answers(non_artist_albums)
+        unless Enum.empty?(artist_albums) do
+          incorrect_answers = incorrect_answers(Artist.not_owned_albums(artist.id))
           {:ok, correct_answer} = Repo.insert(Answer.changeset(%Answer{}, %{content: Enum.random(artist_albums).name}))
           question_text = "Which of these albums was put out by '#{artist.name}'?"
           insert_question(question_text, correct_answer, quiz)
@@ -141,15 +133,11 @@ defmodule MusicQuiz.Seeds do
     end
   end
 
-  defp incorrect_answers(collection) do
-    collection
-    |> Enum.take_random(3)
-    |> Enum.map(fn(tuple) -> Repo.get(Album, elem(tuple, 0)) end)
-  end
+  defp incorrect_answers(albums), do: Enum.take_random(albums, 3)
 end
 
 Spotify.start
 # MusicQuiz.Seeds.artists(1970, 1972)
-# MusicQuiz.Seeds.albums
+# MusicQuiz.Seeds.album
 MusicQuiz.Seeds.quizzes
 MusicQuiz.Seeds.questions
