@@ -2,7 +2,7 @@ require IEx;
 alias MusicQuiz.Spotify
 
 defmodule MusicQuiz.Seeds do
-  alias MusicQuiz.{Repo, Genre, Artist, Album, Quiz, Answer, Question}
+  alias MusicQuiz.{Repo, Genre, Artist, Album, Quiz, Answer, Question, Response}
 
   def artists(start_year, end_year) do
     Enum.each(start_year..end_year, fn(year) ->
@@ -108,12 +108,19 @@ defmodule MusicQuiz.Seeds do
       Enum.each(artists, fn(artist) ->
         artist_albums = artist.albums
         unless Enum.empty?(artist_albums) do
-          incorrect_answers = incorrect_answers(Artist.not_owned_albums(artist.id))
           {:ok, correct_answer} = Repo.insert(Answer.changeset(%Answer{}, %{content: Enum.random(artist_albums).name}))
           question_text = "Which of these albums was put out by '#{artist.name}'?"
-          insert_question(question_text, correct_answer, quiz)
+          question = insert_question(question_text, correct_answer, quiz)
+          insert_distractors(artist, question)
         end
       end)
+    end)
+  end
+
+  def insert_distractors(artist, question) do
+    distractors = incorrect_answers(Artist.not_owned_albums(artist.id))
+    Enum.each(distractors, fn(distractor) ->
+      Repo.insert!(Response.changeset(%Response{}, %{content: distractor.name, question_id: question.id}))
     end)
   end
 

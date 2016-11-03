@@ -6,6 +6,7 @@ defmodule MusicQuiz.Question do
 
     many_to_many :quizzes, MusicQuiz.Quiz, join_through: "quiz_questions"
     belongs_to :answer, MusicQuiz.Answer
+    has_many :responses, MusicQuiz.Response
 
     timestamps
   end
