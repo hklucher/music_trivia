@@ -21,4 +21,9 @@ defmodule MusicQuiz.Router do
     resources "/artists", ArtistController, only: [:index, :show]
     resources "/quizzes", QuizController, only: [:show]
   end
+
+  scope "/api", MusicQuiz do
+    pipe_through :api
+    get "/quizzes/:id", Api.QuizController, :show
+  end
 end

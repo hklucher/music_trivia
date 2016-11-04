@@ -11,14 +11,6 @@ class QuizBox extends React.Component {
   }
 
   loadQuizFromServer() {
-    $.ajax({
-      url: window.location.href,
-      method: 'GET',
-      dataType: 'JSON',
-      success: function(data) {
-        console.log(data)
-      }
-    })
   }
 }
 
