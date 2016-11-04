@@ -17,3 +17,5 @@
     </li>
   <% end %>
 </ol>
+
+<div id="quiz_container"></div>
