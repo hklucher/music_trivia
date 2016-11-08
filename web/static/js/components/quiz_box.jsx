@@ -1,30 +1,32 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router, Route, Link } from "react-router"
 var $ = require('jquery')
 
 class QuizBox extends React.Component {
+  constructor() {
+    super();
+    this.state = {quiz: {}};
+  }
+
   render() {
-    return (<h1>Quiz</h1>)
-    this.state = {};
+    return (
+      <h1>{this.state.quiz.name}</h1>
+    )
   }
 
   componentDidMount() {
-    this.loadQuizFromServer();
-  }
-
-  loadQuizFromServer() {
-    $.ajax({
-      url: '/api' + window.location.pathname,
-      method: 'GET',
-      dataType: 'json',
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(error) {
-        console.log(error);
-      }
-    })
+    const URL = '/api' + window.location.pathname;
+    const _this = this;
+    fetch(URL, {
+      method: 'get',
+      dataType: 'json'
+    }).then(function(response) {
+        response.json().then(function(data) {
+          _this.setState({quiz: data});
+        });
+    }).catch(function(err) {
+        console.log(err)
+    });
   }
 }
 
