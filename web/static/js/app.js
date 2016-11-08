@@ -13,6 +13,7 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 import "./components/quiz_box"
+import "./components/answers_box"
 
 // Import local files
 //

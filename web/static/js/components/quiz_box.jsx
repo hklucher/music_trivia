@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-var $ = require('jquery')
+import {AnswersBox} from "./answers_box"
 
 class QuizBox extends React.Component {
   constructor() {
@@ -10,7 +10,10 @@ class QuizBox extends React.Component {
 
   render() {
     return (
-      <h1>{this.state.quiz.name}</h1>
+      <div>
+        <h1>{this.state.quiz.name}</h1>
+        <AnswersBox data={this.state.quiz}></AnswersBox>
+      </div>
     )
   }
 
