@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import {Question} from "./question"
 
 export class QuestionsBox extends React.Component {
   constructor(props) {
@@ -10,7 +11,11 @@ export class QuestionsBox extends React.Component {
   render() {
     if (this.props.questions) {
       var questionsList = this.props.questions.map(function(question) {
-        return <li key={question.id}>{question.content}</li>
+        return (
+            <li key={question.id}>
+              <Question content={question.content}></Question>
+            </li>
+          )
       })
       return (
         <ul>
