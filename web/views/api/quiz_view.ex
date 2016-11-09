@@ -14,7 +14,7 @@ defmodule MusicQuiz.Api.QuizView do
   def quiz_json(quiz) do
     %{
       id: quiz.id,
-      name: quiz.name,
+      name: titleize(quiz.name),
       questions: Enum.map(quiz.questions, fn(q) -> %{id: q.id, content: q.content} end)
     }
   end

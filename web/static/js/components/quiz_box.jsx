@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import {AnswersBox} from "./answers_box"
+import {QuestionsBox} from "./questions_box"
 
 class QuizBox extends React.Component {
   constructor() {
@@ -8,31 +9,43 @@ class QuizBox extends React.Component {
     this.state = {quiz: {}};
   }
 
+  componentWillMount() {
+    this.loadQuizFromServer();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.quiz.name) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
-    console.log(this.state);
     return (
       <div>
         <h1>{this.state.quiz.name}</h1>
-        <AnswersBox data={this.state.quiz}></AnswersBox>
+        <QuestionsBox questions={this.state.quiz.questions}></QuestionsBox>
       </div>
     )
   }
 
-  componentDidMount() {
-    const URL = '/api' + window.location.pathname;
+  loadQuizFromServer() {
+    const url = '/api' + window.location.pathname;
     const _this = this;
-    fetch(URL, {
-      method: 'get',
-      dataType: 'json'
-    }).then(function(response) {
-        response.json().then(function(data) {
-          _this.setState({quiz: data});
-        });
-    }).catch(function(err) {
-        console.log(err)
-    });
+    return fetch(url, {
+        method: 'get',
+        datatype: 'json'
+      }).then(function(response) {
+          response.json().then(function(data) {
+            _this.setState({quiz: data})
+          });
+      }).catch(function(err) {
+          console.log(err)
+      });
   }
 }
+
 
 ReactDOM.render(
   <QuizBox/>, document.getElementById("quiz_container")
