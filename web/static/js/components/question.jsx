@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDom from "react-dom"
+import {ResponsesBox} from "./responses_box"
 
 export class Question extends React.Component {
   constructor(props) {
@@ -8,6 +9,11 @@ export class Question extends React.Component {
   }
 
   render() {
-    return(<p>{this.props.content}</p>)
+    return (
+      <div>
+        <h5>{this.props.content}</h5>
+        <ResponsesBox></ResponsesBox>
+      </div>
+    )
   }
 }
