@@ -13,11 +13,9 @@ export class QuestionsBox extends React.Component {
         return <li key={question.id}>{question.content}</li>
       })
       return (
-        <div>
-          <ul>
-            {questionsList}
-          </ul>
-        </div>
+        <ul>
+          {questionsList}
+        </ul>
       )
     } else {
       return(<div></div>)
