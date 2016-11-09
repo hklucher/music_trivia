@@ -11,7 +11,6 @@ export class AnswersBox extends React.Component {
     if (this.props.data) {
       return (
         <div>
-          name:
           {this.props.data.name}
         </div>
       )
