@@ -1,3 +1,4 @@
+require IEx;
 defmodule MusicQuiz.Api.QuizView do
   use MusicQuiz.Web, :view
 
@@ -7,15 +8,39 @@ defmodule MusicQuiz.Api.QuizView do
     |> Enum.join(" ")
   end
 
-  def render("show.json", %{quiz: quiz}) do
-    quiz_json(quiz)
+  # def render("show.json", %{quiz: quiz}) do
+  #   quiz_json(quiz)
+  # end
+
+  def render("show.json", quiz, questions) do
+    quiz_json(quiz, questions)
   end
 
-  def quiz_json(quiz) do
+  def render("show.json", %{quiz: quiz, questions: questions}) do
+    quiz_json(quiz, questions)
+  end
+
+  def quiz_json(quiz, questions) do
     %{
       id: quiz.id,
       name: titleize(quiz.name),
-      questions: Enum.map(quiz.questions, fn(q) -> %{id: q.id, content: q.content} end)
+      questions: questions_json(questions)
     }
+  end
+
+  # TODO: Separate logic of inserting responses into map into separate func
+  defp questions_json(questions) do
+    Enum.map(questions, fn(question) ->
+      Map.take(question, [:id, :content, :answer_id])
+      |> Map.put(:responses, Enum.map(question.responses, fn(response) ->
+                              Map.take(response, [:id, :content])
+                            end))
+    end)
+  end
+
+  defp responses_json(questions) do
+    Enum.map(questions, fn(question) ->
+      question.responses
+    end)
   end
 end

@@ -5,6 +5,7 @@ defmodule MusicQuiz.Api.QuizController do
 
   def show(conn, %{"id" => id}) do
     quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
-    render conn, "show.json", quiz: quiz
+    questions = quiz.questions |> Repo.preload(:responses)
+    render conn, "show.json", %{quiz: quiz, questions: questions}
   end
 end

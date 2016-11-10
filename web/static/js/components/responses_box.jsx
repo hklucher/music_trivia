@@ -8,6 +8,6 @@ export class ResponsesBox extends React.Component {
   }
 
   render() {
-    return(<div></div>)
+    return(<div>I'm a response!</div>)
   }
 }
