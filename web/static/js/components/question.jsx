@@ -12,7 +12,7 @@ export class Question extends React.Component {
     return (
       <div>
         <h5>{this.props.content}</h5>
-        <ResponsesBox></ResponsesBox>
+        <ResponsesBox responses={this.props.responses}></ResponsesBox>
       </div>
     )
   }

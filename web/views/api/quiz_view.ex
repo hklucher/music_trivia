@@ -8,14 +8,6 @@ defmodule MusicQuiz.Api.QuizView do
     |> Enum.join(" ")
   end
 
-  # def render("show.json", %{quiz: quiz}) do
-  #   quiz_json(quiz)
-  # end
-
-  def render("show.json", quiz, questions) do
-    quiz_json(quiz, questions)
-  end
-
   def render("show.json", %{quiz: quiz, questions: questions}) do
     quiz_json(quiz, questions)
   end
@@ -28,14 +20,15 @@ defmodule MusicQuiz.Api.QuizView do
     }
   end
 
-  # TODO: Separate logic of inserting responses into map into separate func
   defp questions_json(questions) do
     Enum.map(questions, fn(question) ->
       Map.take(question, [:id, :content, :answer_id])
-      |> Map.put(:responses, Enum.map(question.responses, fn(response) ->
-                              Map.take(response, [:id, :content])
-                            end))
+      |> Map.put(:responses, responses_json(question.responses))
     end)
+  end
+
+  defp responses_json(responses) do
+    Enum.map(responses, fn(response) -> Map.take(response, [:id, :content]) end)
   end
 
   defp responses_json(questions) do

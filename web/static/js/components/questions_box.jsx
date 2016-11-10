@@ -13,7 +13,7 @@ export class QuestionsBox extends React.Component {
       var questionsList = this.props.questions.map(function(question) {
         return (
             <li key={question.id}>
-              <Question content={question.content}></Question>
+              <Question content={question.content} responses={question.responses}></Question>
             </li>
           )
       })
