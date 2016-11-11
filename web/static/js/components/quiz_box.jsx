@@ -6,7 +6,10 @@ import {QuestionsBox} from "./questions_box"
 class QuizBox extends React.Component {
   constructor() {
     super();
-    this.state = {quiz: {}};
+    this.state = {
+      quiz: {},
+      score: 0
+    };
   }
 
   componentWillMount() {
