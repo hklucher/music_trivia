@@ -10,7 +10,13 @@ class QuizBox extends React.Component {
   }
 
   componentWillMount() {
-    this.loadQuizFromServer();
+    const url = `/api/${window.location.pathname}`;
+    fetch(url)
+      .then( (response) => {
+        return response.json() })
+          .then( (json) => {
+            this.setState({quiz: json});
+          });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -25,24 +31,9 @@ class QuizBox extends React.Component {
     return (
       <div>
         <h1>{this.state.quiz.name}</h1>
-        <QuestionsBox questions={this.state.quiz.questions}></QuestionsBox>
+        <QuestionsBox quiz={this.state.quiz}></QuestionsBox>
       </div>
     )
-  }
-
-  loadQuizFromServer() {
-    const url = '/api' + window.location.pathname;
-    const _this = this;
-    return fetch(url, {
-        method: 'get',
-        datatype: 'json'
-      }).then(function(response) {
-          response.json().then(function(data) {
-            _this.setState({quiz: data})
-          });
-      }).catch(function(err) {
-          console.log(err)
-      });
   }
 }
 

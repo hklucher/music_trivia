@@ -4,7 +4,7 @@ import {ResponsesBox} from "./responses_box"
 
 export class Question extends React.Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {};
   }
 
@@ -12,7 +12,7 @@ export class Question extends React.Component {
     return (
       <div>
         <h5>{this.props.content}</h5>
-      <ResponsesBox responses={this.props.responses}></ResponsesBox>
+        <ResponsesBox responses={this.props.responses}></ResponsesBox>
       </div>
     )
   }

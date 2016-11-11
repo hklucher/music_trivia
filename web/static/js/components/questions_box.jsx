@@ -5,15 +5,15 @@ import {Question} from "./question"
 export class QuestionsBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {loading: "Loading..."};
   }
 
   render() {
-    if (this.props.questions) {
-      var questionsList = this.props.questions.map(function(question) {
+    if (this.props.quiz.questions) {
+      var questionsList = this.props.quiz.questions.map(function(question) {
         return (
             <li key={question.id}>
-              <Question content={question.content} responses={question.responses}></Question>
+              <Question content={question.content} responses={question.responses}/>
             </li>
           )
       })
@@ -23,7 +23,8 @@ export class QuestionsBox extends React.Component {
         </ul>
       )
     } else {
-      return(<div></div>)
+      return(<div>{this.state.loading}</div>);
     }
   }
+
 }
