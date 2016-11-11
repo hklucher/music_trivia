@@ -12,7 +12,7 @@ export class ResponsesBox extends React.Component {
     if (this.props.responses) {
       var responsesList = this.props.responses.map(function(resp) {
         return (
-          <div>
+          <div key={resp.id}>
             <Response key={resp.id} content={resp.content}></Response>
             <br/>
           </div>
