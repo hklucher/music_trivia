@@ -145,6 +145,6 @@ end
 
 Spotify.start
 # MusicQuiz.Seeds.artists(1970, 1972)
-# MusicQuiz.Seeds.album
+# MusicQuiz.Seeds.albums
 MusicQuiz.Seeds.quizzes
 MusicQuiz.Seeds.questions

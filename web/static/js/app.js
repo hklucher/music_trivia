@@ -12,6 +12,9 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
+import "./components/quiz_box"
+import "./components/answers_box"
+import "./components/questions_box"
 
 // Import local files
 //
