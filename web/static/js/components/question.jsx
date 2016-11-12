@@ -11,7 +11,7 @@ export class Question extends React.Component {
   render() {
     return (
       <div>
-        <h5>{this.props.content}</h5>
+        <p>{this.props.content}</p>
         <ResponsesBox responses={this.props.responses}></ResponsesBox>
       </div>
     )

@@ -28,12 +28,11 @@ defmodule MusicQuiz.Api.QuizView do
   end
 
   defp responses_json(question) do
-    responses = Enum.map(question.responses, fn(response) ->
-                  Map.take(response, [:id, :content])
-                  |> Map.put(:correct, false)
-                end)
-    responses ++ [Map.take(question.answer, [:id, :content])
-                  |> Map.put(:correct, true)]
+    Enum.map(question.responses, fn(response) ->
+      Map.take(response, [:id, :content])
+      |> Map.put(:correct, false)
+    end) |> List.insert_at(-1, Map.take(question.answer, [:id, :content])
+                               |> Map.put(:correct, true)) |> Enum.shuffle
   end
 
   defp answer_json(answer) do
