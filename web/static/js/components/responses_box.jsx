@@ -23,7 +23,6 @@ export class ResponsesBox extends React.Component {
         <form action="">
           {responsesList}
         </form>
-
       )
     } else {
       return (<div></div>)
@@ -31,8 +30,8 @@ export class ResponsesBox extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e);
     this.setState({selected: e.target.value});
+    this.props.handleChange(e.target.value)
   }
 
   _shuffleResponseOrder(array) {

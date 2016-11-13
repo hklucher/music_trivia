@@ -15,9 +15,9 @@ class QuizBox extends React.Component {
   componentWillMount() {
     const url = `/api/${window.location.pathname}`;
     fetch(url)
-      .then( (response) => {
+      .then((response) => {
         return response.json() })
-          .then( (json) => {
+          .then((json) => {
             this.setState({quiz: json});
           });
   }
