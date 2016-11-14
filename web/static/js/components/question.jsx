@@ -43,6 +43,10 @@ export class Question extends React.Component {
   }
 
   handleSubmit() {
-    this.props.handleSubmit(this.state.currentlyCorrect);
+    if (this.state.selectedValue === '') {
+      return;
+    } else {
+      this.props.handleSubmit(this.state.currentlyCorrect);
+    }
   }
 }
