@@ -13,9 +13,13 @@ export class Response extends React.Component {
           type="radio"
           value={this.props.content}
           name={"response"}
-          onChange={this.props.handleChange.bind(this)}/>
+          onChange={this.handleChange.bind(this)}/>
         {this.props.content}
       </label>
     )
+  }
+
+  handleChange(e) {
+    this.props.handleChange(e.target.value);
   }
 }

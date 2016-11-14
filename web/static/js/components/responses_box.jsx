@@ -14,7 +14,13 @@ export class ResponsesBox extends React.Component {
       var responsesList = this.props.responses.map(function(resp) {
         return (
           <div key={resp.id}>
-            <Response key={resp.id} content={resp.content} selected={_this.state.selected} id={resp.id} handleChange={_this.handleChange.bind(_this)}></Response>
+            <Response
+              key={resp.id}
+              content={resp.content}
+              selected={_this.state.selected}
+              id={resp.id}
+              handleChange={_this.handleChange.bind(_this)}>
+            </Response>
             <br/>
           </div>
         )
@@ -29,23 +35,8 @@ export class ResponsesBox extends React.Component {
     }
   }
 
-  handleChange(e) {
-    this.setState({selected: e.target.value});
-    this.props.handleChange(e.target.value)
-  }
-
-  _shuffleResponseOrder(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
+  handleChange(selectedValue) {
+    this.setState({selected: selectedValue});
+    this.props.handleChange(selectedValue)
   }
 }

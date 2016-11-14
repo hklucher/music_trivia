@@ -1,14 +1,17 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import {AnswersBox} from "./answers_box"
-import {QuestionsBox} from "./questions_box"
+import {QuestionBox} from "./question_box"
+import {Question} from "./question"
 
 class QuizBox extends React.Component {
   constructor() {
     super();
     this.state = {
       quiz: {},
-      score: 0
+      score: 0,
+      completedQuestions: [],
+      currentQuestion: {}
     };
   }
 
@@ -18,7 +21,7 @@ class QuizBox extends React.Component {
       .then((response) => {
         return response.json() })
           .then((json) => {
-            this.setState({quiz: json});
+            this.setState({quiz: json, currentQuestion: json.questions[0]});
           });
   }
 
@@ -31,12 +34,22 @@ class QuizBox extends React.Component {
   }
 
   render() {
+    console.log(this.state.currentQuestion);
     return (
       <div>
         <h1>{this.state.quiz.name}</h1>
-        <QuestionsBox quiz={this.state.quiz}></QuestionsBox>
+        <QuestionBox
+          content={this.state.currentQuestion.content}
+          responses={this.state.currentQuestion.responses}>
+        </QuestionBox>
       </div>
     )
+  }
+
+  adjustScore(current, correct) {
+    if (current === correct) {
+      this.setState({score: this.state.score + 1})
+    }
   }
 }
 

@@ -7,33 +7,46 @@ export class Question extends React.Component {
     super();
     this.state = {
       answer: '',
-      selectedValue: ''
+      selectedValue: '',
+      currentlyCorrect: false
     };
   }
 
   componentDidMount() {
-    this.setState({answer: this.correctAnswer()});
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.currentlyCorrect);
     return (
       <div>
         <p>{this.props.content}</p>
-        <ResponsesBox responses={this.props.responses} onChange={this.handleChange} handleChange={this.handleChange.bind(this)}></ResponsesBox>
+        <ResponsesBox
+          responses={this.props.responses}
+          handleChange={this.handleChange.bind(this)}>
+        </ResponsesBox>
+        <button onClick={this.handleSubmit.bind(this)}>Submit</button>
       </div>
     )
   }
 
-  handleChange(selectedValue) {
-    this.setState({selectedValue: selectedValue});
-  }
-
-  correctAnswer() {
+  _correctAnswer() {
     for (var i = 0; i < this.props.responses.length; i ++) {
       if (this.props.responses[i].correct) {
-        return this.props.responses[i].content;
+        return this.props.responses[i];
       }
     }
+  }
+
+  handleChange(value) {
+    this.setState({selectedValue: value});
+    if (value === this._correctAnswer().content) {
+      this.setState({currentlyCorrect: true});
+    } else {
+      this.setState({currentlyCorrect: false});
+    }
+  }
+
+  handleSubmit() {
+    debugger
   }
 }
