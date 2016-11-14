@@ -12,11 +12,7 @@ export class Question extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
-
   render() {
-    console.log(this.state.currentlyCorrect);
     return (
       <div>
         <p>{this.props.content}</p>
@@ -47,6 +43,6 @@ export class Question extends React.Component {
   }
 
   handleSubmit() {
-    debugger
+    this.props.handleSubmit(this.state.currentlyCorrect);
   }
 }
