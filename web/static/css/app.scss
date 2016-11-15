@@ -3,6 +3,7 @@
 
 .container {
   @include outer-container;
+  margin: 20px;
 }
 
 .column {

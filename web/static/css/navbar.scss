@@ -3,7 +3,17 @@
 
 .nav {
   @include span-columns(12);
-  background-color: silver;
+  background-color: white;
 
   height: 100px !important;
+  text-align: left;
+
+  ul {
+    padding-left: 0;
+  }
+
+  ul > li {
+    display: inline-block;
+    margin: 4px;
+  }
 }

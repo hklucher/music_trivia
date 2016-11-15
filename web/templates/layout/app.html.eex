@@ -12,10 +12,23 @@
   </head>
 
   <!--- Nav Bar --->
-  <div class="container">
-    <div class="nav column">
-      <h3>MusicQuizz</h3>
-    </div>
+  <div class="container nav_container">
+    <header class="nav column">
+      <ul>
+        <li>
+          <h3><%= link("MusicQuizz", to: "/") %></h3>
+        </li>
+
+        <li>
+          <%= link("Genres", to: "/genres") %>
+        </li>
+
+        <li>
+          <%= link("Quizzes", to: "#") %>
+        </li>
+      </ul>
+      <hr/>
+    </header>
   </div>
 
   <body>
