@@ -52,6 +52,9 @@ class QuizBox extends React.Component {
           <h1>
             Quiz Completed!
           </h1>
+          <p>
+            You got {this.state.score} out of {this.state.quiz.questions.length} possible!
+          </p>
         </div>
       )
     }
