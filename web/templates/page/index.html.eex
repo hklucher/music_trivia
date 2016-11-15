@@ -1,6 +1,7 @@
 <div class="container">
   <div class="jumbotron column">
     <h2>What is it?</h2>
+    <hr/>
     <p>
       MusicQuizz is a simple game to test your knowledge of all things music.
       Questions are generated randomly from Spotify's vast library
@@ -13,7 +14,11 @@
 </div>
 
 <div class="container">
-  <div class="column"></div>
+  <div class="column">
+    <h3 class="sub_div_header">Explore Quizzes by Genre</h3>
+  </div>
 
-  <div class="column"></div>
+  <div class="column">
+    <h3 class="sub_div_header">Explore all Quizzes</h3>
+  </div>
 </div>

@@ -1,15 +1,6 @@
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 
-main {
-  width: 100%;
-}
-
 .jumbotron {
-  width: 100%;
   @include span-columns(12);
-  * {
-    float: left;
-    text-align: left;
-  }
 }

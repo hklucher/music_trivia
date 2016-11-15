@@ -9,4 +9,8 @@
   background-color: silver;
   height: 300px;
   @include span-columns(6);
+
+  .sub_div_header {
+    text-align: center;
+  }
 }
