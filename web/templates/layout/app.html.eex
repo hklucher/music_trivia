@@ -11,16 +11,21 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body>
-    <div class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-
+  <!--- Nav Bar --->
+  <div class="container">
+    <div class="nav column">
+      <h3>MusicQuizz</h3>
     </div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </div>
+
+  <body>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

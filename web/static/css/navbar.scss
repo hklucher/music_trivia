@@ -1,0 +1,9 @@
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+.nav {
+  @include span-columns(12);
+  background-color: silver;
+
+  height: 100px !important;
+}
