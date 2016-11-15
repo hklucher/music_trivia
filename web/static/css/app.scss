@@ -1,0 +1,12 @@
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+.container {
+  @include outer-container;
+}
+
+.column {
+  background-color: silver;
+  height: 300px;
+  @include span-columns(6);
+}
