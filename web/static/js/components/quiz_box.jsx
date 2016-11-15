@@ -11,7 +11,8 @@ class QuizBox extends React.Component {
       quiz: {},
       score: 0,
       completedQuestions: [],
-      currentQuestion: {}
+      currentQuestion: {},
+      completed: false
     };
   }
 
@@ -34,26 +35,42 @@ class QuizBox extends React.Component {
   }
 
   render() {
-    console.log(this.state.completedQuestions);
-    return (
-      <div>
-        <h1>{this.state.quiz.name}</h1>
-        <Question
-          content={this.state.currentQuestion.content}
-          responses={this.state.currentQuestion.responses}
-          handleSubmit={this.handleQuestionSubmit.bind(this)}>
-        </Question>
-      </div>
-    )
+    if (!this.state.completed) {
+      return (
+        <div>
+          <h1>{this.state.quiz.name}</h1>
+          <Question
+            content={this.state.currentQuestion.content}
+            responses={this.state.currentQuestion.responses}
+            handleSubmit={this.handleQuestionSubmit.bind(this)}>
+          </Question>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h1>
+            Quiz Completed!
+          </h1>
+        </div>
+      )
+    }
   }
 
   handleQuestionSubmit(questionResult) {
     if (questionResult) {
-      this.setState({score: this.state.score + 1});
+      let currentScore = this.state.score;
+      this.setState({score: currentScore + 1});
     }
-    this.setState({completedQuestions: this.state.completedQuestions.push(this.state.currentQuestion)})
+    this._markQuestionComplete();
     let nextQuestion = this._getNextQuestion();
     this.setState({currentQuestion: nextQuestion});
+  }
+
+  _markQuestionComplete() {
+    let currentCompletedQuestions = this.state.completedQuestions.slice();
+    currentCompletedQuestions.push(this.state.currentQuestion);
+    this.setState({completedQuestions: currentCompletedQuestions});
   }
 
   _getNextQuestion() {
@@ -62,8 +79,7 @@ class QuizBox extends React.Component {
       if (this.state.quiz.questions[i].id === currentQuestionId) {
         let nextQuestion = this.state.quiz.questions[i + 1];
         if (this.state.quiz.questions.length === i + 1) {
-          console.log('completed!');
-          return
+          this.setState({completed: true});
         } else {
           return this.state.quiz.questions[i + 1];
         }
