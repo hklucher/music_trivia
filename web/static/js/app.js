@@ -14,7 +14,7 @@
 import "phoenix_html"
 import "./components/quiz_box"
 import "./components/answers_box"
-import "./components/questions_box"
+import "./components/question_box"
 
 // Import local files
 //
