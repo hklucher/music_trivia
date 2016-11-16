@@ -10,10 +10,15 @@
 
   ul {
     padding-left: 0;
-  }
 
-  ul > li {
-    display: inline-block;
-    margin: 4px;
+    li {
+      display: inline-block;
+      margin: .5em;
+
+      a {
+        font-family: Georgia;
+        letter-spacing: 3px;
+      }
+    }
   }
 }
