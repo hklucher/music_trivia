@@ -1,14 +1,19 @@
-<h1>Genres</h1>
+<div class="container">
+  <div class="column_12">
+    <h1 class="serif">Genres</h1>
+    <p class="sans-serif">
+      Here we have a list of available genres for you to choose from.
+      Simply pick one and explore the quizzes related to that genre!
+    </p>
+  </div>
+</div>
 
-<p>
-  Here we have a list of available genres for you to choose from.
-  Simply pick one and explore the quizzes related to that genre!
-</p>
-
-<ol>
-  <%= for genre <- @genres do %>
-    <li>
-      <%= link(genre.name, to: genre_path(MusicQuiz.Endpoint, :show, genre.id)) %>
-    </li>
-  <% end %>
-</ol>
+<%= for sub_list <- @genres do %>
+  <div class="container">
+    <%= for genre <- sub_list do %>
+      <div class="column_2 genre_box">
+        <%= link(genre.name, to: genre_path(MusicQuiz.Endpoint, :show, genre.id), class: "sans-serif") %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

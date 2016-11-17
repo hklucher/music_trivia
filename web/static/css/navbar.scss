@@ -1,0 +1,24 @@
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+.nav {
+  @include span-columns(12);
+  background-color: white;
+
+  height: 100px !important;
+  text-align: left;
+
+  ul {
+    padding-left: 0;
+
+    li {
+      display: inline-block;
+      margin: .5em;
+
+      a {
+        font-family: Georgia;
+        letter-spacing: 3px;
+      }
+    }
+  }
+}

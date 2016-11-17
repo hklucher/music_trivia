@@ -1,0 +1,34 @@
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
+.container {
+  @include outer-container;
+  margin: 20px;
+}
+
+.column {
+  background-color: silver;
+  height: 300px;
+  @include span-columns(6);
+
+  .sub_div_header {
+    text-align: center;
+  }
+}
+
+.column_12 {
+  @include span-columns(12);
+}
+
+.column_2 {
+  @include span-columns(6);
+  background-color: silver;
+}
+
+.serif {
+  font-family: Georiga !important;
+}
+
+.sans-serif {
+  font-family: Helvetica !important;
+}

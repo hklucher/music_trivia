@@ -11,16 +11,34 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
+  <!--- Nav Bar --->
+  <div class="container nav_container">
+    <header class="nav column">
+      <ul>
+        <li>
+          <h3><%= link("MusicQuizz", to: "/") %></h3>
+        </li>
+
+        <li>
+          <%= link("Genres", to: "/genres") %>
+        </li>
+
+        <li>
+          <%= link("Quizzes", to: "#") %>
+        </li>
+      </ul>
+      <hr/>
+    </header>
+  </div>
+
   <body>
-    <div class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
 
-    </div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
