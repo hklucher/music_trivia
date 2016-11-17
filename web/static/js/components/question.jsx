@@ -15,7 +15,7 @@ export class Question extends React.Component {
   render() {
     return (
       <div>
-        <p>{this.props.content}</p>
+        <p className="sans-serif">{this.props.content}</p>
         <ResponsesBox
           responses={this.props.responses}
           handleChange={this.handleChange.bind(this)}>

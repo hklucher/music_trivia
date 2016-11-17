@@ -38,7 +38,7 @@ class QuizBox extends React.Component {
     if (!this.state.completed) {
       return (
         <div>
-          <h1>{this.state.quiz.name}</h1>
+          <h1 className="serif">{this.state.quiz.name}</h1>
           <Question
             content={this.state.currentQuestion.content}
             responses={this.state.currentQuestion.responses}

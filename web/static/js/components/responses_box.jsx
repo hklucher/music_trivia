@@ -26,7 +26,7 @@ export class ResponsesBox extends React.Component {
         )
       })
       return (
-        <form action="">
+        <form className="responses" action="">
           {responsesList}
         </form>
       )

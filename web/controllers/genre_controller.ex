@@ -5,7 +5,7 @@ defmodule MusicQuiz.GenreController do
 
   def index(conn, _params) do
     conn
-    |> assign(:genres, Repo.all(from g in Genre, select: g))
+    |> assign(:genres, Enum.chunk(Repo.all(Genre), 2))
     |> render "index.html"
   end
 
