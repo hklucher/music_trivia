@@ -18,7 +18,7 @@ defmodule MusicQuiz.Spotify do
   def albums(spotify_id) do
     response = get!("artists/#{spotify_id}/albums")
     case response do
-      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => status}}} ->
+      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => _status}}} ->
         {:error, message}
       %HTTPoison.Response{body: albums} ->
         {:ok, albums}
@@ -28,10 +28,20 @@ defmodule MusicQuiz.Spotify do
   def album(album_id) do
     response = get!("albums/#{album_id}")
     case response do
-      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => status}}} ->
+      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => _status}}} ->
         {:error, message}
       %HTTPoison.Response{body: album_data} ->
         {:ok, album_data}
+    end
+  end
+
+  def album_tracks(album_spotify_id) do
+    response = get!("albums/#{album_spotify_id}/tracks")
+    case response do
+      %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => _status}}} ->
+        {:error, message}
+      %HTTPoison.Response{body: tracks} ->
+        {:ok, tracks}
     end
   end
 end
