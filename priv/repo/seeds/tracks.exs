@@ -1,8 +1,10 @@
 require IEx;
+alias MusicQuiz.Album
+alias MusicQuiz.Repo
+alias MusicQuiz.Spotify
 defmodule MusicQuiz.Seeds.Tracks do
   alias MusicQuiz.Spotify
   alias MusicQuiz.Track
-  alias MusicQuiz.Repo
   @moduledoc """
   Module to seed track data from Spotify into DB
   """
@@ -12,7 +14,19 @@ defmodule MusicQuiz.Seeds.Tracks do
       {:ok, %{"href" => _, "items" => tracks}} = Spotify.album_tracks(album.spotify_id)
       Enum.each(tracks, fn(track) ->
         changeset = build_changeset_from_track(track)
-        IEx.pry
+        case Repo.insert(changeset) do
+          {:ok, changeset} ->
+            changeset = changeset |> Repo.preload(:albums)
+            changeset
+            |> Repo.preload(:albums)
+            |> Ecto.Changeset.change
+            |> Ecto.Changeset.put_assoc(:albums, changeset.albums ++ [album])
+            |> Repo.update!
+            :timer.sleep(1000)
+          {:error, changeset} ->
+            IO.puts "Oh no."
+            System.halt(0)
+        end
       end)
     end)
     # FOR EACH album IN albums
@@ -34,3 +48,6 @@ defmodule MusicQuiz.Seeds.Tracks do
     Track.changeset(%Track{}, data)
   end
 end
+
+Spotify.start
+MusicQuiz.Seeds.Tracks.seed(%{"album_range" => Repo.all(Album, limit: 10)})
