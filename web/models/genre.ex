@@ -21,6 +21,15 @@ defmodule MusicQuiz.Genre do
     |> unique_constraint(:name)
   end
 
+  def albums(id) when is_integer(id) do
+    query =
+      from a in Album,
+        join: ar in assoc(a, :artist),
+        join: g in assoc(ar, :genres),
+        where: g.id == ^id
+    Repo.all(query)
+  end
+
   def albums(genre) do
     query =
       from a in Album,
