@@ -24,21 +24,11 @@ defmodule MusicQuiz.Seeds.Tracks do
             |> Repo.update!
             :timer.sleep(1000)
           {:error, changeset} ->
-            IO.puts "Oh no."
+            IO.puts changeset.errors
             System.halt(0)
         end
       end)
     end)
-    # FOR EACH album IN albums
-      # GET list of tracks from Spotify
-      # IF response ~ 200
-        # FOR EACH track IN tracks
-          # INSERT track, with association to album
-          # Slumber!
-        # END FOR
-      # ELSE
-        # Terminate program
-    # END FOR
   end
 
   defp build_changeset_from_track(track) do
