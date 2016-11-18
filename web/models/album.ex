@@ -7,6 +7,7 @@ defmodule MusicQuiz.Album do
     field :spotify_id, :string
 
     belongs_to :artist, MusicQuiz.Artist, foreign_key: :artist_id
+    many_to_many :tracks, MusicQuiz.Track, join_through: "album_tracks"
 
     timestamps
   end

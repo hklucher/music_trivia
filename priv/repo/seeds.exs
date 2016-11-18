@@ -144,7 +144,7 @@ defmodule MusicQuiz.Seeds do
 end
 
 Spotify.start
-# MusicQuiz.Seeds.artists(1970, 1972)
-# MusicQuiz.Seeds.albums
-MusicQuiz.Seeds.quizzes
-MusicQuiz.Seeds.questions
+MusicQuiz.Seeds.artists(1970, 1972)
+MusicQuiz.Seeds.albums
+# MusicQuiz.Seeds.quizzes
+# MusicQuiz.Seeds.questions
