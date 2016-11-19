@@ -23,4 +23,10 @@ defmodule MusicQuiz.Factory do
       spotify_id: "abc123"
     }
   end
+
+  def quiz_factory do
+    %MusicQuiz.Quiz{
+      name: "Indie Rock Quiz"
+    }
+  end
 end
