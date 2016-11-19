@@ -29,4 +29,22 @@ defmodule MusicQuiz.Factory do
       name: "Indie Rock Quiz"
     }
   end
+
+  def question_factory do
+    %MusicQuiz.Question{
+      content: "Who released 'In the Aeroplane Under the Sea'?"
+    }
+  end
+
+  def response_factory do
+    %MusicQuiz.Response{
+      content: "Eagles of Death Metal"
+    }
+  end
+
+  def answer_factory do
+    %MusicQuiz.Answer{
+      content: "Neutral Milk Hotel"
+    }
+  end
 end
