@@ -21,4 +21,15 @@ defmodule MusicQuiz.GenreTest do
     album_titles_by_genre = Genre.albums(genre) |> Enum.map(fn(x) -> x.name end)
     assert Enum.member?(album_titles_by_genre, album_for_genre.name)
   end
+
+  test ".albums does not include albums not written by artists of that genre" do
+    ska = insert(:genre)
+    jazz = insert(:genre, name: "Jazz")
+    ska_artist = insert(:artist, genres: [ska])
+    insert(:artist, name: "Ella Fitzgerald", genres: [jazz], spotify_id: "1")
+    insert(:album, artist: ska_artist)
+    jazz_album = insert(:album, name: "Songs in a Mellow Mood")
+    album_titles_for_ska = Genre.albums(ska) |> Enum.map(fn(x) -> x.name end)
+    refute Enum.member?(album_titles_for_ska, jazz_album.name)
+  end
 end
