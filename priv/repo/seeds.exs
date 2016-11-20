@@ -153,3 +153,5 @@ import MusicQuiz.Seeds.Artists
 
 Spotify.start
 MusicQuiz.Seeds.Artists.seed(1975, 1977)
+MusicQuiz.Seeds.Albums.seed
+MusicQuiz.Seeds.Quizzes.seed

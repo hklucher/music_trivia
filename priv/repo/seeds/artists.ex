@@ -1,5 +1,8 @@
 defmodule MusicQuiz.Seeds.Artists do
   alias MusicQuiz.{Spotify, Repo, Artist, Genre}
+  @moduledoc """
+  Script to insert Artists and Genres from Spotify API into DataBase
+  """
 
   def seed(start_year, end_year) do
     Enum.each(start_year..end_year, fn(year) ->
