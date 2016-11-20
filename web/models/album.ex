@@ -1,5 +1,7 @@
 defmodule MusicQuiz.Album do
   use MusicQuiz.Web, :model
+  alias MusicQuiz.Repo
+  alias MusicQuiz.Album
 
   schema "albums" do
     field :name, :string
@@ -20,5 +22,13 @@ defmodule MusicQuiz.Album do
     |> unique_constraint(:name)
     |> cast_assoc(:artist)
     |> validate_required(@required_fields)
+  end
+
+  def tracks(id) when is_integer(id) do
+    (Repo.get(Album, id) |> Repo.preload(:tracks)).tracks
+  end
+
+  def tracks(album) do
+    (Repo.get(Album, album.id) |> Repo.preload(:tracks)).tracks
   end
 end

@@ -47,4 +47,14 @@ defmodule MusicQuiz.Factory do
       content: "Neutral Milk Hotel"
     }
   end
+
+  def track_factory do
+    %MusicQuiz.Track{
+      name: "Brand New Song",
+      preview_url: "www.example.com",
+      spotify_id: "cba123",
+      duration_ms: 5000,
+      track_number: 2
+    }
+  end
 end
