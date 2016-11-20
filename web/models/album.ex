@@ -1,7 +1,6 @@
 defmodule MusicQuiz.Album do
   use MusicQuiz.Web, :model
-  alias MusicQuiz.Repo
-  alias MusicQuiz.Album
+  alias MusicQuiz.{Repo, Album, Track}
 
   schema "albums" do
     field :name, :string
@@ -30,5 +29,16 @@ defmodule MusicQuiz.Album do
 
   def tracks(album) do
     (Repo.get(Album, album.id) |> Repo.preload(:tracks)).tracks
+  end
+
+  def not_owned_tracks(id, limit \\ 50) when is_integer(id) do
+    query = from t in Track,
+              inner_join: at in "album_tracks",
+              on: at.track_id == t.id,
+              inner_join: a in "albums",
+              on: at.album_id == a.id,
+              where: a.id != ^id,
+              limit: ^limit
+    Repo.all(query)
   end
 end
