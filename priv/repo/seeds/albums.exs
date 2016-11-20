@@ -2,7 +2,7 @@ defmodule MusicQuiz.Seeds.Albums do
   alias MusicQuiz.{Artist, Spotify, Album, Repo}
 
   def seed, do: seed_albums(Repo.all(Artist))
-  def seed([head | tail]), do: seed_albums([head | tail])
+  def seed(%{"artist_range" => artist_range}), do: seed_albums(artist_range)
 
   def seed_albums(artists) do
     Enum.each(artists, fn(artist) ->
@@ -45,6 +45,6 @@ defmodule MusicQuiz.Seeds.Albums do
 
   defp get_image_url(map), do: (Enum.at(map["images"], 0))["url"]
 end
-
-MusicQuiz.Spotify.start
-MusicQuiz.Seeds.Albums.seed
+#
+# MusicQuiz.Spotify.start
+# MusicQuiz.Seeds.Albums.seed

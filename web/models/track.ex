@@ -12,7 +12,7 @@ defmodule MusicQuiz.Track do
 
     timestamps
 
-    @required_fields [:name, :preview_url, :spotify_id, :duration_ms, :track_number]
+    @required_fields [:name, :spotify_id, :duration_ms, :track_number]
 
     def changeset(track, params \\ %{}) do
       track

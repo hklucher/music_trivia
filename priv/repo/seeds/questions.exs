@@ -1,7 +1,7 @@
 defmodule MusicQuiz.Seeds.Questions do
   alias MusicQuiz.{Repo, Genre, Quiz, Album, Question}
 
-  def seed("album_authors") do
+  def seed(:album_authors) do
     Enum.each(Repo.all(Quiz), fn(quiz) ->
       genre = quiz_genre(quiz) |> Repo.preload(:artists)
       albums = Genre.albums(genre)
@@ -30,4 +30,4 @@ defmodule MusicQuiz.Seeds.Questions do
   defp quiz_genre(quiz), do: (quiz |> Repo.preload(:genre)).genre
 end
 
-MusicQuiz.Seeds.Questions.seed("album_authors")
+# MusicQuiz.Seeds.Questions.seed(:album_authors)

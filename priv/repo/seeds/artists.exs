@@ -53,6 +53,6 @@ defmodule MusicQuiz.Seeds.Artists do
     end)
   end
 end
-
-MusicQuiz.Spotify.start
-MusicQuiz.Seeds.Artists.seed(1980, 1982)
+#
+# MusicQuiz.Spotify.start
+# MusicQuiz.Seeds.Artists.seed(1980, 1982)

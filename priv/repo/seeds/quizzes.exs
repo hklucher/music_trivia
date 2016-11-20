@@ -12,4 +12,4 @@ defmodule MusicQuiz.Seeds.Quizzes do
   end
 end
 
-MusicQuiz.Seeds.Quizzes.seed
+# MusicQuiz.Seeds.Quizzes.seed

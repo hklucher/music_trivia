@@ -39,5 +39,5 @@ defmodule MusicQuiz.Seeds.Tracks do
   end
 end
 
-Spotify.start
-MusicQuiz.Seeds.Tracks.seed(%{"album_range" => Repo.all(Album, limit: 10)})
+# Spotify.start
+# MusicQuiz.Seeds.Tracks.seed(%{"album_range" => Repo.all(Album, limit: 10)})

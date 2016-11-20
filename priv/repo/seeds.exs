@@ -1,4 +1,3 @@
-import MusicQuiz.Seeds.Artists
 # require IEx;
 # alias MusicQuiz.Spotify
 #
@@ -149,9 +148,15 @@ import MusicQuiz.Seeds.Artists
 # MusicQuiz.Seeds.albums
 # # MusicQuiz.Seeds.quizzes
 # # MusicQuiz.Seeds.questions
+Code.require_file("priv/repo/seeds/artists.exs")
+Code.require_file("priv/repo/seeds/albums.exs")
+Code.require_file("priv/repo/seeds/tracks.exs")
+Code.require_file("priv/repo/seeds/quizzes.exs")
+Code.require_file("priv/repo/seeds/questions.exs")
 
-
-Spotify.start
+MusicQuiz.Spotify.start
 MusicQuiz.Seeds.Artists.seed(1975, 1977)
-MusicQuiz.Seeds.Albums.seed
+MusicQuiz.Seeds.Albums.seed(%{"artist_range" => MusicQuiz.Repo.all(MusicQuiz.Artist, limit: 4)})
+MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
 MusicQuiz.Seeds.Quizzes.seed
+MusicQuiz.Seeds.Questions.seed
