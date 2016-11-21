@@ -17,6 +17,13 @@ defmodule MusicQuiz.Seeds.Questions do
     end)
   end
 
+  def seed(:track_run_times) do
+    Enum.each(Repo.all(Quiz), fn(quiz) ->
+      current_genre = quiz_genre(quiz)
+      E
+    end)
+  end
+
   defp insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz, "album" => album}) do
     case Repo.insert(changeset) do
       {:ok, changeset} ->
