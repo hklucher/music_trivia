@@ -12,7 +12,8 @@ class QuizBox extends React.Component {
       score: 0,
       completedQuestions: [],
       currentQuestion: {},
-      completed: false
+      completed: false,
+      currentQuestionNumber: 1,
     };
   }
 
@@ -36,9 +37,14 @@ class QuizBox extends React.Component {
 
   render() {
     if (!this.state.completed) {
+      var questionLength;
+      if (this.state.quiz.questions) {
+        questionLength = this.state.quiz.questions.length;
+      }
       return (
         <div>
           <h1 className="serif">{this.state.quiz.name}</h1>
+          <p>Question {this.state.currentQuestionNumber}/{questionLength}</p>
           <Question
             content={this.state.currentQuestion.content}
             responses={this.state.currentQuestion.responses}
@@ -68,6 +74,8 @@ class QuizBox extends React.Component {
     this._markQuestionComplete();
     let nextQuestion = this._getNextQuestion();
     this.setState({currentQuestion: nextQuestion});
+    let nextQuestionNumber = this.state.currentQuestionNumber + 1;
+    this.setState({currentQuestionNumber: nextQuestionNumber});
   }
 
   _markQuestionComplete() {

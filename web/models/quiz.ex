@@ -1,5 +1,7 @@
 defmodule MusicQuiz.Quiz do
   use MusicQuiz.Web, :model
+  alias MusicQuiz.Question
+  alias MusicQuiz.Repo
 
   schema "quizzes" do
     field :name, :string
@@ -16,5 +18,22 @@ defmodule MusicQuiz.Quiz do
     |> validate_required([:name])
     |> unique_constraint(:name)
     |> cast_assoc(:genre)
+  end
+
+  def questions_for_use(quiz_id) when is_integer(quiz_id) do
+    Repo.all(query_for_questions(quiz_id)) |> Enum.take_random(20)
+  end
+
+  def questions_for_use(quiz) do
+    Repo.all(query_for_questions(quiz.id)) |> Enum.take_random(20)
+  end
+
+  defp query_for_questions(quiz_id) do
+    from q in Question,
+      join: qq in "quiz_questions",
+      on: qq.question_id == q.id,
+      join: quiz in "quizzes",
+      on: qq.quiz_id == quiz.id,
+      where: qq.quiz_id == ^quiz_id
   end
 end
