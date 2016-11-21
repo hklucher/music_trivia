@@ -1,6 +1,6 @@
 require IEx;
 defmodule MusicQuiz.Seeds.Questions do
-  alias MusicQuiz.{Repo, Genre, Quiz, Album, Question, Answer, Response, Track}
+  alias MusicQuiz.{Repo, Genre, Quiz, Question, Answer, Album, Response, Track}
 
   # Creates 'Which of the following tracks appears on X?' questions.
   def seed(:match_song_to_album) do
@@ -11,13 +11,13 @@ defmodule MusicQuiz.Seeds.Questions do
           answer = create_answer_for(album)
           content = "Which of the following tracks appears on the album #{album.name}?"
           changeset = Question.changeset(%Question{content: content})
-          insert_questions_with_associations(changeset, %{"answer" => answer, "quiz" => quiz})
+          insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz, "album" => album})
         end
       end)
     end)
   end
 
-  defp insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz}) do
+  defp insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz, "album" => album}) do
     case Repo.insert(changeset) do
       {:ok, changeset} ->
         changeset = changeset |> Repo.preload([:answer, :quizzes])
