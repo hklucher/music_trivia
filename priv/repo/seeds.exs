@@ -159,4 +159,4 @@ Code.require_file("priv/repo/seeds/questions.exs")
 # MusicQuiz.Seeds.Albums.seed(%{"artist_range" => MusicQuiz.Repo.all(MusicQuiz.Artist, limit: 4)})
 # MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
 # MusicQuiz.Seeds.Quizzes.seed
-MusicQuiz.Seeds.Questions.seed(:album_authors)
+MusicQuiz.Seeds.Questions.seed(:match_song_to_album)

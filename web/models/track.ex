@@ -26,16 +26,16 @@ defmodule MusicQuiz.Track do
   end
 
   # TODO: Figure out how to add limit as a keyword argument with a default of 15
-  def not_on_album(album, limit \\ 15) do
+  def not_on_album(album) do
     album_id = album.id
     query =
       from t in Track,
+        select: t.name,
         join: at in "album_tracks",
         on: at.track_id == t.id,
         join: a in "albums",
         on: at.album_id == a.id,
-        where: at.album_id != ^album_id,
-        limit: ^limit
+        where: at.album_id != ^album_id
     Repo.all(query)
   end
 end
