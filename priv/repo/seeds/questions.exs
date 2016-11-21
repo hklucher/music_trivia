@@ -10,21 +10,25 @@ defmodule MusicQuiz.Seeds.Questions do
           answer = create_answer_for(album)
           content = "Which of the following tracks appears on the album #{album.name}?"
           changeset = Question.changeset(%Question{content: content})
-          case Repo.insert(changeset) do
-            {:ok, changeset} ->
-              changeset = changeset |> Repo.preload([:answer, :quizzes])
-              changeset
-              |> Ecto.Changeset.change
-              |> Ecto.Changeset.put_assoc(:answer, answer)
-              |> Ecto.Changeset.put_assoc(:quizzes, changeset.quizzes ++ [quiz])
-              |> Repo.update!
-              create_distractors_for(changeset, album)
-            {:error, _changeset} ->
-              IO.puts "Insertion failed, continuing."
-          end
+          insert_questions_with_associations(changeset, %{"answer" => answer, "quiz" => quiz})
         end
       end)
     end)
+  end
+
+  defp insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz}) do
+    case Repo.insert(changeset) do
+      {:ok, changeset} ->
+        changeset = changeset |> Repo.preload([:answer, :quizzes])
+        changeset
+        |> Ecto.Changeset.change
+        |> Ecto.Changeset.put_assoc(:answer, answer)
+        |> Ecto.Changeset.put_assoc(:quizzes, changeset.quizzes ++ [quiz])
+        |> Repo.update!
+        create_distractors_for(changeset, album)
+      {:error, _changeset} ->
+        IO.puts "Insertion failed, continuing."
+    end
   end
 
   defp create_answer_for(album) do
