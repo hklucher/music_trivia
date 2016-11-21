@@ -41,7 +41,6 @@ defmodule MusicQuiz.Genre do
   end
 
   def tracks(genre_id) when is_integer(genre_id), do: Repo.all(query_for_genres(genre_id))
-
   def tracks(genre), do: Repo.all(query_for_genres(genre.id))
 
   defp query_for_genres(genre_id) do

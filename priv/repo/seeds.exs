@@ -152,11 +152,13 @@ Code.require_file("priv/repo/seeds/artists.exs")
 Code.require_file("priv/repo/seeds/albums.exs")
 Code.require_file("priv/repo/seeds/tracks.exs")
 Code.require_file("priv/repo/seeds/quizzes.exs")
-Code.require_file("priv/repo/seeds/questions.exs")
+# Code.require_file("priv/repo/seeds/questions.exs")
+Code.require_file("priv/repo/seeds/questions/track_lengths.exs")
 
 # MusicQuiz.Spotify.start
 # MusicQuiz.Seeds.Artists.seed(1975, 1977)
 # MusicQuiz.Seeds.Albums.seed(%{"artist_range" => MusicQuiz.Repo.all(MusicQuiz.Artist, limit: 4)})
 # MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
 # MusicQuiz.Seeds.Quizzes.seed
-MusicQuiz.Seeds.Questions.seed(:match_song_to_album)
+# MusicQuiz.Seeds.Questions.seed(:match_song_to_album)
+MusicQuiz.Seeds.Questions.TrackLengths.seed

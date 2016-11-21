@@ -20,8 +20,27 @@ defmodule MusicQuiz.Seeds.Questions do
   def seed(:track_run_times) do
     Enum.each(Repo.all(Quiz), fn(quiz) ->
       current_genre = quiz_genre(quiz)
-      E
+      tracks_by_genre = Genre.tracks(current_genre) |> Enum.take_random(2)
+      answer = Enum.max_by(tracks_by_genre, fn(t) -> t.duration_ms end).name
+      distractor = Enum.min_by(tracks_by_genre, fn(t) -> t.duration_ms end).name
+      question = Question.changeset(%Question{content: "Which of the following is the longer song?"})
+      insert_track_run_time_question
     end)
+  end
+
+  defp insert_track_run_time_question(question, answer, distractor, quiz) do
+    case Repo.insert(question) do
+      {:ok, changeset} ->
+        changeset = Repo.preload(changeset, [:answer, :quizzes])
+        changeset
+        |> Ecto.Changeset.change
+        |> Ecto.Changeset.put_assoc(:answer, answer)
+        |> Ecto.Changeset.put_assoc(:quizzes, changeset.quizzes ++ [quiz])
+        |> Repo.update!
+        create_distractor_for(changeset)
+      {:error, changeset} ->
+        IO.puts "error inserting question for track run times"
+    end
   end
 
   defp insert_question_with_associations(changeset, %{"answer" => answer, "quiz" => quiz, "album" => album}) do
