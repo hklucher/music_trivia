@@ -18,14 +18,6 @@
         <li>
           <h3><%= link("MusicQuizz", to: "/") %></h3>
         </li>
-
-        <li>
-          <%= link("Genres", to: "/genres") %>
-        </li>
-
-        <li>
-          <%= link("Quizzes", to: "#") %>
-        </li>
       </ul>
       <hr/>
     </header>

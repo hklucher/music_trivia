@@ -3,7 +3,12 @@ defmodule MusicQuiz.QuizController do
   alias MusicQuiz.Repo
   alias MusicQuiz.Quiz
 
-  # TODO: A quiz will end up having a LOT of questions, limit questions to 20 or so.
+  def index(conn, _params) do
+    conn
+    |> assign(:quizzes, Enum.chunk(Repo.all(Quiz), 3))
+    |> render "index.html"
+  end
+
   def show(conn, %{"id" => id}) do
     quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
     conn

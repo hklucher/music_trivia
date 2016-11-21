@@ -1,5 +1,6 @@
 @import 'bourbon/bourbon';
 @import 'neat/neat';
+@import 'variables/colors';
 
 .container {
   @include outer-container;
@@ -7,7 +8,7 @@
 }
 
 .column {
-  background-color: silver;
+  background-color: lighten($base-grey, 20%);
   height: 300px;
   @include span-columns(6);
 
@@ -25,10 +26,19 @@
   background-color: silver;
 }
 
+.column_3 {
+  @include span-columns(4);
+  background-color: silver;
+}
+
 .serif {
   font-family: Georiga !important;
 }
 
 .sans-serif {
   font-family: Helvetica !important;
+}
+
+body {
+  background-color: white !important;
 }
