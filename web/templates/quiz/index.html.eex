@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="container">
+    <div class="jumbotron column">
+      <h2 class="col_header">What is it?</h2>
+      <hr/>
+      <p>
+        MusicQuizz is a simple game to test your knowledge of all things music.
+        Questions are generated randomly from Spotify's vast library
+        of artists, albums, and genres. Because of this, questions can range from
+        being exceptionally easy to exceptionally difficult. You can check out
+        quizzes related to a genre of music, or simply look at all quizzes.
+        Put your knowledge to the test!
+      </p>
+    </div>
+  </div>
+
+  <%= for sub_list <- @quizzes do %>
+    <div class="container">
+      <%= for quiz <- sub_list do %>
+        <div class="column_3 quiz_column">
+          <%= link(quiz.name, to: quiz_path(@conn, :show, quiz.id)) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
