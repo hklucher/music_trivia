@@ -2,6 +2,7 @@ require IEx;
 defmodule MusicQuiz.Seeds.Questions do
   alias MusicQuiz.{Repo, Genre, Quiz, Album, Question, Answer, Response, Track}
 
+  # Creates 'Which of the following tracks appears on X?' questions.
   def seed(:match_song_to_album) do
     Enum.each(Repo.all(Quiz), fn(quiz) ->
       current_genre = quiz_genre(quiz)
