@@ -2,6 +2,7 @@ defmodule MusicQuiz.Quiz do
   use MusicQuiz.Web, :model
   alias MusicQuiz.Question
   alias MusicQuiz.Repo
+  alias MusicQuiz.Quiz
 
   schema "quizzes" do
     field :name, :string
@@ -26,6 +27,12 @@ defmodule MusicQuiz.Quiz do
 
   def questions_for_use(quiz) do
     Repo.all(query_for_questions(quiz.id)) |> Enum.take_random(20)
+  end
+
+  def have_questions do
+    Repo.all(Quiz)
+    |> Repo.preload(:questions)
+    |> Enum.filter(fn(q) -> length(q.questions) >= 1 end)
   end
 
   defp query_for_questions(quiz_id) do

@@ -5,7 +5,7 @@ defmodule MusicQuiz.QuizController do
 
   def index(conn, _params) do
     conn
-    |> assign(:quizzes, Enum.chunk(Repo.all(Quiz), 3))
+    |> assign(:quizzes, Enum.chunk(Quiz.have_questions, 3))
     |> render "index.html"
   end
 
