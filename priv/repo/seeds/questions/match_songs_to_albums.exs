@@ -1,6 +1,6 @@
 defmodule MusicQuiz.Seeds.Questions.MatchSongsToAlbums do
   alias MusicQuiz.{Repo, Album, Genre, Question, Answer, Response}
-  
+
   def seed do
     Enum.each(Repo.all(Quiz), fn(quiz) ->
       current_genre = quiz_genre(quiz)
