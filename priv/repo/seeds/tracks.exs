@@ -1,14 +1,9 @@
-require IEx;
-alias MusicQuiz.Album
-alias MusicQuiz.Repo
-alias MusicQuiz.Spotify
 defmodule MusicQuiz.Seeds.Tracks do
   alias MusicQuiz.Spotify
   alias MusicQuiz.Track
   @moduledoc """
   Module to seed track data from Spotify into DB
   """
-
   def seed(%{"album_range" => albums}) do
     Enum.each(albums, fn(album) ->
       {:ok, %{"href" => _, "items" => tracks}} = Spotify.album_tracks(album.spotify_id)
@@ -38,6 +33,3 @@ defmodule MusicQuiz.Seeds.Tracks do
     Track.changeset(%Track{}, data)
   end
 end
-
-# Spotify.start
-# MusicQuiz.Seeds.Tracks.seed(%{"album_range" => Repo.all(Album, limit: 10)})

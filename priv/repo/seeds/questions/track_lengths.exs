@@ -24,7 +24,7 @@ defmodule MusicQuiz.Seeds.Questions.TrackLengths do
         |> Ecto.Changeset.put_assoc(:quizzes, changeset.quizzes ++ [quiz])
         |> Repo.update!
         create_distractor_for(changeset, distractor)
-      {:error, changeset} ->
+      {:error, _changeset} ->
         IO.puts "error inserting question for track run times"
     end
   end
