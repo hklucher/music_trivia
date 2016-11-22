@@ -17,4 +17,13 @@ defmodule MusicQuiz.QuizIndexTest do
     quizzes = find_all_elements(:class, "quiz_column")
     refute Enum.empty?(quizzes)
   end
+
+  test "clicking a quiz link sends the user to that quizzes show page" do
+    insert_multiple_quizzes(10)
+    navigate_to("/")
+    link_container = find_element(:class, "quiz_column")
+    link = find_within_element(link_container, :tag, "a")
+    click(link)
+    assert page_source =~ "Quiz"
+  end
 end

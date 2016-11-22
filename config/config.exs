@@ -22,8 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Hound settings
-config :hound, driver: "phantomjs"
 
 
 # Import environment specific config. This must remain at the bottom

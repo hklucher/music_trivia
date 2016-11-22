@@ -17,3 +17,6 @@ config :music_quiz, MusicQuiz.Repo,
   database: "music_quiz_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Hound settings
+config :hound, driver: "phantomjs"
