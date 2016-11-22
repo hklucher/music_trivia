@@ -15,7 +15,7 @@ defmodule MusicQuiz.Api.QuizControllerTest do
     quiz = insert(:quiz)
     response = insert(:response)
     answer = insert(:answer)
-    question = insert(:question, quizzes: [quiz], responses: [response], answer: answer)
+    insert(:question, quizzes: [quiz], responses: [response], answer: answer)
     conn = get conn, "/api/quizzes/#{quiz.id}"
     assert json_response(conn, 200)["questions"] |> Enum.at(0) |> Map.get("responses")
   end
