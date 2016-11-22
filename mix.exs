@@ -16,11 +16,18 @@ defmodule MusicQuiz.Mixfile do
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
+
   def application do
     [mod: {MusicQuiz, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ex_machina]]
+     applications: app_list(Mix.env)]
   end
+
+  def app_list do
+    [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex]
+  end
+
+  def app_list(:test), do: [:hound | app_list]
+  def app_list(_), do: app_list
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -40,7 +47,8 @@ defmodule MusicQuiz.Mixfile do
      {:cowboy, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
      {:poison, "~> 2.0"},
-     {:ex_machina, "~> 1.0"}]
+     {:ex_machina, "~> 1.0"},
+     {:hound, "~> 1.0", only: :test}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
