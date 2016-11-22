@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import {AnswersBox} from "./answers_box"
 import {QuestionBox} from "./question_box"
 import {Question} from "./question"
+import {QuizStats} from "./quiz_stats"
 
 class QuizBox extends React.Component {
   constructor() {
@@ -54,14 +55,7 @@ class QuizBox extends React.Component {
       )
     } else {
       return (
-        <div>
-          <h1>
-            Quiz Completed!
-          </h1>
-          <p>
-            You got {this.state.score} out of {this.state.quiz.questions.length} possible!
-          </p>
-        </div>
+        <QuizStats questions={this.state.quiz.questions}></QuizStats>
       )
     }
   }
