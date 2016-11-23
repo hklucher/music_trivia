@@ -1,5 +1,5 @@
 defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
-  alias MusicQuiz.{Repo, Genre}
+  alias MusicQuiz.{Repo, Genre, Artist, Question, Answer, Response}
 
   def seed, do: seed(genres: Repo.all(Genre))
 
@@ -16,9 +16,11 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     question_content = "What band or artist released the album '#{album.name}'?"
     question = Question.changeset(%Question{}, content: question_content)
     answer = build_answer(album)
-    distractors = build_distracotrs(album)
+    distractors = build_distractors(album)
     insert_question_with_associations(question: question, answer: answer, distractors: distractors)
   end
+
+  def seed(albums: []), do: :ok
 
   defp insert_question_with_associations(question: changeset, answer: answer, distractors: distractors) do
     case Repo.insert(changeset) do
@@ -44,7 +46,7 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     build_distractors(album, tail, results ++ [distractor])
   end
 
-  defp build_distractors(album, [], reuslts), do: results
+  defp build_distractors(album, [], results), do: results
 
   defp build_answer(album) do
     changeset = Answer.changeset(%Answer{}, %{content: album.artist.name})
