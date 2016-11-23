@@ -47,14 +47,13 @@ export class QuestionList extends React.Component {
   }
 
   _getResponseClassName(question, response) {
-    if (this._gotQuestionRight(question) && response.content === question.answer.content) {
+    if (response.content === question.answer.content) {
       return "green";
+    } else if (!this._gotQuestionRight(question) && response.content === question.userResponse) {
+      return "red";
     } else {
       return "";
     }
-    // IF the got the question right AND the current response is the correct answer
-      // Return 'green'
-    // END IF
   }
 }
 
