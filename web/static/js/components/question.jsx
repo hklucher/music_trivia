@@ -46,7 +46,7 @@ export class Question extends React.Component {
     if (this.state.selectedValue === '') {
       return;
     } else {
-      this.props.handleSubmit(this.state.currentlyCorrect);
+      this.props.handleSubmit(this.state.currentlyCorrect, this.state.selectedValue);
     }
   }
 }

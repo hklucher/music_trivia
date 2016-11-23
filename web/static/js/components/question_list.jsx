@@ -7,7 +7,6 @@ export class QuestionList extends React.Component {
   }
 
   render() {
-    console.log(this.props.questions);
     const _this = this;
     let questionList = this.props.questions.map(function(quest, index) {
       return (
@@ -28,9 +27,7 @@ export class QuestionList extends React.Component {
 
   _mapResponses(question) {
     let responseList = question.responses.map(function(resp) {
-      return (
-        <li key={resp.id}>{resp.content}</li>
-      )
+      return (<li key={resp.id}>{resp.content}</li>)
     });
     return responseList;
   }

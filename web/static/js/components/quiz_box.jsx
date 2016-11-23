@@ -64,16 +64,23 @@ class QuizBox extends React.Component {
     }
   }
 
-  handleQuestionSubmit(questionResult) {
+  handleQuestionSubmit(questionResult, userResponse) {
     if (questionResult) {
       let currentScore = this.state.score;
       this.setState({score: currentScore + 1});
     }
+    this._markQuestionResponse(userResponse);
     this._markQuestionComplete();
     let nextQuestion = this._getNextQuestion();
     this.setState({currentQuestion: nextQuestion});
     let nextQuestionNumber = this.state.currentQuestionNumber + 1;
     this.setState({currentQuestionNumber: nextQuestionNumber});
+  }
+
+  _markQuestionResponse(userResponse) {
+    let currentQuestion = this.state.currentQuestion;
+    currentQuestion['userResponse'] = userResponse;
+    this.setState({currentQuestion: currentQuestion});
   }
 
   _markQuestionComplete() {
