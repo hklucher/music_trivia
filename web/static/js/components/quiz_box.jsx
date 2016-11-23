@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import {AnswersBox} from "./answers_box"
 import {QuestionBox} from "./question_box"
 import {Question} from "./question"
+import {QuizStats} from "./quiz_stats"
 
 class QuizBox extends React.Component {
   constructor() {
@@ -54,28 +55,32 @@ class QuizBox extends React.Component {
       )
     } else {
       return (
-        <div>
-          <h1>
-            Quiz Completed!
-          </h1>
-          <p>
-            You got {this.state.score} out of {this.state.quiz.questions.length} possible!
-          </p>
-        </div>
+        <QuizStats
+          questions={this.state.completedQuestions}
+          numCorrect={this.state.score}
+          quizName={this.state.quiz.name}>
+        </QuizStats>
       )
     }
   }
 
-  handleQuestionSubmit(questionResult) {
+  handleQuestionSubmit(questionResult, userResponse) {
     if (questionResult) {
       let currentScore = this.state.score;
       this.setState({score: currentScore + 1});
     }
+    this._markQuestionResponse(userResponse);
     this._markQuestionComplete();
     let nextQuestion = this._getNextQuestion();
     this.setState({currentQuestion: nextQuestion});
     let nextQuestionNumber = this.state.currentQuestionNumber + 1;
     this.setState({currentQuestionNumber: nextQuestionNumber});
+  }
+
+  _markQuestionResponse(userResponse) {
+    let currentQuestion = this.state.currentQuestion;
+    currentQuestion['userResponse'] = userResponse;
+    this.setState({currentQuestion: currentQuestion});
   }
 
   _markQuestionComplete() {

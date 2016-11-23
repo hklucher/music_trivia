@@ -8,7 +8,7 @@ use Mix.Config
 # General application configuration
 config :music_quiz,
   ecto_repos: [MusicQuiz.Repo]
-  
+
 # Configures the endpoint
 config :music_quiz, MusicQuiz.Endpoint,
   url: [host: "localhost"],
@@ -21,6 +21,7 @@ config :music_quiz, MusicQuiz.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
 
 
 # Import environment specific config. This must remain at the bottom

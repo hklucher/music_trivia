@@ -4,7 +4,7 @@ use Mix.Config
 # you can enable the server option below.
 config :music_quiz, MusicQuiz.Endpoint,
   http: [port: 4001],
-  server: false
+  server: true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
@@ -17,3 +17,6 @@ config :music_quiz, MusicQuiz.Repo,
   database: "music_quiz_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Hound settings
+config :hound, driver: "phantomjs"

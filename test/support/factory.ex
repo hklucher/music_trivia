@@ -57,4 +57,11 @@ defmodule MusicQuiz.Factory do
       track_number: 2
     }
   end
+
+  def insert_multiple_quizzes(amount) do
+    Enum.each(1..amount, fn(i) ->
+      quiz_question = insert(:question, content: "question_#{i}")
+      insert(:quiz, name: "quiz_#{i}", questions: [quiz_question])
+    end)
+  end
 end
