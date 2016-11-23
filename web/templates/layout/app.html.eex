@@ -8,6 +8,7 @@
     <meta name="author" content="">
 
     <title>Music Trivia</title>
+    <script src="https://use.fontawesome.com/3787ac236a.js"></script>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
