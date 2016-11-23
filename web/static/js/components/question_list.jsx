@@ -38,10 +38,23 @@ export class QuestionList extends React.Component {
   }
 
   _mapResponses(question) {
+    const _this = this;
     let responseList = question.responses.map(function(resp) {
-      return (<li key={resp.id}>{resp.content}</li>)
+      let className = _this._getResponseClassName(question, resp);
+      return (<li className={className} key={resp.id}>{resp.content}</li>)
     });
     return responseList;
+  }
+
+  _getResponseClassName(question, response) {
+    if (this._gotQuestionRight(question) && response.content === question.answer.content) {
+      return "green";
+    } else {
+      return "";
+    }
+    // IF the got the question right AND the current response is the correct answer
+      // Return 'green'
+    // END IF
   }
 }
 
