@@ -15,7 +15,7 @@ defmodule MusicQuiz.Response do
   def changeset(response, params \\ %{}) do
     response
     |> cast(params, [:content, :question_id])
-    |> validate_required([:content, :question_id])
+    |> validate_required([:content])
     |> cast_assoc(:question)
   end
 end

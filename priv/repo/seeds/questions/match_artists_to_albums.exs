@@ -14,7 +14,7 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
   def seed(albums: [head | tail]) do
     album = Repo.preload(head, :artist)
     question_content = "What band or artist released the album '#{album.name}'?"
-    question = Question.changeset(%Question{}, content: question_content)
+    question = Question.changeset(%Question{}, %{content: question_content})
     answer = build_answer(album)
     distractors = build_distractors(album)
     insert_question_with_associations(question: question, answer: answer, distractors: distractors)
@@ -37,12 +37,12 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
   end
 
   defp build_distractors(album) do
-    distractor_albums = Enum.take_random(Artist.not_owned_albums(album), 3)
+    distractor_albums = Enum.take_random(Artist.not_owned_albums(album.id), 3)
     build_distractors(album, distractor_albums)
   end
 
   defp build_distractors(album, [head | tail], results \\ []) do
-    distractor = Repo.insert(Response.changeset(%Response{}, %{content: album.name}))
+    {:ok, distractor} = Repo.insert(Response.changeset(%Response{}, %{content: album.name}))
     build_distractors(album, tail, results ++ [distractor])
   end
 
