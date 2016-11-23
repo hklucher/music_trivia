@@ -13,14 +13,14 @@ export class QuizStats extends React.Component {
         <div>
           <h1 className="serif">Report: {this.props.quizName}</h1>
           <p>
-            You got <strong> {this.props.numCorrect}</strong> out of
+            You got <strong>{this.props.numCorrect}</strong> out of
             <strong>{this.props.questions.length}</strong> possible.
           </p>
         </div>
         <QuestionList
-          questions={this.props.questions}
-          quizName={this.props.quizName}>
+          questions={this.props.questions}>
         </QuestionList>
+        <a href="/">Home</a>
       </div>
     )
   }
@@ -28,5 +28,6 @@ export class QuizStats extends React.Component {
 
 QuizStats.propTypes = {
   questions: React.PropTypes.array,
-  numberCorrect: React.PropTypes.number
+  numberCorrect: React.PropTypes.number,
+  quizName: React.PropTypes.string
 }

@@ -12,6 +12,7 @@ export class QuestionList extends React.Component {
       return (
         <div key={quest.id}>
           <h3>Question {index + 1} {_this._correctnessIcon(quest)}</h3>
+          <h5>{quest.content}</h5>
           <ul>
             {_this._mapResponses(quest)}
           </ul>
