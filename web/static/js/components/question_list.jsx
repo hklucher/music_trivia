@@ -9,15 +9,9 @@ export class QuestionList extends React.Component {
   render() {
     const _this = this;
     let questionList = this.props.questions.map(function(quest, index) {
-      var checkMark;
-      if (_this._gotQuestionRight(quest)) {
-        checkMark = <i className="fa fa-check-circle-o" aria-hidden="true"></i>
-      } else {
-        checkMark = <i className="fa fa-times-circle" aria-hidden="true"></i>
-      }
       return (
         <div key={quest.id}>
-          <h3>Question {index + 1} {checkMark}</h3>
+          <h3>Question {index + 1} {_this._correctnessIcon(quest)}</h3>
           <ul>
             {_this._mapResponses(quest)}
           </ul>
@@ -29,6 +23,14 @@ export class QuestionList extends React.Component {
         {questionList}
       </div>
     )
+  }
+
+  _correctnessIcon(question) {
+    if (this._gotQuestionRight(question)) {
+      return <i className="fa fa-check-circle-o" aria-hidden="true"></i>;
+    } else {
+      return <i className="fa fa-times-circle" aria-hidden="true"></i>;
+    }
   }
 
   _gotQuestionRight(question) {

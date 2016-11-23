@@ -13,7 +13,7 @@ export class QuizStats extends React.Component {
         <div>
           <h1 className="serif">Report: {this.props.quizName}</h1>
           <p>
-            You got <strong>{this.props.numCorrect}</strong> out of
+            You got <strong> {this.props.numCorrect}</strong> out of
             <strong>{this.props.questions.length}</strong> possible.
           </p>
         </div>
