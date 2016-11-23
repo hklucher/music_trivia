@@ -55,7 +55,11 @@ class QuizBox extends React.Component {
       )
     } else {
       return (
-        <QuizStats questions={this.state.quiz.questions}></QuizStats>
+        <QuizStats
+          questions={this.state.quiz.questions}
+          numCorrect={this.state.score}
+          quizName={this.state.quiz.name}>
+        </QuizStats>
       )
     }
   }

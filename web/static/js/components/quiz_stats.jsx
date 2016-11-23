@@ -9,11 +9,24 @@ export class QuizStats extends React.Component {
 
   render() {
     return(
-      <QuestionList questions={this.props.questions}/>
+      <div>
+        <div>
+          <h1 className="serif">Report: {this.props.quizName}</h1>
+          <p>
+            You got <strong>{this.props.numCorrect}</strong> out of
+            <strong>{this.props.questions.length}</strong> possible.
+          </p>
+        </div>
+        <QuestionList
+          questions={this.props.questions}
+          quizName={this.props.quizName}>
+        </QuestionList>
+      </div>
     )
   }
 }
 
 QuizStats.propTypes = {
-  questions: React.PropTypes.array
+  questions: React.PropTypes.array,
+  numberCorrect: React.PropTypes.number
 }
