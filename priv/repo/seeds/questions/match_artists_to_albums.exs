@@ -1,30 +1,20 @@
 defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
   alias MusicQuiz.{Repo, Genre, Artist, Question, Answer, Response, Quiz}
 
-  # def seed, do: seed(quizzes: Repo.all(Quiz))
-
   def seed, do: seed(quizzes: Repo.all(Quiz))
 
-  def seed(quizzes: [head | tail]) do
-    genre = Repo.preload(head, :genre).genre
-    seed(genre: genre, quiz: head)
+  def seed(quizzes: [quiz | tail]) do
+    genre = Repo.preload(quiz, :genre).genre
+    seed(genre: genre, quiz: quiz)
     seed(quizzes: tail)
   end
 
   def seed(quizzes: []), do: :ok
 
-  def seed(genres: [head | tail]) do
-    albums_for_genre = Genre.albums(head)
-    seed(albums: albums_for_genre)
-    seed(genres: tail)
-  end
-
   def seed(genre: genre, quiz: quiz) do
     albums_for_genre = Genre.albums(genre)
     seed(albums: albums_for_genre, quiz: quiz)
   end
-
-  def seed(genres: []), do: :ok
 
   def seed(albums: [head | tail], quiz: quiz) do
     album = Repo.preload(head, :artist)
@@ -53,11 +43,6 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
   end
 
   defp build_distractors(album) do
-    # Artist.did_not_write_album(album)
-    # It's too god damn loud here to finish this. I'm  building a response from
-    # an album instead of artists. Write a query to grab artists who did not
-    # release a given album, then pass that as an an argument to take_random
-    # and call it distractor_artists instead, you fool.
     distractor_artists = Enum.take_random(Artist.did_not_write_album(album), 3)
     build_distractors(album, distractor_artists)
   end
@@ -74,18 +59,3 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     Repo.insert!(changeset)
   end
 end
-
-# FOR genre in ALL genres
-  # Get list of albums associated with that genre
-  # FOR EACH album IN albums
-    # Build changeset of question with content "What band or artist released the album 'album'?"
-    # IF changeset is inserted
-      # Insert an answer with the content of the albums artist
-      # Get three random artists who did not release the current album
-      # Insert those as distractors
-      # Associate these with question
-    # ELSE
-      # Print out warning message, continue.
-    # END IF
-  # END FOR
-# END FOR
