@@ -13,3 +13,4 @@ MusicQuiz.Spotify.start
 # MusicQuiz.Seeds.Quizzes.seed
 # MusicQuiz.Seeds.Questions.MatchSongsToAlbums.seed
 # MusicQuiz.Seeds.Questions.TrackLengths.seed
+MusicQuiz.Seeds.Questions.MatchArtistsToAlbums.seed
