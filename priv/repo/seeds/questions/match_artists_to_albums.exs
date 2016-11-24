@@ -58,12 +58,12 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     # an album instead of artists. Write a query to grab artists who did not
     # release a given album, then pass that as an an argument to take_random
     # and call it distractor_artists instead, you fool.
-    distractor_albums = Enum.take_random(Artist.not_owned_albums(album.id), 3)
-    build_distractors(album, distractor_albums)
+    distractor_artists = Enum.take_random(Artist.did_not_write_album(album), 3)
+    build_distractors(album, distractor_artists)
   end
 
   defp build_distractors(album, [head | tail], results \\ []) do
-    {:ok, distractor} = Repo.insert(Response.changeset(%Response{}, %{content: album.name}))
+    {:ok, distractor} = Repo.insert(Response.changeset(%Response{}, %{content: head.name}))
     build_distractors(album, tail, results ++ [distractor])
   end
 
