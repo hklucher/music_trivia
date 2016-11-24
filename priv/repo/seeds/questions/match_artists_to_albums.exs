@@ -53,6 +53,11 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
   end
 
   defp build_distractors(album) do
+    # Artist.did_not_write_album(album)
+    # It's too god damn loud here to finish this. I'm  building a response from
+    # an album instead of artists. Write a query to grab artists who did not
+    # release a given album, then pass that as an an argument to take_random
+    # and call it distractor_artists instead, you fool.
     distractor_albums = Enum.take_random(Artist.not_owned_albums(album.id), 3)
     build_distractors(album, distractor_albums)
   end
