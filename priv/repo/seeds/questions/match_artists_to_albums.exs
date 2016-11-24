@@ -1,7 +1,17 @@
 defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
-  alias MusicQuiz.{Repo, Genre, Artist, Question, Answer, Response}
+  alias MusicQuiz.{Repo, Genre, Artist, Question, Answer, Response, Quiz}
 
-  def seed, do: seed(genres: Repo.all(Genre))
+  # def seed, do: seed(quizzes: Repo.all(Quiz))
+
+  def seed, do: seed(quizzes: Repo.all(Quiz))
+
+  def seed(quizzes: [head | tail]) do
+    genre = Repo.preload(head, :genre).genre
+    seed(genre: genre, quiz: head)
+    seed(quizzes: tail)
+  end
+
+  def seed(quizzes: []), do: :ok
 
   def seed(genres: [head | tail]) do
     albums_for_genre = Genre.albums(head)
@@ -9,27 +19,33 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     seed(genres: tail)
   end
 
+  def seed(genre: genre, quiz: quiz) do
+    albums_for_genre = Genre.albums(genre)
+    seed(albums: albums_for_genre, quiz: quiz)
+  end
+
   def seed(genres: []), do: :ok
 
-  def seed(albums: [head | tail]) do
+  def seed(albums: [head | tail], quiz: quiz) do
     album = Repo.preload(head, :artist)
     question_content = "What band or artist released the album '#{album.name}'?"
     question = Question.changeset(%Question{}, %{content: question_content})
     answer = build_answer(album)
     distractors = build_distractors(album)
-    insert_question_with_associations(question: question, answer: answer, distractors: distractors)
+    insert_question_with_associations(question: question, answer: answer, distractors: distractors, quiz: quiz)
   end
 
-  def seed(albums: []), do: :ok
+  def seed(albums: [], quiz: quiz), do: :ok
 
-  defp insert_question_with_associations(question: changeset, answer: answer, distractors: distractors) do
+  defp insert_question_with_associations(question: changeset, answer: answer, distractors: distractors, quiz: quiz) do
     case Repo.insert(changeset) do
       {:ok, changeset} ->
-        question = Repo.preload(changeset, [:answer, :responses])
+        question = Repo.preload(changeset, [:answer, :responses, :quizzes])
         question
         |> Ecto.Changeset.change
         |> Ecto.Changeset.put_assoc(:answer, answer)
         |> Ecto.Changeset.put_assoc(:responses, question.responses ++ distractors)
+        |> Ecto.Changeset.put_assoc(:quizzes, question.quizzes ++ [quiz])
         |> Repo.update!
       {:error, _changeset} ->
         IO.puts "error inserting question, continuing..."
