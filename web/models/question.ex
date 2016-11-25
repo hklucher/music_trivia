@@ -15,5 +15,6 @@ defmodule MusicQuiz.Question do
     question
     |> cast(params, [:content])
     |> validate_required([:content])
+    |> unique_constraint([:content])
   end
 end
