@@ -23,9 +23,10 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     answer = build_answer(album)
     distractors = build_distractors(album)
     insert_question_with_associations(question: question, answer: answer, distractors: distractors, quiz: quiz)
+    seed(albums: tail, quiz: quiz)
   end
 
-  def seed(albums: [], quiz: quiz), do: :ok
+  def seed(albums: [], quiz: _quiz), do: :ok
 
   defp insert_question_with_associations(question: changeset, answer: answer, distractors: distractors, quiz: quiz) do
     case Repo.insert(changeset) do
@@ -42,17 +43,19 @@ defmodule MusicQuiz.Seeds.Questions.MatchArtistsToAlbums do
     end
   end
 
-  defp build_distractors(album) do
-    distractor_artists = Enum.take_random(Artist.did_not_write_album(album), 3)
-    build_distractors(album, distractor_artists)
-  end
+  defp build_distractors(album, distractors, results \\ [])
 
-  defp build_distractors(album, [head | tail], results \\ []) do
+  defp build_distractors(album, [head | tail], results) do
     {:ok, distractor} = Repo.insert(Response.changeset(%Response{}, %{content: head.name}))
     build_distractors(album, tail, results ++ [distractor])
   end
 
-  defp build_distractors(album, [], results), do: results
+  defp build_distractors(_album, [], results), do: results
+
+  defp build_distractors(album) do
+    distractor_artists = Enum.take_random(Artist.did_not_write_album(album), 3)
+    build_distractors(album, distractor_artists)
+  end
 
   defp build_answer(album) do
     changeset = Answer.changeset(%Answer{}, %{content: album.artist.name})
