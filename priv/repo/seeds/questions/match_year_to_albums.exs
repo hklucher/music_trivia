@@ -1,6 +1,6 @@
 require IEx;
 defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
-  alias MusicQuiz.{Repo, Quiz, Genre, Spotify}
+  alias MusicQuiz.{Repo, Quiz, Genre, Spotify, Answer, Response}
 
   @chars_in_year 4
 
@@ -9,19 +9,58 @@ defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
 
   def seed(quizzes: [quiz | tail]) do
     quiz_genre = Repo.preload(quiz, :genre).genre
-    genre_albums = Genre.albums(quiz_genre)
+    genre_albums = Repo.preload(Genre.albums(quiz_genre), :artist)
     seed(albums: genre_albums)
     seed(quizzes: tail)
   end
 
   def seed(albums: [album | tail]) do
     {:ok, album_info} = Spotify.album(album.spotify_id)
-    album_release_year = release_year(album_info["release_date"])
+    question_content = "What year was the album #{album.name} by #{album.artist.name} released?"
+    answer = insert_or_find_answer(release_year(album_info["release_date"]))
+    distractors = insert_or_find_distractors(answer.content)
+    IO.inspect distractors
     :timer.sleep(1000)
+    seed(albums: tail)
   end
 
   def seed(albums: []), do: :ok
   defp release_year(year), do: String.slice(year, 0, @chars_in_year)
+
+  defp insert_or_find_answer(year) do
+    case Repo.insert(Answer.changeset(%Answer{}, %{content: year})) do
+      {:ok, changeset} ->
+        changeset
+      {:error, _changeset} ->
+        Repo.get_by!(Answer, content: year)
+    end
+  end
+
+  defp build_distractor_years(year) do
+    lower_bound = String.to_integer(year) - 10
+    {current_year, _, _} = elem(:calendar.universal_time, 0)
+    upper_bound =
+      if (String.to_integer(year) + 10) > current_year do
+        current_year
+      else
+        String.to_integer(year) + 10
+      end
+    Enum.to_list(lower_bound..upper_bound)
+    |> Enum.reject(fn(y) -> String.to_integer(year) == y end)
+    |> Enum.take_random(3)
+  end
+
+  defp insert_or_find_distractors(answer_year) do
+    distractors = build_distractor_years(answer_year)
+    Enum.map(distractors, fn(year) ->
+      case Repo.insert(Response.changeset(%Response{}, %{content: "#{year}"})) do
+        {:ok, changeset} ->
+          changeset
+        {:error, _changeset} ->
+          Repo.get_by!(Answer, content: year)
+      end
+    end)
+  end
 end
 
 # FOR EACH quiz IN quizzes
