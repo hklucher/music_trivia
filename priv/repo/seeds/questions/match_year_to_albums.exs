@@ -19,7 +19,7 @@ defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
     question_content = "What year was the album #{album.name} by #{album.artist.name} released?"
     answer = insert_or_find_answer(release_year(album_info["release_date"]))
     distractors = insert_or_find_distractors(answer.content)
-    insert_question(question_content, answer, distractors)
+    insert_question(question_content, answer, distractors, quiz)
     :timer.sleep(1000)
     seed(albums: tail, quiz: quiz)
   end
@@ -27,16 +27,16 @@ defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
   def seed(albums: [], quiz: _), do: :ok
   defp release_year(year), do: String.slice(year, 0, @chars_in_year)
 
-  defp insert_question(content, answer, distractors) do
+  defp insert_question(content, answer, distractors, quiz) do
     case Repo.insert(Question.changeset(%Question{}, %{content: content})) do
       {:ok, changeset} ->
-        changeset = Repo.preload(changeset, [:answer, :responses])
+        changeset = Repo.preload(changeset, [:answer, :responses, :quizzes])
         changeset
         |> Ecto.Changeset.change
         |> Ecto.Changeset.put_assoc(:answer, answer)
         |> Ecto.Changeset.put_assoc(:responses, changeset.responses ++ distractors)
+        |> Ecto.Changeset.put_assoc(:quizzes, changeset.quizzes ++ [quiz])
         |> Repo.update!
-        # Associations!
       {:error, changeset} ->
         IO.inspect changeset
         System.halt(0)
@@ -78,42 +78,3 @@ defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
     end)
   end
 end
-
-# FOR EACH quiz IN quizzes
-  # GET genre for current quiz
-  # GET list of albums for current genre
-  # FOR EACH album IN albums
-    # Build answer content of '{album release year}'
-      # INSERT answer
-    # Build distractors: SEE build_distractors pseudocode
-      # FOR EACH distractor IN distractors
-        # INSERT distractor
-      # END FOR
-      # RETURN list of inserted distractors
-    # Build question with content 'What year was the album {album title} by {album artist} released?'
-    # IF question is successfully INSERTED
-      # PRELOAD associations answer and responses
-      # Build a changeset to associate answer and responses with already inserted answer and responses
-      # UPDATE changeset
-    # ELSE
-      # The question is likely already in existence, simply find that question and
-      # associate it with the current quiz
-    # END IF
-  # END FOR
-# END FOR
-
-# Build Distractors
-  # INPUT: Actual release year of album (correct answer)
-  # OUTPUT: A list of inserted Response structs
-  # SET lower_bound TO year MINUS 10
-  # IF input year + 10 IS NOT in the future
-    # SET upper_bound TO year PLUS 10
-  # ELSE
-    # SET upper_bound TO current year
-  # END IF
-  # MAP lower bound to upper bound as list
-  # TAKE three random items from list that ARE NOT year
-  # FOR EACH year IN year_list
-    # INSERT a distractor with that content
-  # END FOR
-  # RETURN mapped disractor list
