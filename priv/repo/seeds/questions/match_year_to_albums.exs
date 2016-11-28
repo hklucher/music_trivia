@@ -1,6 +1,6 @@
 require IEx;
 defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
-  alias MusicQuiz.{Repo, Quiz, Genre, Spotify, Answer, Response}
+  alias MusicQuiz.{Repo, Quiz, Genre, Spotify, Answer, Response, Question}
 
   @chars_in_year 4
 
@@ -10,22 +10,38 @@ defmodule MusicQuiz.Seeds.Questions.MatchYearToAlbums do
   def seed(quizzes: [quiz | tail]) do
     quiz_genre = Repo.preload(quiz, :genre).genre
     genre_albums = Repo.preload(Genre.albums(quiz_genre), :artist)
-    seed(albums: genre_albums)
+    seed(albums: genre_albums, quiz: quiz)
     seed(quizzes: tail)
   end
 
-  def seed(albums: [album | tail]) do
+  def seed(albums: [album | tail], quiz: quiz) do
     {:ok, album_info} = Spotify.album(album.spotify_id)
     question_content = "What year was the album #{album.name} by #{album.artist.name} released?"
     answer = insert_or_find_answer(release_year(album_info["release_date"]))
     distractors = insert_or_find_distractors(answer.content)
-    IO.inspect distractors
+    insert_question(question_content, answer, distractors)
     :timer.sleep(1000)
-    seed(albums: tail)
+    seed(albums: tail, quiz: quiz)
   end
 
-  def seed(albums: []), do: :ok
+  def seed(albums: [], quiz: _), do: :ok
   defp release_year(year), do: String.slice(year, 0, @chars_in_year)
+
+  defp insert_question(content, answer, distractors) do
+    case Repo.insert(Question.changeset(%Question{}, %{content: content})) do
+      {:ok, changeset} ->
+        changeset = Repo.preload(changeset, [:answer, :responses])
+        changeset
+        |> Ecto.Changeset.change
+        |> Ecto.Changeset.put_assoc(:answer, answer)
+        |> Ecto.Changeset.put_assoc(:responses, changeset.responses ++ distractors)
+        |> Repo.update!
+        # Associations!
+      {:error, changeset} ->
+        IO.inspect changeset
+        System.halt(0)
+    end
+  end
 
   defp insert_or_find_answer(year) do
     case Repo.insert(Answer.changeset(%Answer{}, %{content: year})) do
