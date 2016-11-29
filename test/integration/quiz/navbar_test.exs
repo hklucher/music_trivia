@@ -3,6 +3,7 @@ defmodule MusicQuiz.NavbarTest do
   use MusicQuiz.ConnCase
 
   import MusicQuiz.Factory
+  import MusicQuiz.TestHelpers
 
   hound_session
 
@@ -13,13 +14,7 @@ defmodule MusicQuiz.NavbarTest do
 
   test "does not link to sign up when logged in" do
     user = insert(:user)
-    navigate_to("/login")
-    form = find_element(:tag, "form")
-    email_field = find_element(:id, "session_email")
-    password_field = find_element(:id, "session_password")
-    fill_field(email_field, user.email)
-    fill_field(password_field, user.password)
-    submit_element(form)
+    login(user)
     assert {:error, _} = search_element(:link_text, "Sign Up", 1)
   end
 end
