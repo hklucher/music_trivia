@@ -21,6 +21,7 @@ defmodule MusicQuiz.Router do
     resources "/genres", GenreController, only: [:index, :show]
     resources "/artists", ArtistController, only: [:index, :show]
     resources "/quizzes", QuizController, only: [:show, :index]
+    resources "/registrations", RegistrationController, only: [:new, :create]
   end
 
   scope "/api", MusicQuiz do
