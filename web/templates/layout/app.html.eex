@@ -20,7 +20,9 @@
           <h3><%= link("MusicQuizz", to: "/") %></h3>
         </li>
         <li>
-          <h6><%= link("Sign Up", to: registration_path(@conn, :new)) %></h6>
+          <%= unless logged_in?(@conn) do %>
+            <h6><%= link("Sign Up", to: registration_path(@conn, :new)) %></h6>
+          <% end %>
         </li>
       </ul>
       <hr/>

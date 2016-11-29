@@ -12,6 +12,7 @@ defmodule MusicQuiz.RegistrationController do
     case Registration.create(changeset, Repo) do
       {:ok, changeset} ->
         conn
+        |> put_session(:current_user, changeset.id)
         |> put_flash(:info, "Successfully signed up! Welcome.")
         |> redirect(to: "/")
       {:error, changeset} ->
