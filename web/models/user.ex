@@ -4,14 +4,20 @@ defmodule MusicQuiz.User do
   schema "users" do
     field :email, :string
     field :crypted_password, :string
+    field :password, :string, virtual: true
 
     timestamps()
   end
 
+  @required_fields ~w(email password)
+
+  # TODO: add actual regex to check for valid email address
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:email, :crypted_password])
-    |> validate_required([:email, :crypted_password])
+    |> cast(params, [:email, :password])
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> validate_required([:email, :password])
   end
 end
