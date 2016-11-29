@@ -27,6 +27,11 @@
             <h6><%= link("Log In", to: session_path(@conn, :new)) %></h6>
           </li>
         <% end %>
+        <%= if logged_in?(@conn) do %>
+          <li>
+            <h6><%= link("Log Out", to: session_path(@conn, :delete)) %></h6>
+          </li>
+        <% end %>
       </ul>
       <hr/>
     </header>

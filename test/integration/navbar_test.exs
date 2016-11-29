@@ -18,10 +18,10 @@ defmodule MusicQuiz.NavbarTest do
     assert {:error, _} = search_element(:link_text, "Sign Up", 0)
   end
 
-  test "does not have a link to log out when logged in" do
+  test "has a link to sign out when logged in" do
     user = insert(:user)
     login(user)
-    assert {:error, _} = search_element(:link_text, "Sign Out", 0)
+    assert {:ok, _} = search_element(:link_text, "Log Out", 0)
   end
 
   test "has a link to log in when not logged in" do
