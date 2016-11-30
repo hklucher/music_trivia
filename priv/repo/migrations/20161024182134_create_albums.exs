@@ -6,7 +6,6 @@ defmodule MusicQuiz.Repo.Migrations.CreateAlbums do
       add :name, :string
       add :spotify_id, :string
       add :image_url, :string
-
       add :artist_id, references(:artists)
 
       timestamps
