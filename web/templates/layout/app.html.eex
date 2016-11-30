@@ -29,7 +29,7 @@
         <% end %>
         <%= if logged_in?(@conn) do %>
           <li>
-            <h6><%= link("Log Out", to: session_path(@conn, :delete)) %></h6>
+            <h6><%= link("Log Out", to: session_path(@conn, :delete), method: :delete) %></h6>
           </li>
         <% end %>
       </ul>
