@@ -6,7 +6,7 @@ defmodule MusicQuiz.User do
     field :crypted_password, :string
     field :password, :string, virtual: true
 
-    timestamps()
+    timestamps
   end
 
   @required_fields ~w(email password)
