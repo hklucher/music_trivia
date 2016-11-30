@@ -17,7 +17,6 @@ defmodule MusicQuiz.RegistrationController do
         |> redirect(to: "/")
       {:error, changeset} ->
         conn
-        |> put_flash(:info, "Unable to create account. Please check errors.")
         |> render("new.html", changeset: changeset)
     end
   end

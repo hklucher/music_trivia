@@ -13,9 +13,14 @@ defmodule MusicQuiz.SessionControllerTest do
     assert redirected_to(conn) == "/"
   end
 
-  test "a bad login attempt re renders the page with error" do
+  test "a bad login attempt re-renders the page with error" do
     conn = post build_conn(), "/login", %{"session" => %{"email" => "wrong", "password" => "wronger"}}
     assert conn.resp_body =~ "Wrong email or password"
+  end
+
+  test "logging out redirects the user to the root path" do
+    conn = delete build_conn(), "/logout"
+    assert redirected_to(conn) == "/" 
   end
 
   defp send_request(conn) do
