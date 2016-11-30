@@ -48,6 +48,7 @@ defmodule MusicQuiz.Mixfile do
      {:httpoison, "~> 0.9.0"},
      {:poison, "~> 2.0"},
      {:ex_machina, "~> 1.0"},
+     {:comeonin, "~> 1.0"},
      {:hound, "~> 1.0", only: :test}]
   end
 

@@ -58,6 +58,14 @@ defmodule MusicQuiz.Factory do
     }
   end
 
+  def user_factory do
+    %MusicQuiz.User{
+      email: "test@example.com",
+      crypted_password: Comeonin.Bcrypt.hashpwsalt("password"),
+      password: "password"
+    }
+  end
+
   def insert_multiple_quizzes(amount) do
     Enum.each(1..amount, fn(i) ->
       quiz_question = insert(:question, content: "question_#{i}")
