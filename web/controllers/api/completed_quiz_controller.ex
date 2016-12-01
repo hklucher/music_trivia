@@ -6,12 +6,12 @@ defmodule MusicQuiz.Api.CompletedQuizController do
 
   def create(conn, %{"completed_quiz" => params}) do
     # completed_quiz_params = Map.put(params, :user_id, current_user.id)
-    IEx.pry
+    # IEx.pry
     case Repo.insert(CompletedQuiz.changeset(%CompletedQuiz{}, params)) do
       {:ok, changeset} ->
-        render "create.json", changeset
+        render conn, "create.json", %{completed_quiz: changeset}
       {:error, _} ->
-        render "create.json", %{"error" => "something went wrong"}
+        render conn, "create.json", %{"error" => "something went wrong"}
     end
   end
 end
