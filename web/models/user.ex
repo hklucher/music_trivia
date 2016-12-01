@@ -6,6 +6,8 @@ defmodule MusicQuiz.User do
     field :crypted_password, :string
     field :password, :string, virtual: true
 
+    has_many :completed_quizzes, MusicQuiz.CompletedQuiz
+
     timestamps
   end
 

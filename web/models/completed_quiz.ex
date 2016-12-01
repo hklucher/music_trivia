@@ -1,5 +1,7 @@
 defmodule MusicQuiz.CompletedQuiz do
   use MusicQuiz.Web, :model
+
+  @required_fields [:name, :score, :total_questions]
   
   schema "completed_quizzes" do
     field :name, :string
@@ -12,5 +14,9 @@ defmodule MusicQuiz.CompletedQuiz do
   end
 
   def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:name, :score, :total_questions])
+    |> cast_assoc(:user)
+    |> validate_required(@required_fields)
   end
 end
