@@ -30,5 +30,6 @@ defmodule MusicQuiz.Router do
   scope "/api", MusicQuiz do
     pipe_through :api
     get "/quizzes/:id", Api.QuizController, :show
+    post "/completed_quizzes", Api.CompletedQuizController, :create
   end
 end

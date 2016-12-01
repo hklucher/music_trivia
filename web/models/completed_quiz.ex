@@ -15,7 +15,7 @@ defmodule MusicQuiz.CompletedQuiz do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :score, :total_questions])
+    |> cast(params, [:name, :score, :total_questions, :user_id])
     |> cast_assoc(:user)
     |> validate_required(@required_fields)
   end
