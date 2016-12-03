@@ -21,8 +21,25 @@ export class QuizStats extends React.Component {
           questions={this.props.questions}>
         </QuestionList>
         <a href="/">Home</a>
+        <a href="/api/completed_quizzes" onClick={this.handleCompletedQuizClick.bind(this)}>Want to record your results?</a>
       </div>
     )
+  }
+
+  handleCompletedQuizClick(e) {
+    e.preventDefault();
+    const completedQuiz = {
+      "completed_quiz": {
+        "name": this.props.quizName,
+        "score": this.props.numCorrect,
+        "total_questions": this.props.questions.length
+      }
+    }
+
+    fetch("/api/completed_quizzes", {
+      method: 'POST',
+      body: completedQuiz
+    }).then(function(resp) { return res.json(); });
   }
 }
 
