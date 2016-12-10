@@ -22,6 +22,15 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configures Guardian
+config :guardian, Guardian,
+  allowed_algos: ["HS512"],
+  verify_module: Guardian.JWT,
+  issuer: "MusicQuiz",
+  ttl: { 30, :days},
+  verify_issuer: true,
+  secret_key: "<your secret guardian key>",
+  serializer: MusicQuiz.GuardianSerializer
 
 
 # Import environment specific config. This must remain at the bottom

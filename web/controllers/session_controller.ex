@@ -3,27 +3,26 @@ defmodule MusicQuiz.SessionController do
   alias MusicQuiz.{Session, Repo}
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    render conn, "new.html"
   end
 
-  def create(conn, %{"session" => session_params}) do
-    case Session.login(session_params, Repo) do
-      {:ok, user} ->
+  def create(conn, %{"session" => %{"email" => email, "password" => pass}}) do
+    case MusicQuiz.Auth.login_by_email_and_pass(conn, email, pass, repo: Repo) do
+      {:ok, conn} ->
+        logged_in_user = Guardian.Plug.current_resource(conn)
         conn
-        |> put_session(:current_user, user.id)
-        |> put_flash(:info, "Welcome back!")
+        |> put_flash(:info, "Logged in")
         |> redirect(to: "/")
-      :error ->
+      {:error, _reason, conn} ->
         conn
-        |> put_flash(:info, "Wrong email or password")
+        |> put_flash(:error, "Wrong username/password")
         |> render("new.html")
     end
   end
 
-  def delete(conn, _) do
+  def delete(conn, _params) do
     conn
-    |> delete_session(:current_user)
-    |> put_flash(:info, "Logged out")
+    |> Guardian.Plug.sign_out
     |> redirect(to: "/")
   end
 end

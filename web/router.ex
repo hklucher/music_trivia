@@ -7,6 +7,14 @@ defmodule MusicQuiz.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :browser_auth do
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.EnsureAuthenticated, handler: MusicQuiz.Token
+    plug Guardian.Plug.LoadResource
   end
 
   pipeline :api do
@@ -21,9 +29,13 @@ defmodule MusicQuiz.Router do
     resources "/artists", ArtistController, only: [:index, :show]
     resources "/quizzes", QuizController, only: [:show, :index]
     resources "/registrations", RegistrationController, only: [:new, :create]
-    get "/login", SessionController, :new
-    post "/login", SessionController, :create
-    delete "/logout", SessionController, :delete
+    resources "/users", UserController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
+  end
+
+  scope "/", MusicQuiz do
+    pipe_through [:browser, :browser_auth]
+    resources "/users", UserController, only: [:show, :index, :update]
   end
 
   scope "/api", MusicQuiz do
