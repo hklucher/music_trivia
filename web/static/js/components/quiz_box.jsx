@@ -5,7 +5,7 @@ import {QuestionBox} from "./question_box"
 import {Question} from "./question"
 import {QuizStats} from "./quiz_stats"
 
-class QuizBox extends React.Component {
+export class QuizBox extends React.Component {
   constructor() {
     super();
     this.state = {
