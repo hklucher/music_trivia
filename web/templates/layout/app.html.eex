@@ -21,8 +21,12 @@
         </li>
         <%= if logged_in?(@conn) do %>
           <li>
-            <h6><%= link("Log Out", to: session_path(@conn, :delete), method: :delete) %></h6>
-            </li>
+            <p>
+              <%= current_user(@conn).email %>
+            </p>
+          </li>
+          <li>
+          </li>
         <% else %>
           <li>
             <h6><%= link("Sign Up", to: registration_path(@conn, :new)) %></h6>

@@ -52,7 +52,8 @@ defmodule MusicQuiz.Web do
       import MusicQuiz.Router.Helpers
       import MusicQuiz.ErrorHelpers
       import MusicQuiz.Gettext
-      import MusicQuiz.Session, only: [current_user: 1, logged_in?: 1]
+      # import MusicQuiz.Session, only: [current_user: 1, logged_in?: 1]
+      import MusicQuiz.ViewHelper
     end
   end
 
