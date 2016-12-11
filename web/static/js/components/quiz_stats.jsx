@@ -5,6 +5,7 @@ import {QuestionList} from "./question_list"
 export class QuizStats extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {current_user: {}};
   }
 
   render() {
