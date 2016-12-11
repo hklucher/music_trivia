@@ -1,5 +1,3 @@
-<%# <div id="quiz_container" class="container"></div> %>
-
-<div>
-  <%= PhoenixReactor.react_container "quiz_box", %{name: "name"} %>
+<div class="container">
+  <%= PhoenixReactor.react_container "quiz_box", %{user_id: current_user(@conn).id} %>
 </div>

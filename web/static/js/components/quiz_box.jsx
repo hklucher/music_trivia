@@ -6,8 +6,8 @@ import {Question} from "./question"
 import {QuizStats} from "./quiz_stats"
 
 export class QuizBox extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       quiz: {},
       score: 0,
@@ -58,7 +58,8 @@ export class QuizBox extends React.Component {
         <QuizStats
           questions={this.state.completedQuestions}
           numCorrect={this.state.score}
-          quizName={this.state.quiz.name}>
+          quizName={this.state.quiz.name}
+          userId={this.props.userId}>
         </QuizStats>
       )
     }
