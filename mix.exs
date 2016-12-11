@@ -46,11 +46,12 @@ defmodule MusicQuiz.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:httpoison, "~> 0.9.0"},
-     {:poison, "~> 2.0"},
+     {:poison, "~> 1.5.2"},
      {:ex_machina, "~> 1.0"},
      {:comeonin, "~> 1.0"},
      {:hound, "~> 1.0", only: :test},
-     {:guardian, "~> 0.13.0"}]
+     {:guardian, "~> 0.13.0"},
+     {:phoenix_reactor, "~> 0.0.3"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

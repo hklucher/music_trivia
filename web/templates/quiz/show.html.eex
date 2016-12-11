@@ -1,1 +1,5 @@
-<div id="quiz_container" class="container"></div>
+<%# <div id="quiz_container" class="container"></div> %>
+
+<div>
+  <%= PhoenixReactor.react_container "quiz_box", %{name: "name"} %>
+</div>
