@@ -34,11 +34,12 @@ defmodule MusicQuiz.Router do
 
   scope "/", MusicQuiz do
     pipe_through [:browser, :browser_auth]
-    resources "/users", UserController, only: [:show, :index, :update]
+    resources "/users", UserController, only: [:show, :index]
   end
 
   scope "/api", MusicQuiz do
     pipe_through :api
     get "/quizzes/:id", Api.QuizController, :show
+    post "/users/:user_id/completed_quizzes", Api.CompletedQuizController, :create
   end
 end
