@@ -4,6 +4,7 @@ defmodule MusicQuiz.Api.CompletedQuizController do
 
   def create(conn, %{"user_id" => user_id, "completed_quiz" => completed_quiz_params}) do
     user = Repo.get(User, user_id)
+    # Find a better way of getting params into a correctly formatted map
     changeset =
       %CompletedQuiz{}
       |> CompletedQuiz.changeset(%{correct: completed_quiz_params["correct"], possible: completed_quiz_params["possible"], name: completed_quiz_params["name"]})
@@ -12,7 +13,9 @@ defmodule MusicQuiz.Api.CompletedQuizController do
       {:ok, completed_quiz} ->
         render conn, "show.json", %{completed_quiz: completed_quiz}
       {:error, changeset} ->
-        render conn, "show.json", %{error: changeset.errors}
+        conn
+        |> put_status(400)
+        |> render "show.json", %{error: changeset.errors}
     end
   end
 end
