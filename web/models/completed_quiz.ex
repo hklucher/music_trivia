@@ -13,7 +13,7 @@ defmodule MusicQuiz.CompletedQuiz do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:correct, :possible])
+    |> cast(params, [:correct, :possible, :name])
     |> validate_required([:correct, :possible, :name])
   end
 end

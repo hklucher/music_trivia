@@ -3,16 +3,16 @@ defmodule MusicQuiz.QuizTest do
   alias MusicQuiz.CompletedQuiz
   import MusicQuiz.Factory
 
-  @valid_attrs %{correct: 15, possible: 20, name: "Jazz Quiz"}}
+  @valid_attrs %{correct: 15, possible: 20, name: "Jazz Quiz"}
   @invalid_attrs %{}
 
   test "changest with valid attributes" do
-    changeset = CompletedQuiz.changeset(%Quiz{}, @valid_attrs)
+    changeset = CompletedQuiz.changeset(%CompletedQuiz{}, @valid_attrs)
     assert changeset.valid?
   end
 
   test "changeset with invalid attributes" do
-    changeset = Quiz.changeset(%Quiz{}, @invalid_attrs)
-    refute changest.valid?
+    changeset = CompletedQuiz.changeset(%CompletedQuiz{}, @invalid_attrs)
+    refute changeset.valid?
   end
 end

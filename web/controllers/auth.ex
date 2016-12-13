@@ -1,6 +1,5 @@
 defmodule MusicQuiz.Auth do
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-  import Plug.Conn
 
   def login(conn, user) do
     conn |> Guardian.Plug.sign_in(user, :access)
