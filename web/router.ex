@@ -29,7 +29,8 @@ defmodule MusicQuiz.Router do
     resources "/artists", ArtistController, only: [:index, :show]
     resources "/quizzes", QuizController, only: [:show, :index]
     resources "/registrations", RegistrationController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/sessions", SessionController, only: [:new, :create]
+    delete "/sessions", SessionController, :delete
   end
 
   scope "/", MusicQuiz do

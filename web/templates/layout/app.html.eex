@@ -21,6 +21,7 @@
         </li>
         <%= if logged_in?(@conn) do %>
           <li>
+            <h6><%= link("Log Out", to: session_path(@conn, :delete), method: :delete) %></h6>
           </li>
         <% else %>
           <li>
