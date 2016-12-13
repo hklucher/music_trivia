@@ -11,7 +11,7 @@ defmodule MusicQuiz.TestHelpers do
   hound_session
 
   def login(user) do
-    navigate_to("/login")
+    navigate_to("/sessions/new")
     form = find_element(:tag, "form")
     email_field = find_element(:id, "session_email")
     password_field = find_element(:id, "session_password")

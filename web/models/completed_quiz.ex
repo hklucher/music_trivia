@@ -4,6 +4,7 @@ defmodule MusicQuiz.CompletedQuiz do
   schema "completed_quizzes" do
     field :correct, :integer
     field :possible, :integer
+    field :name, :string
     
     belongs_to :user, MusicQuiz.User
 
@@ -13,6 +14,6 @@ defmodule MusicQuiz.CompletedQuiz do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:correct, :possible])
-    |> validate_required([:correct, :possible])
+    |> validate_required([:correct, :possible, :name])
   end
 end

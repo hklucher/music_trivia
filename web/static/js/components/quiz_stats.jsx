@@ -31,7 +31,7 @@ export class QuizStats extends React.Component {
     if (this.state.postedResults) {
       return <a href="#">Results added! Click to view your profile</a>;
     } else {
-      return <a href="#" onClick={this._handlePostResults.bind(this)}>Click to add your results to your profile</a>; 
+      return <a href="#" onClick={this._handlePostResults.bind(this)}>Click to add your results to your profile</a>;
     }
   }
 
@@ -51,7 +51,7 @@ export class QuizStats extends React.Component {
       })
     }).then(function(response) {
       if (response.status === 200) {
-        _this.setState({postedResults: true}); 
+        _this.setState({postedResults: true});
       } else {
         console.log(response);
       }
