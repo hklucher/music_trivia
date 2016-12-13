@@ -1,4 +1,3 @@
-require IEx
 defmodule MusicQuiz.Api.CompletedQuizController do
   use MusicQuiz.Web, :controller
   alias MusicQuiz.{CompletedQuiz, Repo, User}

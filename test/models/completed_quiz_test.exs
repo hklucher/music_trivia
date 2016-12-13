@@ -1,4 +1,4 @@
-defmodule MusicQuiz.QuizTest do
+defmodule MusicQuiz.CompletedQuizTest do
   use MusicQuiz.ModelCase
   alias MusicQuiz.CompletedQuiz
 

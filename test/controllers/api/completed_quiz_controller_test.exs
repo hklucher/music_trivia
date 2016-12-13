@@ -1,4 +1,4 @@
-defmodule MusicQuiz.Api.QuizControllerTest do
+defmodule MusicQuiz.Api.CompletedQuizControllerTest do
   use MusicQuiz.ConnCase
   import MusicQuiz.Factory
 
