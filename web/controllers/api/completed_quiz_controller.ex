@@ -1,3 +1,4 @@
+require IEx
 defmodule MusicQuiz.Api.CompletedQuizController do
   use MusicQuiz.Web, :controller
   alias MusicQuiz.{CompletedQuiz, Repo, User}
@@ -6,7 +7,7 @@ defmodule MusicQuiz.Api.CompletedQuizController do
     user = Repo.get(User, user_id)
     changeset =
       %CompletedQuiz{}
-      |> Ecto.Changeset.change(%{correct: completed_quiz_params["correct"], possible: completed_quiz_params["possible"]})
+      |> CompletedQuiz.changeset(%{correct: completed_quiz_params["correct"], possible: completed_quiz_params["possible"], name: completed_quiz_params["name"]})
       |> Ecto.Changeset.put_assoc(:user, user)
     case Repo.insert(changeset) do
       {:ok, completed_quiz} ->
