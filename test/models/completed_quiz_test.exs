@@ -1,7 +1,6 @@
 defmodule MusicQuiz.QuizTest do
   use MusicQuiz.ModelCase
   alias MusicQuiz.CompletedQuiz
-  import MusicQuiz.Factory
 
   @valid_attrs %{correct: 15, possible: 20, name: "Jazz Quiz"}
   @invalid_attrs %{}

@@ -66,6 +66,14 @@ defmodule MusicQuiz.Factory do
     }
   end
 
+  def completed_quiz_factory do
+    %MusicQuiz.CompletedQuiz{
+      name: "Indie Rock Quiz",
+      correct: 20,
+      possible: 25
+    }
+  end
+
   def insert_multiple_quizzes(amount) do
     Enum.each(1..amount, fn(i) ->
       quiz_question = insert(:question, content: "question_#{i}")

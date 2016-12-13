@@ -5,7 +5,7 @@ defmodule MusicQuiz.CompletedQuiz do
     field :correct, :integer
     field :possible, :integer
     field :name, :string
-    
+
     belongs_to :user, MusicQuiz.User
 
     timestamps
