@@ -49,6 +49,12 @@ export class QuizStats extends React.Component {
           possible: _this.props.numCorrect,
         }
       })
+    }).then(function(response) {
+      if (response.status === 200) {
+        _this.setState({postedResults: true}); 
+      } else {
+        console.log(response);
+      }
     })
   }
 }
