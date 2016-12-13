@@ -1,3 +1,7 @@
 <div class="container">
-  <%= PhoenixReactor.react_container "quiz_box", %{user_id: current_user(@conn).id} %>
+  <%= if current_user(@conn) do %>
+    <%= PhoenixReactor.react_container "quiz_box", %{user_id: current_user(@conn).id} %>
+  <%= else %>
+    <%= PhoenixReactor.react_container "quiz_box", %{user_id: nil} %>
+  <% end %>
 </div>
