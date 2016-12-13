@@ -36,6 +36,7 @@ export class QuizStats extends React.Component {
   }
 
   _handlePostResults(e) {
+    const _this = this;
     e.preventDefault();
     fetch(`/api/users/${this.props.userId}/completed_quizzes`, {
       method: 'POST',
@@ -44,7 +45,8 @@ export class QuizStats extends React.Component {
       },
       body: JSON.stringify({
         completed_quiz: {
-          // JSON body! 
+          completed: _this.props.questions.length,
+          possible: _this.props.numCorrect,
         }
       })
     })
