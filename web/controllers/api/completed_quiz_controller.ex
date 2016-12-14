@@ -4,10 +4,10 @@ defmodule MusicQuiz.Api.CompletedQuizController do
 
   def create(conn, %{"user_id" => user_id, "completed_quiz" => completed_quiz_params}) do
     user = Repo.get(User, user_id)
-    # Find a better way of getting params into a correctly formatted map
+    parsed_params = for {k, v} <- completed_quiz_params, into: %{}, do: {String.to_atom(k), v}
     changeset =
       %CompletedQuiz{}
-      |> CompletedQuiz.changeset(%{correct: completed_quiz_params["correct"], possible: completed_quiz_params["possible"], name: completed_quiz_params["name"]})
+      |> CompletedQuiz.changeset(parsed_params)
       |> Ecto.Changeset.put_assoc(:user, user)
     case Repo.insert(changeset) do
       {:ok, completed_quiz} ->
@@ -15,7 +15,7 @@ defmodule MusicQuiz.Api.CompletedQuizController do
       {:error, changeset} ->
         conn
         |> put_status(400)
-        |> render "show.json", %{error: changeset.errors}
+        |> render("show.json", %{error: changeset.errors})
     end
   end
 end

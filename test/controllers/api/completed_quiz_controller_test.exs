@@ -13,6 +13,6 @@ defmodule MusicQuiz.Api.CompletedQuizControllerTest do
     user = insert(:user)
     completed_quiz_params = %{"completed_quiz" => %{name: "", correct: nil, possible: nil}}
     conn = post build_conn, "/api/users/#{user.id}/completed_quizzes", completed_quiz_params
-    assert json_response(conn, 200)["errors"]
+    assert json_response(conn, 400)["errors"]
   end
 end
