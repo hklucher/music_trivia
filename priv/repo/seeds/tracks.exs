@@ -1,6 +1,7 @@
 defmodule MusicQuiz.Seeds.Tracks do
   alias MusicQuiz.Spotify
   alias MusicQuiz.Track
+  alias MusicQuiz.Repo
   @moduledoc """
   Module to seed track data from Spotify into DB
   """

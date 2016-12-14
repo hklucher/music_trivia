@@ -29,9 +29,14 @@ export class QuizStats extends React.Component {
 
   _displayPostResultsLink() {
     if (this.state.postedResults) {
-      return <a href="#">Results added! Click to view your profile</a>;
+      return <a href=`/users/${this.props.userId}`>Results added! Click to view your profile</a>
     } else {
-      return <a href="#" onClick={this._handlePostResults.bind(this)}>Click to add your results to your profile</a>;
+      return(
+        <a href="javascript:void(0)"
+          onClick={this._handlePostResults.bind(this)}>
+          Click to add your results to your profile
+        </a>
+      )
     }
   }
 
