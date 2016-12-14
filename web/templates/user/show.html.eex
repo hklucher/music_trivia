@@ -1,1 +1,15 @@
-<h1><%= @user.email %></h1>
+<div class="container">
+  <h3><%= @user.email %></h3>
+  <p>User since <%= @user.inserted_at %> (x years)</p>
+</div>
+
+<div class="container">
+  <table class="user_quiz_info">
+    <th>
+      <td>Quiz Name</td>
+      <td>Number Correct</td>
+      <td>Possible</td>
+      <td>Percent Correct</td>
+    </th>
+  </table>
+</div>

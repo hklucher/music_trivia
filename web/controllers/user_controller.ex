@@ -6,6 +6,7 @@ defmodule MusicQuiz.UserController do
   def show(conn, %{"id" => id}, _user, _claims) do
     conn
     |> assign(:user, Repo.get(User, id))
+    |> assign(:quizzes, User.completed_quizzes(id))
     |> render("show.html")
   end
 end

@@ -11,6 +11,11 @@ defmodule MusicQuiz.User do
     timestamps
   end
 
+  def quizzes(id) do
+    user = Repo.get(User, id) |> Repo.preload(:completed_quizzes)
+    user.completed_quizzes
+  end
+
   @required_fields ~w(email password)
 
   # TODO: add actual regex to check for valid email address
