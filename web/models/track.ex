@@ -1,6 +1,5 @@
 defmodule MusicQuiz.Track do
   use MusicQuiz.Web, :model
-  alias MusicQuiz.Album
   alias MusicQuiz.Repo
   alias MusicQuiz.Track
 

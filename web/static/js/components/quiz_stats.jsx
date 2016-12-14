@@ -28,8 +28,10 @@ export class QuizStats extends React.Component {
   }
 
   _displayPostResultsLink() {
+    if (!this.props.userId) { return; }
+
     if (this.state.postedResults) {
-      return <a href=`/users/${this.props.userId}`>Results added! Click to view your profile</a>
+      return <a href={`/users/${this.props.userId}`}>Results added! Click to view your profile</a>
     } else {
       return(
         <a href="javascript:void(0)"
@@ -50,8 +52,9 @@ export class QuizStats extends React.Component {
       },
       body: JSON.stringify({
         completed_quiz: {
-          completed: _this.props.questions.length,
+          correct: _this.props.questions.length,
           possible: _this.props.numCorrect,
+          name: _this.props.quizName
         }
       })
     }).then(function(response) {

@@ -1,6 +1,6 @@
 defmodule MusicQuiz.SessionController do
   use MusicQuiz.Web, :controller
-  alias MusicQuiz.{Session, Repo}
+  alias MusicQuiz.Repo
 
   def new(conn, _params) do
     render conn, "new.html"
@@ -9,7 +9,6 @@ defmodule MusicQuiz.SessionController do
   def create(conn, %{"session" => %{"email" => email, "password" => pass}}) do
     case MusicQuiz.Auth.login_by_email_and_pass(conn, email, pass, repo: Repo) do
       {:ok, conn} ->
-        logged_in_user = Guardian.Plug.current_resource(conn)
         conn
         |> put_flash(:info, "Logged in")
         |> redirect(to: "/")

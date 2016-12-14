@@ -6,7 +6,7 @@ defmodule MusicQuiz.GenreController do
   def index(conn, _params) do
     conn
     |> assign(:genres, Enum.chunk(Repo.all(Genre), 2))
-    |> render "index.html"
+    |> render("index.html")
   end
 
   def show(conn, %{"id" => id}) do
@@ -14,6 +14,6 @@ defmodule MusicQuiz.GenreController do
     conn
     |> assign(:genre, Repo.get(Genre, id))
     |> assign(:quizzes, Repo.all(from q in "quizzes", select: {q.id, q.name}, where: q.genre_id == ^genre_id))
-    |> render "show.html"
+    |> render("show.html")
   end
 end
