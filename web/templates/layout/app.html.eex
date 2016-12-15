@@ -23,6 +23,9 @@
           <li>
             <h6><%= link("Log Out", to: session_path(@conn, :delete), method: :delete) %></h6>
           </li>
+          <li>
+            <h6><%= link("Your Profile", to: "/users/#{current_user(@conn).id}") %></h6>
+          </li>
         <% else %>
           <li>
             <h6><%= link("Sign Up", to: registration_path(@conn, :new)) %></h6>
