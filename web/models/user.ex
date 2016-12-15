@@ -1,5 +1,6 @@
 defmodule MusicQuiz.User do
   use MusicQuiz.Web, :model
+  alias MusicQuiz.{Repo, User}
 
   schema "users" do
     field :email, :string

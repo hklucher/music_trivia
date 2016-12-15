@@ -52,8 +52,8 @@ export class QuizStats extends React.Component {
       },
       body: JSON.stringify({
         completed_quiz: {
-          correct: _this.props.questions.length,
-          possible: _this.props.numCorrect,
+          correct: _this.props.numCorrect,
+          possible: _this.props.questions.length,
           name: _this.props.quizName
         }
       })

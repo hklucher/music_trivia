@@ -5,11 +5,20 @@
 
 <div class="container">
   <table class="user_quiz_info">
-    <th>
+    <tr>
       <td>Quiz Name</td>
       <td>Number Correct</td>
       <td>Possible</td>
       <td>Percent Correct</td>
-    </th>
+    </tr>
+
+    <%= for q <- @quizzes do %>
+      <tr>
+        <td><%= q.name %></td>
+        <td><%= q.correct %></td>
+        <td><%= q.possible %></td>
+        <td><%= MusicQuiz.CompletedQuiz.percent_correct(q.id) %></td>
+      </tr>
+    <% end %>
   </table>
 </div>
