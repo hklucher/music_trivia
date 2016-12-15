@@ -1,4 +1,3 @@
-require IEx
 defmodule MusicQuiz.CompletedQuiz do
   use MusicQuiz.Web, :model
   alias MusicQuiz.CompletedQuiz

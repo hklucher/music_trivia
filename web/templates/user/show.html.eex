@@ -1,6 +1,6 @@
 <div class="container">
   <h3><%= @user.email %></h3>
-  <p>User since <%= @user.inserted_at %> (x years)</p>
+  <p>User since <%= MusicQuiz.User.join_date(@user.id) %></p>
 </div>
 
 <div class="container">

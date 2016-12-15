@@ -23,7 +23,7 @@ defmodule MusicQuiz.Mixfile do
   end
 
   def app_list do
-    [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex]
+    [:phoenix, :phoenix_html, :cowboy, :logger, :phoenix_ecto, :postgrex, :timex, :timex_ecto]
   end
 
   def app_list(:test), do: [:hound | app_list]
@@ -51,7 +51,9 @@ defmodule MusicQuiz.Mixfile do
      {:comeonin, "~> 1.0"},
      {:hound, "~> 1.0", only: :test},
      {:guardian, "~> 0.13.0"},
-     {:phoenix_reactor, "~> 0.0.3"}]
+     {:phoenix_reactor, "~> 0.0.3"},
+     {:timex, "~> 3.0"},
+     {:timex_ecto, "~> 3.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

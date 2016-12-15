@@ -1,6 +1,9 @@
 defmodule MusicQuiz.User do
   use MusicQuiz.Web, :model
   alias MusicQuiz.{Repo, User}
+  use Timex.Ecto.Timestamps
+
+  @valid_email_regex ~r/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   schema "users" do
     field :email, :string
@@ -17,14 +20,19 @@ defmodule MusicQuiz.User do
     user.completed_quizzes
   end
 
+  def join_date(id) do
+    user = Repo.get!(User, id) 
+    {:ok, date} = Timex.format(user.inserted_at, "{0M}/{D}/{YYYY}")
+    date
+  end
+
   @required_fields ~w(email password)
 
-  # TODO: add actual regex to check for valid email address
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:email, :password])
     |> unique_constraint(:email)
-    |> validate_format(:email, ~r/@/)
+    |> validate_format(:email, @valid_email_regex)
     |> validate_length(:password, min: 8)
     |> validate_required([:email, :password])
   end
