@@ -5,7 +5,7 @@ import {QuestionList} from "./question_list"
 export class QuizStats extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {current_user: {}};
+    this.state = {postedResults: false};
   }
 
   render() {
@@ -22,8 +22,48 @@ export class QuizStats extends React.Component {
           questions={this.props.questions}>
         </QuestionList>
         <a href="/">Home</a>
+        {this._displayPostResultsLink()}
       </div>
     )
+  }
+
+  _displayPostResultsLink() {
+    if (!this.props.userId) { return; }
+
+    if (this.state.postedResults) {
+      return <a href={`/users/${this.props.userId}`}>Results added! Click to view your profile</a>
+    } else {
+      return(
+        <a href="javascript:void(0)"
+          onClick={this._handlePostResults.bind(this)}>
+          Click to add your results to your profile
+        </a>
+      )
+    }
+  }
+
+  _handlePostResults(e) {
+    const _this = this;
+    e.preventDefault();
+    fetch(`/api/users/${this.props.userId}/completed_quizzes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        completed_quiz: {
+          correct: _this.props.numCorrect,
+          possible: _this.props.questions.length,
+          name: _this.props.quizName
+        }
+      })
+    }).then(function(response) {
+      if (response.status === 200) {
+        _this.setState({postedResults: true});
+      } else {
+        console.log(response);
+      }
+    })
   }
 }
 

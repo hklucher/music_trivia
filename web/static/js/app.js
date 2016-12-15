@@ -16,6 +16,11 @@ import "./components/quiz_box"
 import "./components/answers_box"
 import "./components/question_box"
 
+import {exportComponent} from "./phoenix_reactor"
+import {QuizBox} from "./components/quiz_box"
+
+exportComponent("quiz_box", QuizBox)
+
 // Import local files
 //
 // Local files can be imported directly using relative

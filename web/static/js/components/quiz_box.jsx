@@ -5,9 +5,9 @@ import {QuestionBox} from "./question_box"
 import {Question} from "./question"
 import {QuizStats} from "./quiz_stats"
 
-class QuizBox extends React.Component {
-  constructor() {
-    super();
+export class QuizBox extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       quiz: {},
       score: 0,
@@ -58,7 +58,8 @@ class QuizBox extends React.Component {
         <QuizStats
           questions={this.state.completedQuestions}
           numCorrect={this.state.score}
-          quizName={this.state.quiz.name}>
+          quizName={this.state.quiz.name}
+          userId={this.props.userId}>
         </QuizStats>
       )
     }
@@ -110,6 +111,6 @@ class QuizBox extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <QuizBox/>, document.getElementById("quiz_container")
-)
+// ReactDOM.render(
+  // <QuizBox/>, document.getElementById("quiz_container")
+// )

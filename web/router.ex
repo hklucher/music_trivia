@@ -29,16 +29,18 @@ defmodule MusicQuiz.Router do
     resources "/artists", ArtistController, only: [:index, :show]
     resources "/quizzes", QuizController, only: [:show, :index]
     resources "/registrations", RegistrationController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/sessions", SessionController, only: [:new, :create]
+    delete "/sessions", SessionController, :delete
   end
 
   scope "/", MusicQuiz do
     pipe_through [:browser, :browser_auth]
-    resources "/users", UserController, only: [:show, :index, :update]
+    resources "/users", UserController, only: [:show]
   end
 
   scope "/api", MusicQuiz do
     pipe_through :api
     get "/quizzes/:id", Api.QuizController, :show
+    post "/users/:user_id/completed_quizzes", Api.CompletedQuizController, :create
   end
 end

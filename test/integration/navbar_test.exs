@@ -28,4 +28,15 @@ defmodule MusicQuiz.NavbarTest do
     navigate_to("/")
     assert {:ok, _} = search_element(:link_text, "Log In", 0)
   end
+
+  test "has a link to a users profile when logged in" do
+    user = insert(:user)
+    login(user)
+    assert {:ok, _} = search_element(:link_text, "Your Profile", 0)
+  end
+
+  test "does not have a link to a users profile when not logged in" do
+    navigate_to("/")
+    assert {:error, _} = search_element(:link_text, "Your Profile", 0)
+  end
 end

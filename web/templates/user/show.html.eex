@@ -1,0 +1,24 @@
+<div class="container">
+  <h3><%= @user.email %></h3>
+  <p>User since <%= MusicQuiz.User.join_date(@user.id) %></p>
+</div>
+
+<div class="container">
+  <table class="user_quiz_info">
+    <tr>
+      <td>Quiz Name</td>
+      <td>Number Correct</td>
+      <td>Possible</td>
+      <td>Percent Correct</td>
+    </tr>
+
+    <%= for q <- @quizzes do %>
+      <tr>
+        <td><%= q.name %></td>
+        <td><%= q.correct %></td>
+        <td><%= q.possible %></td>
+        <td><%= MusicQuiz.CompletedQuiz.percent_correct(q.id) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
