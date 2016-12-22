@@ -15,7 +15,7 @@ config :music_quiz, MusicQuiz.Endpoint,
 config :music_quiz, MusicQuiz.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("DATABASE_USERNAME"),
-  password: System.get_env("DATABASE_PASSWORD")
+  password: System.get_env("DATABASE_PASSWORD"),
   # username: "postgres",
   # password: "postgres",
   database: "music_quiz_prod",
