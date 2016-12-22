@@ -13,8 +13,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :music_quiz, MusicQuiz.Endpoint,
   http: [port: {:system, "PORT"}],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
-  url: System.get_env("DATABASE_URL"),
+  # secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  # url: System.get_env("DATABASE_URL"),
   cache_static_manifest: "priv/static/manifest.json",
   adapter: Ecto.Adapters.Postgres,
   size: 20
