@@ -14,6 +14,7 @@ use Mix.Config
 config :music_quiz, MusicQuiz.Endpoint,
   http: [port: {:system, "PORT"}],
   # secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  url: [scheme: "https", host: "stormy-falls-82572.herokuapp.com", port: 443],
   # url: System.get_env("DATABASE_URL"),
   cache_static_manifest: "priv/static/manifest.json",
   adapter: Ecto.Adapters.Postgres,
@@ -58,7 +59,14 @@ config :logger, level: :info
 #
 #     config :music_quiz, MusicQuiz.Endpoint, server: true
 #
+config :music_quiz, MusicQuiz.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  # username: System.get_env("DATABASE_USERNAME"),
+  # password: System.get_env("DATABASE_PASSWORD"),
+  # database: System.get_env("DATABASE_NAME"),
+  pool_size: 20
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
