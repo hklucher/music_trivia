@@ -16,7 +16,7 @@ config :music_quiz, MusicQuiz.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: System.get_env("DATABASE_USERNAME"),
   password: System.get_env("DATABASE_PASSWORD"),
-  database: "music_quiz_heroku_prod",
+  database: System.get_env("DATABASE_NAME"),
   pool_size: 20
 
 System.get_env("DATABASE_PASSWORD")
