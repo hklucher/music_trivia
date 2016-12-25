@@ -39,6 +39,6 @@ defmodule MusicQuiz.Album do
               on: at.album_id == a.id,
               where: a.id != ^id,
               limit: ^limit
-    Repo.all(query)
+    Repo.all(query) |> Enum.uniq_by(&(&1.name))
   end
 end
