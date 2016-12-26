@@ -1,6 +1,14 @@
 .quiz_column {
   height: 150px;
   text-align: center;
-  padding-top: 5%;
   background-color: rgba(238, 238, 238, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+  }
 }
