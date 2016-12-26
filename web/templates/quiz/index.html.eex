@@ -13,6 +13,11 @@
   </div>
 </div>
 
+<div class="container">
+  <span><%= Enum.count(@quizzes) %> quizzes currently available</span>
+  <hr>
+</div>
+
 <%= for sub_list <- @quizzes do %>
   <div class="container">
     <%= for quiz <- sub_list do %>
