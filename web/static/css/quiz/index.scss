@@ -1,6 +1,47 @@
+@import '../bourbon/bourbon';
+@import '../neat/neat';
+@import '../variables/colors';
+@import '../grid-settings';
+@import '../mixins/vertical-align';
+
+.jumbotron {
+  @include media($mobile) {
+    padding: 6px;
+    p {
+      font-size: 14px;
+      line-height: 200%;
+    }
+  }
+}
+
 .quiz_column {
+  // Standard
+  @include span-columns(4);
+  background-color: silver;
   height: 150px;
   text-align: center;
-  padding-top: 5%;
   background-color: rgba(238, 238, 238, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    align-items: center;
+  }
+
+  // Mobile
+  @include media($mobile) {
+    @include span-columns(12);
+    max-width: 100%;
+
+    a {
+      @include vertical-align;
+      font-size: 25px;
+    }
+  }
 }

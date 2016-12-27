@@ -1,10 +1,19 @@
 @import 'bourbon/bourbon';
 @import 'neat/neat';
 @import 'variables/colors';
+@import 'grid-settings';
+@import 'mixins/vertical-align';
+$mobile: new-breakpoint(max-width 480px 4);
 
-.container {
-  @include outer-container;
-  margin: 20px;
+main {
+  @include media($mobile) {
+    max-width: 480px;
+  }
+
+  .container {
+    @include outer-container;
+    position: relative;
+  }
 }
 
 .column {
@@ -23,11 +32,6 @@
 
 .column_2 {
   @include span-columns(6);
-  background-color: silver;
-}
-
-.column_3 {
-  @include span-columns(4);
   background-color: silver;
 }
 
