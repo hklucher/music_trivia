@@ -14,21 +14,7 @@ main {
     @include outer-container;
     position: relative;
   }
-
-
-  .row {
-    @include row();
-  }
 }
-
-// .column_3 {
-//   @include span-columns(6);
-//   @include media($mobile) {
-//     @include span-columns(6);
-//   }
-//   background-color: silver;
-// }
-
 
 .column {
   background-color: lighten($base-grey, 20%);

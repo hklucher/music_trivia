@@ -4,6 +4,16 @@
 @import '../grid-settings';
 @import '../mixins/vertical-align';
 
+.jumbotron {
+  @include media($mobile) {
+    padding: 6px;
+    p {
+      font-size: 14px;
+      line-height: 200%;
+    }
+  }
+}
+
 .quiz_column {
   // Standard
   @include span-columns(4);
