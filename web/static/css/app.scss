@@ -3,6 +3,7 @@
 @import 'variables/colors';
 @import 'grid-settings';
 @import 'mixins/vertical-align';
+@import 'common/form';
 $mobile: new-breakpoint(max-width 480px 4);
 
 main {
@@ -26,15 +27,6 @@ main {
   }
 }
 
-.column_12 {
-  @include span-columns(12);
-}
-
-.column_2 {
-  @include span-columns(6);
-  background-color: silver;
-}
-
 .serif {
   font-family: Georiga !important;
 }
@@ -44,5 +36,5 @@ main {
 }
 
 body {
-  background-color: white !important;
+  background-color: $white !important;
 }
