@@ -28,6 +28,7 @@
 .quiz_column {
   // Standard
   @include span-columns(4);
+  @include omega;
   height: 150px;
   text-align: center;
   background-color: rgba(238, 238, 238, 1);
@@ -36,13 +37,13 @@
   justify-content: center;
   position: relative;
   margin-bottom: 20px;
+  font-family: "dejavu";
 
   a {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
     align-items: center;
-    font-family: "dejavu";
   }
 
   // Mobile

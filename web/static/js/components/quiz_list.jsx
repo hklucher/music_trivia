@@ -4,10 +4,26 @@ import ReactDOM from "react-dom"
 export class QuizList extends React.Component {
   constructor(props) {
     super(props)
-    debugger;
   }
 
   render() {
-    return <div></div>
+    return(
+      <div className="container">
+        {this._listQuizzes()}
+      </div>
+    )
   }
+
+  _listQuizzes() {
+    const quizzes = this.props.quizzes.map((quiz) =>
+      <div className="quiz_column" key={quiz.id}>
+        {quiz.name}
+      </div>
+    );
+    return quizzes;
+  }
+}
+
+QuizList.propTypes = {
+  quizzes: React.PropTypes.array
 }
