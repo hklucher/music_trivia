@@ -28,7 +28,7 @@
 
     <div class="container">
       <div class="form-group">
-        <%= submit "Sign up", class: "animated-btn" %>
+        <%= submit "Sign up", class: "btn" %>
       </div>
     </div>
   </div>

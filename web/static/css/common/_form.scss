@@ -5,6 +5,7 @@
   background-color: $grey;
   padding: 0 !important;
   align-items: center;
+  border-shadow: 2px;
 
   .form-header {
     color: darken($grey, 50%);
@@ -22,6 +23,23 @@
 
   label {
     color: darken($grey, 50%);
+    font-family: "dejavu";
+  }
+
+  .btn {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0px;
+    font-family: Arial;
+    color: darken($grey, 50%);
+    font-size: 20px;
+    background-color: $taupe;
+    padding: 9px 20px 10px 20px;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $quick-silver;
+    }
   }
 }
 
