@@ -17,10 +17,18 @@ export class QuizList extends React.Component {
   _listQuizzes() {
     const quizzes = this.props.quizzes.map((quiz) =>
       <div className="quiz_column" key={quiz.id}>
-        {quiz.name}
+        {this._titleizeQuiz(quiz.name)}
       </div>
     );
     return quizzes;
+  }
+
+  _titleizeQuiz(quizName) {
+    const words = quizName.split(" ");
+    const capitalized = words.map((word) =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    );
+    return capitalized.join(" ");
   }
 }
 
