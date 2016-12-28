@@ -5,11 +5,22 @@
 @import '../mixins/vertical-align';
 
 .jumbotron {
+  padding-top: 1.5em;
+
+  h2 {
+    font-family: "brawler";
+  }
+
+  p {
+    font-family: "dejavu";
+    font-size: 1.3em;
+  }
+
   @include media($mobile) {
     padding: 6px;
     p {
       font-size: 14px;
-      line-height: 200%;
+      line-height: 150%;
     }
   }
 }
@@ -17,7 +28,6 @@
 .quiz_column {
   // Standard
   @include span-columns(4);
-  background-color: silver;
   height: 150px;
   text-align: center;
   background-color: rgba(238, 238, 238, 1);
@@ -32,6 +42,7 @@
     vertical-align: middle;
     line-height: normal;
     align-items: center;
+    font-family: "dejavu";
   }
 
   // Mobile
