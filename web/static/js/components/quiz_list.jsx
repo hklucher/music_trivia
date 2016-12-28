@@ -17,7 +17,7 @@ export class QuizList extends React.Component {
   _listQuizzes() {
     const quizzes = this.props.quizzes.map((quiz) =>
       <div className="quiz_column" key={quiz.id} onClick={() => this._linkToQuiz(quiz)}>
-        {this._titleizeQuiz(quiz.name)}
+        <p>{this._titleizeQuiz(quiz.name)}</p>
       </div>
     );
     return quizzes;

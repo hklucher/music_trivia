@@ -40,7 +40,15 @@
   font-family: "dejavu";
   margin: 5px;
 
-  a {
+  &:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 0 25px #53a7ea;
+    p {
+      font-size: 16px;
+    }
+  }
+
+  p {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
