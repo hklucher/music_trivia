@@ -1,12 +1,12 @@
 defmodule MusicQuiz.QuizController do
-  require Logger
   use MusicQuiz.Web, :controller
   alias MusicQuiz.Repo
   alias MusicQuiz.Quiz
 
   def index(conn, _params) do
+    quizzes = Quiz.have_questions |> Enum.map(fn(x) -> Map.take(x, [:id, :name]) end)
     conn
-    |> assign(:quizzes, Enum.chunk(Quiz.have_questions, 3, 3, []))
+    |> assign(:quizzes, quizzes)
     |> render("index.html")
   end
 

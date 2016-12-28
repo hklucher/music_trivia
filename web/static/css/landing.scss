@@ -5,12 +5,3 @@
   margin-top: 1.5em;
   @include span-columns(12);
 }
-
-p {
-  font-family: Helvetica;
-  line-height: 30px;
-}
-
-.col_header {
-  font-family: Georgia !important;
-}

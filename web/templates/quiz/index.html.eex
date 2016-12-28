@@ -18,12 +18,6 @@
   <hr>
 </div>
 
-<%= for sub_list <- @quizzes do %>
-  <div class="container">
-    <%= for quiz <- sub_list do %>
-      <div class="column_3 quiz_column">
-        <%= link(titleize(quiz.name), to: quiz_path(@conn, :show, quiz.id)) %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+<div class="container">
+  <%= PhoenixReactor.react_container "quiz_list", %{quizzes: @quizzes} %>
+</div>
