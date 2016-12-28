@@ -16,7 +16,7 @@ export class QuizList extends React.Component {
 
   _listQuizzes() {
     const quizzes = this.props.quizzes.map((quiz) =>
-      <div className="quiz_column" key={quiz.id}>
+      <div className="quiz_column" key={quiz.id} onClick={() => this._linkToQuiz(quiz)}>
         {this._titleizeQuiz(quiz.name)}
       </div>
     );
@@ -29,6 +29,10 @@ export class QuizList extends React.Component {
       word.charAt(0).toUpperCase() + word.slice(1)
     );
     return capitalized.join(" ");
+  }
+
+  _linkToQuiz(quiz) {
+    window.location.assign(`/quizzes/${quiz.id}`);
   }
 }
 
