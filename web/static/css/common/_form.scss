@@ -1,19 +1,30 @@
 @import '../variables/colors';
 @import 'fonts';
+@import 'mixins/vertical-align';
 .form-container {
   background-color: $grey;
   padding: 0 !important;
+  align-items: center;
+
+  .form-header {
+    color: darken($grey, 50%);
+
+    h1 {
+      margin-top: 1em;
+      @include vertical-align;
+      font-family: "dejavu";
+      vertical-align: middle;
+    }
+    background-color: $taupe;
+    width: 100%;
+    margin: 0;
+  }
+
+  label {
+    color: darken($grey, 50%);
+  }
 }
 
 .form-group {
   @include span-columns(6);
-}
-
-.form-header {
-  h1 {
-    font-family: "advent-pro"
-  }
-  background-color: $taupe;
-  width: 100%;
-  margin: 0;
 }
