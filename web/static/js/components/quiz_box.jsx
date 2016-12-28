@@ -44,8 +44,8 @@ export class QuizBox extends React.Component {
       }
       return (
         <div>
-          <h1 className="serif">{this.state.quiz.name}</h1>
-          <p>Question {this.state.currentQuestionNumber}/{questionLength}</p>
+          <h1 className="quiz_header">{this.state.quiz.name}</h1>
+          <p className="sans-serif">Question {this.state.currentQuestionNumber}/{questionLength}</p>
           <Question
             content={this.state.currentQuestion.content}
             responses={this.state.currentQuestion.responses}

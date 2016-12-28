@@ -15,12 +15,12 @@ export class Question extends React.Component {
   render() {
     return (
       <div>
-        <p className="sans-serif">{this.props.content}</p>
+        <p className="serif question_content">{this.props.content}</p>
         <ResponsesBox
           responses={this.props.responses}
           handleChange={this.handleChange.bind(this)}>
         </ResponsesBox>
-        <button onClick={this.handleSubmit.bind(this)}>Submit</button>
+        <button className="btn" onClick={this.handleSubmit.bind(this)}>Submit</button>
       </div>
     )
   }
