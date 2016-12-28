@@ -110,7 +110,3 @@ export class QuizBox extends React.Component {
     }
   }
 }
-
-// ReactDOM.render(
-  // <QuizBox/>, document.getElementById("quiz_container")
-// )

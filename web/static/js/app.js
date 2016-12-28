@@ -15,11 +15,14 @@ import "phoenix_html"
 import "./components/quiz_box"
 import "./components/answers_box"
 import "./components/question_box"
+import "./components/quiz_list"
 
 import {exportComponent} from "./phoenix_reactor"
 import {QuizBox} from "./components/quiz_box"
+import {QuizList} from "./components/quiz_list"
 
 exportComponent("quiz_box", QuizBox)
+exportComponent("quiz_list", QuizList)
 
 // Import local files
 //
