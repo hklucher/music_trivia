@@ -61,10 +61,7 @@ config :logger, level: :info
 #
 config :music_quiz, MusicQuiz.Repo,
   adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  # username: System.get_env("DATABASE_USERNAME"),
-  # password: System.get_env("DATABASE_PASSWORD"),
-  # database: System.get_env("DATABASE_NAME"),
+  url: System.get_env("HEROKU_POSTGRESQL_WHITE_URL"),
   pool_size: 20
 
 # Finally import the config/prod.secret.exs
