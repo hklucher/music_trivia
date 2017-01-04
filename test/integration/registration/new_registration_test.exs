@@ -16,10 +16,18 @@ defmodule MusicQuiz.NewRegistrationTest do
 
   test "displays the home page after registering" do
     navigate_to("/registrations/new")
-    form = find_element(:tag, "form")
     fill_field({:id, "user_email"}, "email@email.com")
     fill_field({:id, "user_password"}, "password")
-    submit_element(form)
+    submit_element({:tag, "form"})
     assert page_source =~ "What is it?"
+  end
+
+  test "logs the user in after registration" do
+    navigate_to("/registrations/new")
+    fill_field({:id, "user_email"}, "email@email.com")
+    fill_field({:id, "user_password"}, "password")
+    submit_element({:tag, "form"})
+    assert find_element(:link_text, "Log Out")
+    assert find_element(:link_text, "Your Profile")
   end
 end
