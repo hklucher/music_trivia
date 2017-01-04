@@ -18,5 +18,3 @@ config :music_quiz, MusicQuiz.Repo,
   password: System.get_env("DATABASE_PASSWORD"),
   database: System.get_env("DATABASE_NAME"),
   pool_size: 20
-
-System.get_env("DATABASE_PASSWORD")
