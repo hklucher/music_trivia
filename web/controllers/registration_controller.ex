@@ -10,9 +10,9 @@ defmodule MusicQuiz.RegistrationController do
   def create(conn, %{"user" => user_params}) do
     changeset = User.changeset(%User{}, user_params)
     case Registration.create(changeset, Repo) do
-      {:ok, changeset} ->
+      {:ok, user} ->
         conn
-        |> put_session(:current_user, changeset.id)
+        |> Guardian.Plug.sign_in(user, :access)
         |> put_flash(:info, "Successfully signed up! Welcome.")
         |> redirect(to: "/")
       {:error, changeset} ->
