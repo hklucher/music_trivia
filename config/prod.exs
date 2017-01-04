@@ -62,7 +62,8 @@ config :logger, level: :info
 config :music_quiz, MusicQuiz.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: "#{System.get_env("HEROKU_POSTGRESQL_WHITE_URL")}",
-  pool_size: 20
+  pool_size: 20,
+  ssl: true
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
