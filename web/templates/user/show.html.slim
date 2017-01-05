@@ -9,6 +9,20 @@
       td Number Correct
       td Possible
       td Percent Correct
+
+.container
+  h3 Tell us about yourself.
+  = form_for MusicQuiz.User.changeset(@user), user_path(MusicQuiz.Endpoint, :update, @user.id), fn f ->
+    label First name
+    = text_input f, :first_name, class: "form-control"
+    = error_tag f, :first_name
+    label Last name
+    = text_input f, :last_name, class: "form-control"
+    = error_tag f, :last_name
+    label Email
+    = text_input f, :email, class: "form-control"
+    = error_tag f, :email
+    = submit "Submit", class: "btn"
   
   = for q <- @quizzes do
     td
