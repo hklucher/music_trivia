@@ -4,8 +4,8 @@ defmodule MusicQuiz.Api.QuizController do
   alias MusicQuiz.Quiz
 
   def show(conn, %{"id" => id}) do
-    quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
-    questions = Quiz.questions_for_use(quiz) |> Repo.preload([:responses, :answer])
+    quiz = Quiz |> Repo.get(id) |> Repo.preload(:questions)
+    questions = quiz |> Quiz.questions_for_use |> Repo.preload([:responses, :answer])
     render conn, "show.json", %{quiz: quiz, questions: questions}
   end
 end

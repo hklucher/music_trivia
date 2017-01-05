@@ -24,11 +24,11 @@ defmodule MusicQuiz.Album do
   end
 
   def tracks(id) when is_integer(id) do
-    (Repo.get(Album, id) |> Repo.preload(:tracks)).tracks
+    (Album |> Repo.get(id) |> Repo.preload(:tracks)).tracks
   end
 
   def tracks(album) do
-    (Repo.get(Album, album.id) |> Repo.preload(:tracks)).tracks
+    (Album |> Repo.get(album.id) |> Repo.preload(:tracks)).tracks
   end
 
   def not_owned_tracks(id, limit \\ 50) when is_integer(id) do
@@ -39,6 +39,6 @@ defmodule MusicQuiz.Album do
               on: at.album_id == a.id,
               where: a.id != ^id,
               limit: ^limit
-    Repo.all(query) |> Enum.uniq_by(&(&1.name))
+    query |> Repo.all |> Enum.uniq_by(&(&1.name))
   end
 end

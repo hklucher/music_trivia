@@ -1,5 +1,6 @@
 defmodule MusicQuiz.Artist do
   use MusicQuiz.Web, :model
+
   alias MusicQuiz.Repo
   alias MusicQuiz.Artist
   alias MusicQuiz.Album
@@ -50,11 +51,11 @@ defmodule MusicQuiz.Artist do
   end
 
   def did_not_write_album(album_id) when is_integer(album_id) do
-    Repo.all(query_for_not_written_albums(album_id)) |> Enum.uniq
+    album_id |> query_for_not_written_albums |> Repo.all |> Enum.uniq
   end
 
   def did_not_write_album(album) do
-    Repo.all(query_for_not_written_albums(album.id)) |> Enum.uniq
+    album.id |> query_for_not_written_albums |> Repo.all |> Enum.uniq
   end
 
   defp query_for_not_written_albums(album_id) do

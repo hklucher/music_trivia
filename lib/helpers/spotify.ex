@@ -20,8 +20,8 @@ defmodule MusicQuiz.Spotify do
     case response do
       %HTTPoison.Response{body: %{"error" => %{"message" => message, "status" => _status}}} ->
         {:error, message}
-      %HTTPoison.Response{body: albums} ->
-        {:ok, albums}
+      %HTTPoison.Response{body: albums_json} ->
+        {:ok, albums_json}
     end
   end
 
