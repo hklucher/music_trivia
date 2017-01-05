@@ -15,11 +15,11 @@ defmodule MusicQuiz.UserController do
 
   def update(conn, %{"user" => user_params, "id" => user_id}, _user, _claims) do
     user = Repo.get(User, user_id)
-    changeset = User.changeset(%User{}, user_params)
+    changeset = User.changeset(:update, user, user_params)
     case Repo.update(changeset) do
       {:ok, user_struct} ->
         conn
-        |> put_flash(:success, "Updated your info!")
+        |> put_flash(:success, "Updated your info")
         |> assign(:user, user)
         |> assign(:quizzes, User.quizzes(user_id))
         |> render("show.html")
