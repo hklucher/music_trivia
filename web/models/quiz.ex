@@ -1,8 +1,6 @@
 defmodule MusicQuiz.Quiz do
-  @moduledoc """
-  Represents a quiz. A quiz belongs to a genre and has many questions through quiz_questions.
-  """
   use MusicQuiz.Web, :model
+
   alias MusicQuiz.Question
   alias MusicQuiz.Repo
   alias MusicQuiz.Quiz
@@ -25,15 +23,16 @@ defmodule MusicQuiz.Quiz do
   end
 
   def questions_for_use(quiz_id) when is_integer(quiz_id) do
-    Repo.all(query_for_questions(quiz_id)) |> Enum.take_random(20)
+    quiz_id |> query_for_questions |> Repo.all |> Enum.take_random(20)
   end
 
   def questions_for_use(quiz) do
-    Repo.all(query_for_questions(quiz.id)) |> Enum.take_random(20)
+    quiz.id |> query_for_questions |> Repo.all |> Enum.take_random(20)
   end
 
   def have_questions do
-    Repo.all(Quiz)
+    Quiz
+    |> Repo.all
     |> Repo.preload(:questions)
     |> Enum.filter(fn(q) -> length(q.questions) >= 1 end)
   end

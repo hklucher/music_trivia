@@ -1,8 +1,6 @@
 defmodule MusicQuiz.Artist do
-  @moduledoc """
-  Represents a band/artist. One to many with albums, many to many genres.
-  """
   use MusicQuiz.Web, :model
+
   alias MusicQuiz.Repo
   alias MusicQuiz.Artist
   alias MusicQuiz.Album
@@ -53,18 +51,18 @@ defmodule MusicQuiz.Artist do
   end
 
   def did_not_write_album(album_id) when is_integer(album_id) do
-    Repo.all(query_for_not_written_albums(album_id)) |> Enum.uniq
+    album_id |> query_for_not_written_albums |> Repo.all |> Enum.uniq
   end
 
   def did_not_write_album(album) do
-    Repo.all(query_for_not_written_albums(album.id)) |> Enum.uniq
+    album.id |> query_not_written_for_albums |> Repo.all |> Enum.uniq
   end
 
   defp query_for_not_written_albums(album_id) do
     from a in Artist,
       join: al in "albums",
       on: al.artist_id == a.id,
-      where: al.id != ^album_id
+      where: al.id != ^album_id,
   end
 
   def who_have_albums do

@@ -1,9 +1,9 @@
-require IEx
 defmodule MusicQuiz.Api.QuizView do
   use MusicQuiz.Web, :view
 
   def titleize(quiz_name) do
-    String.split(quiz_name, " ")
+    quiz_name
+    |> String.split(" ")
     |> Enum.map(fn(x) -> String.capitalize(x) end)
     |> Enum.join(" ")
   end
@@ -22,7 +22,8 @@ defmodule MusicQuiz.Api.QuizView do
 
   defp questions_json(questions) do
     Enum.map(questions, fn(question) ->
-      Map.take(question, [:id, :content, :answer_id])
+      question
+      |> Map.take([:id, :content, :answer_id])
       |> Map.put(:responses, responses_json(question))
       |> Map.put(:answer, answer_json(question.answer))
     end)

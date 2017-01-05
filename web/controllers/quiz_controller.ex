@@ -11,7 +11,7 @@ defmodule MusicQuiz.QuizController do
   end
 
   def show(conn, %{"id" => id}) do
-    quiz = Repo.get(Quiz, id) |> Repo.preload(:questions)
+    quiz = Quiz |> Repo.get(id) |> Repo.preload(:questions)
     conn
     |> assign(:quiz, quiz)
     |> assign(:questions, Quiz.questions_for_use(quiz))

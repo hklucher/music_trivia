@@ -1,8 +1,4 @@
 defmodule MusicQuiz.User do
-  @moduledoc """
-  Represents a user. Has many completed quizzes.
-  """
-
   @valid_email_regex ~r/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
   use MusicQuiz.Web, :model
@@ -21,7 +17,7 @@ defmodule MusicQuiz.User do
   end
 
   def quizzes(id) do
-    user = Repo.get(User, id) |> Repo.preload(:completed_quizzes)
+    user = User |> Repo.get(id) |> Repo.preload(:completed_quizzes)
     user.completed_quizzes
   end
 
