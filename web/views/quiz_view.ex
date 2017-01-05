@@ -4,8 +4,9 @@ defmodule MusicQuiz.QuizView do
   alias MusicQuiz.Genre
 
   def titleize(quiz_name) do
-    String.split(quiz_name, " ")
-    |> Enum.map(fn(x) -> String.capitalize(x) end)
+    quiz_name
+    |> String.split(" ")
+    |> Enum.map(&String.capitalize/1)
     |> Enum.join(" ")
   end
 

@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Question do
+  @moduledoc """
+  Represents a question. Has one answer and many responses, and can have many quizzes.
+  """
   use MusicQuiz.Web, :model
 
   schema "questions" do

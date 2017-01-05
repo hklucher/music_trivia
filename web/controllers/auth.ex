@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Auth do
+  @moduledoc """
+  Module to authenticate and log in a user using Guardian.
+  """
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   def login(conn, user) do

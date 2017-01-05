@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Artist do
+  @moduledoc """
+  Represents a band/artist. One to many with albums, many to many genres.
+  """
   use MusicQuiz.Web, :model
   alias MusicQuiz.Repo
   alias MusicQuiz.Artist

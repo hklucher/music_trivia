@@ -1,4 +1,7 @@
 defmodule MusicQuiz.GuardianSerializer do
+  @moduledoc """
+  Guardian serializer to authorize users.
+  """
   @behaviour Guardian.Serializer
 
   alias MusicQuiz.Repo

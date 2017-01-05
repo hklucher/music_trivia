@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Quiz do
+  @moduledoc """
+  Represents a quiz. A quiz belongs to a genre and has many questions through quiz_questions.
+  """
   use MusicQuiz.Web, :model
   alias MusicQuiz.Question
   alias MusicQuiz.Repo

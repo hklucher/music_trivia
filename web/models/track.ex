@@ -1,4 +1,7 @@
 defmodule MusicQuiz.Track do
+  @moduledoc """
+  Represents a song. A track has many albums and can belong to many albums.
+  """
   use MusicQuiz.Web, :model
   alias MusicQuiz.Repo
   alias MusicQuiz.Track
@@ -24,7 +27,6 @@ defmodule MusicQuiz.Track do
     |> validate_required(@required_fields)
   end
 
-  # TODO: Figure out how to add limit as a keyword argument with a default of 15
   def not_on_album(album) do
     album_id = album.id
     query =

@@ -1,9 +1,14 @@
 defmodule MusicQuiz.User do
-  use MusicQuiz.Web, :model
-  alias MusicQuiz.{Repo, User}
-  use Timex.Ecto.Timestamps
+  @moduledoc """
+  Represents a user. Has many completed quizzes.
+  """
 
   @valid_email_regex ~r/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
+  use MusicQuiz.Web, :model
+  use Timex.Ecto.Timestamps
+
+  alias MusicQuiz.{Repo, User}
 
   schema "users" do
     field :email, :string
@@ -21,7 +26,7 @@ defmodule MusicQuiz.User do
   end
 
   def join_date(id) do
-    user = Repo.get!(User, id) 
+    user = Repo.get!(User, id)
     {:ok, date} = Timex.format(user.inserted_at, "{0M}/{D}/{YYYY}")
     date
   end

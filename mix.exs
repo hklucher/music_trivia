@@ -10,7 +10,7 @@ defmodule MusicQuiz.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases(),
-     deps: deps()]
+     deps: deps]
   end
 
   # Configuration for the OTP application.
@@ -53,7 +53,8 @@ defmodule MusicQuiz.Mixfile do
      {:guardian, "~> 0.13.0"},
      {:phoenix_reactor, "~> 0.0.3"},
      {:timex, "~> 3.0"},
-     {:timex_ecto, "~> 3.0"}]
+     {:timex_ecto, "~> 3.0"},
+     {:credo, "~> 0.5", only: [:dev, :test]}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
