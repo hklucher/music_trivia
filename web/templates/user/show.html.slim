@@ -1,5 +1,5 @@
 .container
-  h3 = @user.email
+  h3 = display_name(@user)
   p User since #{MusicQuiz.User.join_date(@user.id)}
   
 .container
