@@ -1,0 +1,19 @@
+.container
+  h3 = @user.email
+  p User since #{MusicQuiz.User.join_date(@user.id)}
+  
+.container
+  table.user_quiz_info
+    tr
+      td Quiz Name
+      td Number Correct
+      td Possible
+      td Percent Correct
+  
+  = for q <- @quizzes do
+    td
+      td = q.name
+      td = q.correct
+      td = q.possible
+      td = MusicQuiz.CompletedQuiz.percent_correct(q.id)
+  
