@@ -1,6 +1,6 @@
 .container
   h3 = display_name(@user)
-  p User since #{MusicQuiz.User.join_date(@user.id)}
+  p User since #{User.join_date(@user.id)}
   
 .container
   table.user_quiz_info
@@ -12,7 +12,7 @@
 
 .container
   h3 Tell us about yourself.
-  = form_for MusicQuiz.User.changeset(@user), user_path(MusicQuiz.Endpoint, :update, @user.id), fn f ->
+  = form_for User.changeset(@user), user_path(Endpoint, :update, @user.id), fn f ->
     label First name
     = text_input f, :first_name, class: "form-control"
     = error_tag f, :first_name

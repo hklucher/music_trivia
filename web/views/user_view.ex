@@ -1,8 +1,9 @@
 defmodule MusicQuiz.UserView do
   use MusicQuiz.Web, :view
-  
+
   alias MusicQuiz.Repo
   alias MusicQuiz.User
+  alias MusicQuiz.Endpoint
 
   def render("show.json", %{user: user}) do
     Map.take(user, [:id, :email])
