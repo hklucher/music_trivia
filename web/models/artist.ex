@@ -55,14 +55,14 @@ defmodule MusicQuiz.Artist do
   end
 
   def did_not_write_album(album) do
-    album.id |> query_not_written_for_albums |> Repo.all |> Enum.uniq
+    album.id |> query_for_not_written_albums |> Repo.all |> Enum.uniq
   end
 
   defp query_for_not_written_albums(album_id) do
     from a in Artist,
       join: al in "albums",
       on: al.artist_id == a.id,
-      where: al.id != ^album_id,
+      where: al.id != ^album_id
   end
 
   def who_have_albums do
