@@ -7,23 +7,25 @@
     = if Enum.any?(@quizzes) do
       h3 Saved quizzes: #{Enum.count(@quizzes)}
       table.user_quiz_info
-        tr
-          td Quiz Name
-          td Number Correct
-          td Possible
-          td Percent Correct
-      = for q <- @quizzes do
-        tr
-          td = q.name
-          td = q.correct
-          td = q.possible
-          td = MusicQuiz.CompletedQuiz.percent_correct(q.id)
+        thead
+          tr
+            th Quiz Name
+            th Number Correct
+            th Possible
+            th Percent Correct
+        tbody
+          = for q <- @quizzes do
+            tr
+              td = q.name
+              td = q.correct
+              td = q.possible
+              td = MusicQuiz.CompletedQuiz.percent_correct(q.id)
     - else
       div
         h3 Nothing to report!
-        p 
-          | You haven't saved any quizzes to your profile. Start by taking some 
-          | quizzes. You can save the ones you're proud of at the end!
+        p You haven't saved any quizzes to your profile. Start by taking some
+          = link(" quizzes. ", to: "/quizzes")
+          | You can save the ones you're proud of at the end!
 
   .column
     h3 Tell us about yourself.
