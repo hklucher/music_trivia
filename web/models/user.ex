@@ -10,6 +10,8 @@ defmodule MusicQuiz.User do
     field :email, :string
     field :crypted_password, :string
     field :password, :string, virtual: true
+    field :first_name, :string
+    field :last_name, :string
 
     has_many :completed_quizzes, MusicQuiz.CompletedQuiz
 
@@ -28,6 +30,14 @@ defmodule MusicQuiz.User do
   end
 
   @required_fields ~w(email password)
+
+  def changeset(:update, struct, params) do
+    struct
+    |> cast(params, [:email, :first_name, :last_name])
+    |> unique_constraint(:email)
+    |> validate_format(:email, @valid_email_regex)
+    |> validate_required([:email])
+  end
 
   def changeset(struct, params \\ %{}) do
     struct

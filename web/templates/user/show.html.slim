@@ -1,0 +1,43 @@
+.container
+  h1 = display_name(@user)
+  p User since #{User.join_date(@user.id)}
+  
+.container
+  .column
+    = if Enum.any?(@quizzes) do
+      h3 Saved quizzes: #{Enum.count(@quizzes)}
+      table.user_quiz_info
+        thead
+          tr
+            th Quiz Name
+            th Number Correct
+            th Possible
+            th Percent Correct
+        tbody
+          = for q <- @quizzes do
+            tr
+              td = q.name
+              td = q.correct
+              td = q.possible
+              td = MusicQuiz.CompletedQuiz.percent_correct(q.id)
+    - else
+      div
+        h3 Nothing to report!
+        p You haven't saved any quizzes to your profile. Start by taking some
+          = link(" quizzes. ", to: "/quizzes")
+          | You can save the ones you're proud of at the end!
+
+  .column
+    h3 Tell us about yourself.
+    = form_for User.changeset(@user), user_path(Endpoint, :update, @user.id), fn f ->
+      label First name
+      = text_input f, :first_name, class: "form-control"
+      = error_tag f, :first_name
+      label Last name
+      = text_input f, :last_name, class: "form-control"
+      = error_tag f, :last_name
+      label Email
+      = text_input f, :email, class: "form-control"
+      = error_tag f, :email
+      = submit "Submit", class: "btn"
+  

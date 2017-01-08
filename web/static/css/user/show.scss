@@ -1,0 +1,20 @@
+.user_quiz_info {
+  th {
+    padding: 10px;
+    border-bottom: 1px solid black;
+  }
+
+  td {
+    padding: 10px;
+  }
+
+  tbody {
+    tr:nth-child(even) {
+      background-color: #eee;
+    }
+
+    tr:nth-child(odd) {
+      background-color: white;
+    }
+  }
+}

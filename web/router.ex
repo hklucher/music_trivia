@@ -35,7 +35,7 @@ defmodule MusicQuiz.Router do
 
   scope "/", MusicQuiz do
     pipe_through [:browser, :browser_auth]
-    resources "/users", UserController, only: [:show]
+    resources "/users", UserController, only: [:show, :update]
   end
 
   scope "/api", MusicQuiz do
