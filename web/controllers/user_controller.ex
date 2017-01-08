@@ -18,10 +18,10 @@ defmodule MusicQuiz.UserController do
     case Repo.update(changeset) do
       {:ok, user_struct} ->
         conn
-        |> put_flash(:success, "Updated your info")
         |> assign(:user, user)
         |> assign(:quizzes, User.quizzes(user_id))
-        |> render("show.html")
+        |> put_flash(:success, "Updated your info")
+        |> redirect(to: "/users/#{user_id}")
       {:error, user_struct} ->
         conn
         |> put_flash(:error, "An error occurred")

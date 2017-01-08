@@ -21,8 +21,14 @@ export class QuizStats extends React.Component {
         <QuestionList
           questions={this.props.questions}>
         </QuestionList>
-        <a href="/">Home</a>
-        {this._displayPostResultsLink()}
+        <div className="container">
+          <div>
+            <a href="/">Home</a>
+          </div>
+          <div>
+            {this._displayPostResultsLink()}
+          </div>
+        </div>
       </div>
     )
   }
