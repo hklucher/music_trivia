@@ -1,7 +1,4 @@
 defmodule MusicQuiz.Genre do
-  @moduledoc """
-  Represents a genre of music. Has many artists and many quizzes.
-  """
   use MusicQuiz.Web, :model
   alias MusicQuiz.Album
   alias MusicQuiz.Repo

@@ -31,15 +31,14 @@ defmodule MusicQuiz.Album do
     (Album |> Repo.get(album.id) |> Repo.preload(:tracks)).tracks
   end
 
-  def not_owned_tracks(album_id, limit \\ 50) when is_integer(album_id) do
-    artist_id = (Album |> Repo.get(album_id) |> Repo.preload(:artist)).id
-    genres = Artist.genres(artist_id)
-     Track
-    |> Repo.all
-    |> Repo.preload(:albums)
-    |> Enum.reject(fn(t) -> Enum.member?(t.albums, album) end)
-    |> Enum.uniq_by(&(&1.name))
-    |> Enum.shuffle
-    |> Enum.take(limit)
+  def not_owned_tracks(id, limit \\ 50) when is_integer(id) do
+    query = from t in Track,
+                inner_join: at in "album_tracks",
+                on: at.track_id == t.id,
+                inner_join: a in "albums",
+                on: at.album_id == a.id,
+                where: a.id != ^id,
+                limit: ^limit
+    query |> Repo.all |> Enum.uniq_by(&(&1.name))
   end
 end
