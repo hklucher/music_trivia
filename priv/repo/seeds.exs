@@ -9,8 +9,8 @@ Path.wildcard("priv/repo/seeds/**/*.exs")
 MusicQuiz.Spotify.start
 # MusicQuiz.Seeds.Artists.seed(1990, 1995)
 # MusicQuiz.Seeds.Albums.seed(%{"artist_range" => MusicQuiz.Repo.all(MusicQuiz.Artist, limit: 4)})
-MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
-MusicQuiz.Seeds.Quizzes.seed
+# MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
+# MusicQuiz.Seeds.Quizzes.seed
 # MusicQuiz.Seeds.Questions.MatchSongsToAlbums.seed
 # MusicQuiz.Seeds.Questions.TrackLengths.seed
 # MusicQuiz.Seeds.Questions.MatchArtistsToAlbums.seed
