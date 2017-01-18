@@ -14,6 +14,7 @@ defmodule MusicQuiz.Track do
     field :track_number, :integer
 
     many_to_many :albums, MusicQuiz.Album, join_through: "album_tracks"
+    many_to_many :genres, MusicQuiz.Genre, join_through: "track_genres"
 
     timestamps
 

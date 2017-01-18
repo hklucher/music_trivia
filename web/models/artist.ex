@@ -43,6 +43,17 @@ defmodule MusicQuiz.Artist do
     Repo.all(query)
   end
 
+  def genres(artist_id) do
+    genre_query =
+      from g in Genre,
+        join: ag in "artist_genres",
+        on: ag.genre_id == g.id,
+        join: a in Artist,
+        on: a.id == ag.artist_id,
+        where: a.id == ^artist_id
+    Repo.all(genre_query)
+  end
+
   def not_owned_albums(artist_id) do
     query = from a in Album,
               where: a.artist_id != ^artist_id,

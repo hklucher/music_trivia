@@ -7,7 +7,7 @@ Path.wildcard("priv/repo/seeds/**/*.exs")
 # the current DB call with a different query.
 
 MusicQuiz.Spotify.start
-# MusicQuiz.Seeds.Artists.seed(1975, 1977)
+# MusicQuiz.Seeds.Artists.seed(1990, 1995)
 # MusicQuiz.Seeds.Albums.seed(%{"artist_range" => MusicQuiz.Repo.all(MusicQuiz.Artist, limit: 4)})
 # MusicQuiz.Seeds.Tracks.seed(%{"album_range" => MusicQuiz.Repo.all(MusicQuiz.Album, limit: 10)})
 # MusicQuiz.Seeds.Quizzes.seed
