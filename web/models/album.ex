@@ -31,7 +31,7 @@ defmodule MusicQuiz.Album do
     (Album |> Repo.get(album.id) |> Repo.preload(:tracks)).tracks
   end
 
-  def not_owned_tracks(album_id, limit \\ 50) when is_integer(album_id) do
+  def not_owned_tracks(album_id) when is_integer(album_id) do
     album = Album |> Repo.get!(album_id) |> Repo.preload([:tracks, :artist])
     genre_ids = Artist.genres(album.artist.id) |> Enum.map(&(&1.id))
     query =
