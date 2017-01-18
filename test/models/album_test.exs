@@ -1,5 +1,3 @@
-require IEx
-
 defmodule MusicQuiz.AlbumTest do
   use MusicQuiz.ModelCase
   alias MusicQuiz.Album
